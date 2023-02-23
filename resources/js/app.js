@@ -1,6 +1,6 @@
-import './bootstrap';
+import "./bootstrap";
 
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
 import "flowbite/dist/flowbite";
 import "flowbite/dist/datepicker";
