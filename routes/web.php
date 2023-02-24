@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,6 +11,9 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/', DashboardController::class)->name('admin.dashboard');
+
+    // Menu
+    Route::resource('menu', MenuController::class, ['as' => 'admin']);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
