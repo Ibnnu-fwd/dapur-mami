@@ -10,40 +10,6 @@
                     <canvas id="dailySalesChart"></canvas>
                 </div>
             </x-card-container>
-            <x-card-container>
-                <div class="flex justify-between items-center">
-                    <h3 class="font-semibold">Menu Favorit</h3>
-                    <select id="favoriteMenuSelect"
-                        class="block max-w-auto p-2 text-sm text-gray-900 border border-gray-300 rounded-lg  focus:ring-primary focus:border-primary">
-                        <option value="day">Harian</option>
-                        <option value="week">Mingguan</option>
-                        <option value="month">Bulanan</option>
-                    </select>
-                </div>
-                <div class="flex justify-between mt-4">
-                    <span class="font-medium text-gray-600">Menu</span>
-                    <span class="font-medium text-gray-600">Pesanan</span>
-                </div>
-                {{-- Data Menu --}}
-                @for ($i = 1; $i <= 4; $i++)
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-x-3 my-2">
-                            <div class="avatar">
-                                <div class="w-12 rounded-full">
-                                    <img src="https://cdn1-production-images-kly.akamaized.net/KxuztQKl3tnUN0Fw5iAwKsnX_u0=/0x148:1920x1230/640x360/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/3093328/original/069244600_1585909700-fried-2509089_1920.jpg"
-                                        alt="">
-                                </div>
-                            </div>
-                            <div>
-                                <span class="badge badge-warning badge-sm">Makanan</span>
-                                <h3 class="font-semibold mt-1 text-md">Nasi Goreng</h3>
-                            </div>
-                        </div>
-                        <span class="font-semibold text-md">600</span>
-                    </div>
-                @endfor
-
-            </x-card-container>
         </div>
         <div class="lg:w-2/5">
             <x-card-container>
@@ -115,11 +81,90 @@
         </div>
     </div>
 
+    <div class="lg:flex gap-x-3">
+        <div class="lg:w-2/5">
+            <x-card-container>
+                <div class="flex justify-between items-center">
+                    <h3 class="font-semibold">Menu Favorit</h3>
+                    <select id="favoriteMenuSelect"
+                        class="block max-w-auto p-2 text-sm text-gray-900 border border-gray-300 rounded-lg  focus:ring-primary focus:border-primary">
+                        <option value="day">Harian</option>
+                        <option value="week">Mingguan</option>
+                        <option value="month">Bulanan</option>
+                    </select>
+                </div>
+                <div class="flex justify-between mt-4">
+                    <span class="font-medium text-gray-600">Menu</span>
+                    <span class="font-medium text-gray-600">Pesanan</span>
+                </div>
+                {{-- Data Menu --}}
+                @for ($i = 1; $i <= 4; $i++)
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-x-3 my-2">
+                            <div class="avatar">
+                                <div class="w-12 rounded-full">
+                                    <img src="https://cdn1-production-images-kly.akamaized.net/KxuztQKl3tnUN0Fw5iAwKsnX_u0=/0x148:1920x1230/640x360/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/3093328/original/069244600_1585909700-fried-2509089_1920.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div>
+                                <span class="badge badge-warning badge-sm">Makanan</span>
+                                <h3 class="font-semibold mt-1 text-md">Nasi Goreng</h3>
+                            </div>
+                        </div>
+                        <span class="font-semibold text-md">600</span>
+                    </div>
+                @endfor
+            </x-card-container>
+        </div>
+        <div class="lg:w-3/5">
+            <x-card-container>
+                <h3 class="font-semibold mb-4">Transaksi Terbaru</h3>
+                <table class="w-full" id="recentOrderTable">
+                    <thead>
+                        <tr>
+                            <th>Pelanggan</th>
+                            <th>Menu</th>
+                            <th>Invoice</th>
+                            <th>No. Pesanan</th>
+                            <th>Total Bayar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for ($i = 1; $i <= 5; $i++)
+                            <tr>
+                                <td>Ibnnu</td>
+                                <td>
+                                    <ul class="list-none">
+                                        <li>Nasi Goreng <span class="text-gray-500">x2</span></li>
+                                        <li>Soto <span class="text-gray-500">x2</span></li>
+                                    </ul>
+                                </td>
+                                <td><span class="text-gray-400">TR0011212</span></td>
+                                <td><span class="text-gray-400">#00001</span></td>
+                                <td><span class="text-gray-400">Rp. 50.000</span></td>
+                            </tr>
+                        @endfor
+                    </tbody>
+                </table>
+            </x-card-container>
+        </div>
+    </div>
+
     @push('js-internal')
         <script>
             $(function() {
                 $('#favoriteMenuSelect').select2({
                     width: 'resolve'
+                });
+
+                $('#recentOrderTable').DataTable({
+                    responsive: true,
+                    autoWidth: false,
+                    paginate: false,
+                    info: false,
+                    searching: false,
+                    dom: '<"top"i>rt<"bottom"flp><"clear">',
                 });
             });
         </script>
