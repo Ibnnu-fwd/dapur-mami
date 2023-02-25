@@ -19,11 +19,13 @@
         <ul class="space-y-3">
             <x-sidebar-menu name="Dashboard" icon="fas fa-home" route="{{ route('admin.dashboard') }}"
                 active="{{ request()->routeIs('admin.dashboard') }}" />
-            <x-sidebar-menu name="Makanan & Minuman" icon="fas fa-utensils" route="{{ route('admin.menu.index') }}" active="{{ request()->routeIs('admin.menu.*') }}" />
+            <x-sidebar-menu name="Makanan & Minuman" icon="fas fa-utensils" route="{{ route('admin.menu.index') }}"
+                active="{{ request()->routeIs('admin.menu.*') }}" />
             {{-- tagihan --}}
             <x-sidebar-menu name="Tagihan" icon="fas fa-receipt" />
             {{-- pengaturan --}}
-            <x-sidebar-menu name="Pengaturan" icon="fas fa-cog" />
+            <x-sidebar-menu name="Pengaturan" icon="fas fa-cog" route="{{ route('admin.setting.index') }}"
+                active="{{ request()->routeIs('admin.setting.*') }}" />
             {{-- logout --}}
             <x-sidebar-menu name="Keluar" icon="fas fa-sign-out-alt" />
         </ul>
@@ -41,7 +43,7 @@
                 <p class="text-xs text-gray-400">Admin • 4h 26m</p>
 
                 {{-- open profile button light --}}
-                <a href="#"
+                <a href="{{ route('admin.setting.index') }}"
                     class="w-full px-4 py-2 mt-6 text-xs font-medium bg-gray-100 border border-transparent rounded-md shadow-sm">
                     <span>Buka Profil</span>
                 </a>

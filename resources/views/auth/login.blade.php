@@ -19,7 +19,7 @@
                 </a>
             @endif
 
-            <x-button class="btn btn-primary text-sm btn-sm ml-3">Masuk</x-button>
+            <x-button class="ml-3">Masuk</x-button>
         </div>
     </form>
 </x-guest-layout>

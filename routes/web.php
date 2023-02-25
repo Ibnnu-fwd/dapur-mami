@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,9 @@ Route::group(['prefix' => 'dashboard'], function () {
 
     // Menu
     Route::resource('menu', MenuController::class, ['as' => 'admin']);
+
+    // Setting
+    Route::resource('setting', SettingController::class, ['as' => 'admin']);
 });
 
 require __DIR__ . '/auth.php';
