@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\ProfileController;
@@ -15,6 +16,9 @@ Route::group(['prefix' => 'dashboard'], function () {
 
     // Menu
     Route::resource('menu', MenuController::class, ['as' => 'admin']);
+
+    // Invoice
+    Route::resource('invoice', InvoiceController::class, ['as' => 'admin']);
 
     // Setting
     Route::resource('setting', SettingController::class, ['as' => 'admin']);

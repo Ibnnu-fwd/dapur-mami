@@ -22,7 +22,8 @@
             <x-sidebar-menu name="Makanan & Minuman" icon="fas fa-utensils" route="{{ route('admin.menu.index') }}"
                 active="{{ request()->routeIs('admin.menu.*') }}" />
             {{-- tagihan --}}
-            <x-sidebar-menu name="Tagihan" icon="fas fa-receipt" />
+            <x-sidebar-menu name="Tagihan" icon="fas fa-receipt" route="{{ route('admin.invoice.index') }}"
+            active="{{ request()->routeIs('admin.invoice.*') }}" />
             {{-- pengaturan --}}
             <x-sidebar-menu name="Pengaturan" icon="fas fa-cog" route="{{ route('admin.setting.index') }}"
                 active="{{ request()->routeIs('admin.setting.*') }}" />

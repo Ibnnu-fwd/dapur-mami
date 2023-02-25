@@ -13,6 +13,12 @@ Breadcrumbs::for('menu', function(BreadcrumbTrail $trail) {
     $trail->push('Makanan & Minuman', route('admin.menu.index'));
 });
 
+// Invoice
+Breadcrumbs::for('invoice', function(BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Tagihan', route('admin.invoice.index'));
+});
+
 // Setting
 Breadcrumbs::for('setting', function(BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
