@@ -11,10 +11,11 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::group(['prefix' => 'dashboard'], function () {
+Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/', DashboardController::class)->name('admin.dashboard');
 
     // Menu
+    Route::get('menu/catalog-management', [MenuController::class, 'catalogManagement'])->name('admin.menu.catalog-management');
     Route::resource('menu', MenuController::class, ['as' => 'admin']);
 
     // Invoice

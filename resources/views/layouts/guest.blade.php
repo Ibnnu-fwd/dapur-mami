@@ -33,7 +33,7 @@
         <div>
             <a href="/">
                 {{-- <x-application-logo class="w-20 h-20 fill-current text-gray-500" /> --}}
-                <img src="{{asset('assets/images/logo.png')}}" width="129" alt="">
+                <img src="{{ asset('assets/images/logo.png') }}" width="129" alt="">
             </a>
         </div>
 

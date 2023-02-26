@@ -23,29 +23,42 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name'  => ['required', 'string', 'max:255'],
+            'fullname'   => ['required', 'string', 'max:255'],
+            'sex'        => ['required', 'string', 'max:255'],
+            'birth_date' => ['required', 'string', 'max:255'],
+            'phone'      => ['required', 'string', 'max:255'],
+            'address'    => ['required', 'string', 'max:255'],
+            'email'      => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+            'password'   => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        try {
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name'  => $request->last_name,
+                'fullname'   => $request->fullname,
+                'sex'        => $request->sex,
+                'birth_date' => date('Y-m-d', strtotime($request->birth_date)),
+                'phone'      => $request->phone,
+                'address'    => $request->address,
+                'email'      => $request->email,
+                'password'   => password_hash($request->password, PASSWORD_DEFAULT),
+                'role'       => User::CASHIER_ROLE,
+                'status'     => User::ACTIVE_STATUS,
+            ]);
 
-        event(new Registered($user));
+            event(new Registered($user));
 
-        Auth::login($user);
+            Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+            return redirect(RouteServiceProvider::HOME);
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Gagal mendaftar');
+        }
     }
 }

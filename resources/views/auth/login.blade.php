@@ -13,8 +13,7 @@
 
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600"
-                    href="{{ route('register') }}">
+                <a class="underline text-sm text-gray-600" href="{{ route('register') }}">
                     {{ __('Tidak punya akun?') }}
                 </a>
             @endif
@@ -22,4 +21,26 @@
             <x-button class="ml-3">Masuk</x-button>
         </div>
     </form>
+
+    @push('js-internal')
+        <script>
+            $(function() {
+                @if (Session::has('success'))
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: '{{ Session::get('success') }}',
+                    });
+                @endif
+
+                @if (Session::has('error'))
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: '{{ Session::get('error') }}',
+                    });
+                @endif
+            });
+        </script>
+    @endpush
 </x-guest-layout>

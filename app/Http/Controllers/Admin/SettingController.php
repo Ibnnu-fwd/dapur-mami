@@ -3,16 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\SettingInterface;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+
+    private $setting;
+
+    public function __construct(SettingInterface $setting)
+    {
+        $this->setting = $setting;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('admin.setting.index');
+        return view('admin.setting.index', [
+            'user' => auth()->user(),
+        ]);
     }
 
     /**
@@ -52,7 +63,13 @@ class SettingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $this->setting->update($request->all(), $id);
+            return redirect()->back()->with('success', 'Profil berhasil diperbarui');
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return redirect()->back()->with('error', 'Profil gagal diperbarui');
+        }
     }
 
     /**

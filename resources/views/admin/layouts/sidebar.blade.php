@@ -23,12 +23,24 @@
                 active="{{ request()->routeIs('admin.menu.*') }}" />
             {{-- tagihan --}}
             <x-sidebar-menu name="Tagihan" icon="fas fa-receipt" route="{{ route('admin.invoice.index') }}"
-            active="{{ request()->routeIs('admin.invoice.*') }}" />
+                active="{{ request()->routeIs('admin.invoice.*') }}" />
             {{-- pengaturan --}}
             <x-sidebar-menu name="Pengaturan" icon="fas fa-cog" route="{{ route('admin.setting.index') }}"
                 active="{{ request()->routeIs('admin.setting.*') }}" />
+            {{-- manajemen menu --}}
+            <x-sidebar-menu name="Manajemen Katalog" icon="fas fa-bars" route="{{ route('admin.menu.catalog-management') }}"
+                active="{{ request()->routeIs('admin.menu.catalog-management') }}" />
             {{-- logout --}}
-            <x-sidebar-menu name="Keluar" icon="fas fa-sign-out-alt" />
+            <li>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit"
+                        class="flex w-full items-center p-3 font-normal text-gray-900 rounded-md dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <i class="fas fa-sign-out-alt w-4 h-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="ml-3">Keluar</span>
+                    </button>
+                </form>
+            </li>
         </ul>
 
         <div id="dropdown-cta" class="p-4 mt-12 rounded-2xl border-b border-gray-200 sm:rounded-2xl shadow-xl"
@@ -37,11 +49,15 @@
                 <div class="avatar">
                     <div class="w-12 rounded-full">
                         <img
-                            src="https://images.soco.id/589-5-fakta-menarik-film-avatar-yang-kembali-tayang-5.jpg.jpg" />
+                            src="{{ auth()->user()->profile_picture != null ? asset(auth()->user()->profile_picture) : asset('images/profile_picture/default.jpg') }}" />
                     </div>
                 </div>
-                <p class="font-bold mt-2">Ibnnu Sutio</p>
-                <p class="text-xs text-gray-400">Admin • 4h 26m</p>
+                <p class="font-bold mt-2">
+                    {{ auth()->user()->fullname }}
+                </p>
+                <p class="text-xs text-gray-400">
+                    {{ auth()->user()->getRole() }} • {{ auth()->user()->getSex() }}
+                </p>
 
                 {{-- open profile button light --}}
                 <a href="{{ route('admin.setting.index') }}"
