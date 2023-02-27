@@ -5,7 +5,7 @@
     <x-card-container>
 
         <div class="text-end">
-            <x-link-button route="{{ route('admin.catalog-management.create') }}" class="bg-gray-700 mb-4">Tambah Menu
+            <x-link-button route="{{ route('admin.catalog-management.create') }}" class="mb-4" color="gray">Tambah Menu
             </x-link-button>
         </div>
 

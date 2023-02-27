@@ -1,9 +1,9 @@
 <div class="inline-flex gap-x-2">
     <a href="{{ route('admin.catalog-management.edit', $id) }}" class="btn btn-sm btn-primary">
-        <i class="fas fa-edit"></i>
+        <small><i class="fas fa-edit"></i></small>
     </a>
     <a href="#my-modal-{{ $id }}" class="btn btn-sm">
-        <i class="fas fa-trash"></i>
+        <small><i class="fas fa-trash"></i></small>
     </a>
 </div>
 
@@ -14,10 +14,11 @@
             Apakah anda yakin ingin menghapus menu ini?
         </p>
         <div class="modal-action">
+            <x-link-button route="#" color="gray">Batal</x-link-button>
             <form action="{{ route('admin.catalog-management.destroy', $id) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <x-button type="submit" primary="false">Hapus</x-button>
+                <x-button type="submit" color="red">Hapus</x-button>
             </form>
         </div>
     </div>

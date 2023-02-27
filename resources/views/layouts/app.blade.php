@@ -71,8 +71,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
 
     <script>
-        Chart.defaults.font.family = 'Lexend Deca';
+        Chart.defaults.font.family        = 'Lexend Deca';
         Chart.defaults.scale.grid.display = false;
+        $('input[type="search"]').addClass('text-sm');
     </script>
 
     @stack('js-internal')

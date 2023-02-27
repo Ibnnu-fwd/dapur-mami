@@ -37,4 +37,10 @@ Breadcrumbs::for('catalog-management.create', function(BreadcrumbTrail $trail) {
     $trail->push('Tambah Menu', route('admin.catalog-management.create'));
 });
 
+// Catalog Management > Tambah Menu
+Breadcrumbs::for('catalog-management.edit', function(BreadcrumbTrail $trail, $data) {
+    $trail->parent('catalog-management');
+    $trail->push($data->name, route('admin.catalog-management.edit', $data->id));
+});
+
 

@@ -78,12 +78,29 @@ class CatalogManagementController extends Controller
 
     public function edit(string $id)
     {
-        //
+        return view('admin.menu.catalog_management.edit', [
+            'data'       => $this->catalogManagement->find($id),
+            'categories' => Menu::CATEGORIES
+        ]);
     }
 
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $request->validate([
+                'name'     => ['required', 'string', 'max:255'],
+                'price'    => ['required'],
+                'category' => ['required'],
+                'weight'   => ['required'],
+                'image'    => ['nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            ]);
+
+            $this->catalogManagement->update($request->all(), $id);
+            return redirect()->route('admin.catalog-management.index')->with('success', 'Menu berhasil diubah');
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return redirect()->back()->with('Menu gagal diubah');
+        }
     }
 
     public function destroy(string $id)
