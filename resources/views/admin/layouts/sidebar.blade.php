@@ -28,8 +28,8 @@
             <x-sidebar-menu name="Pengaturan" icon="fas fa-cog" route="{{ route('admin.setting.index') }}"
                 active="{{ request()->routeIs('admin.setting.*') }}" />
             {{-- manajemen menu --}}
-            <x-sidebar-menu name="Manajemen Katalog" icon="fas fa-bars" route="{{ route('admin.menu.catalog-management') }}"
-                active="{{ request()->routeIs('admin.menu.catalog-management') }}" />
+            <x-sidebar-menu name="Manajemen Katalog" icon="fas fa-bars" route="{{ route('admin.catalog-management.index') }}"
+                active="{{ request()->routeIs('admin.catalog-management.*') }}" />
             {{-- logout --}}
             <li>
                 <form action="{{ route('logout') }}" method="POST">

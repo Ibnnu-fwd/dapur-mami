@@ -24,3 +24,17 @@ Breadcrumbs::for('setting', function(BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
     $trail->push('Pengaturan', route('admin.setting.index'));
 });
+
+// Catalog Management
+Breadcrumbs::for('catalog-management', function(BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Manajemen Katalog', route('admin.catalog-management.index'));
+});
+
+// Catalog Management > Tambah Menu
+Breadcrumbs::for('catalog-management.create', function(BreadcrumbTrail $trail) {
+    $trail->parent('catalog-management');
+    $trail->push('Tambah Menu', route('admin.catalog-management.create'));
+});
+
+

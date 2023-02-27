@@ -42,10 +42,4 @@ class MenuController extends Controller
     {
         //
     }
-
-    /* custom function */
-    public function catalogManagement()
-    {
-
-    }
 }

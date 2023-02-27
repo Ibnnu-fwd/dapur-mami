@@ -12,6 +12,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(\App\Interfaces\SettingInterface::class, \App\Repositories\SettingRepository::class);
+        $this->app->bind(\App\Interfaces\CatalogManagementInterface::class, \App\Repositories\CatalogManagementRepository::class);
     }
 
     /**
