@@ -102,13 +102,13 @@
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-x-3 my-2">
                             <div class="avatar">
-                                <div class="w-12 rounded-full">
+                                <div class="w-12 rounded-xl rounded">
                                     <img src="https://cdn1-production-images-kly.akamaized.net/KxuztQKl3tnUN0Fw5iAwKsnX_u0=/0x148:1920x1230/640x360/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/3093328/original/069244600_1585909700-fried-2509089_1920.jpg"
                                         alt="">
                                 </div>
                             </div>
                             <div>
-                                <span class="badge badge-warning badge-sm">Makanan</span>
+                                <span class="badge badge-primary badge-sm">Makanan</span>
                                 <h3 class="font-semibold mt-1 text-md">Nasi Goreng</h3>
                             </div>
                         </div>

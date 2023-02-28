@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\CatalogManagementController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InvoiceController;
@@ -26,6 +27,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
 
     // Catalog Management
     Route::resource('catalog-management', CatalogManagementController::class, ['as' => 'admin']);
+
+    // Booking
+    Route::post('booking/add-cart/{id}', [BookingController::class, 'addCart'])->name('admin.booking.add-cart');
+    Route::resource('booking', BookingController::class, ['as' => 'admin']);
 });
 
 require __DIR__ . '/auth.php';

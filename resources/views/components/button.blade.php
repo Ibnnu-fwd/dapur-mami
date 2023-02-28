@@ -1,8 +1,8 @@
-@props(['primary' => true, 'color' => 'green'])
+@props(['color' => 'green', 'type' => 'submit'])
 
 <button
     {{ $attributes->merge([
-        'type' => 'submit',
+        'type' => $type == 'submit' ? 'submit' : 'button',
         'class' =>
             'inline-flex items-center px-4 py-2 border border-transparent rounded-md text-sm text-white bg-' .
             $color .

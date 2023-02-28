@@ -37,10 +37,21 @@ Breadcrumbs::for('catalog-management.create', function(BreadcrumbTrail $trail) {
     $trail->push('Tambah Menu', route('admin.catalog-management.create'));
 });
 
-// Catalog Management > Tambah Menu
+// Catalog Management > Update Menu
 Breadcrumbs::for('catalog-management.edit', function(BreadcrumbTrail $trail, $data) {
     $trail->parent('catalog-management');
     $trail->push($data->name, route('admin.catalog-management.edit', $data->id));
 });
 
+// Booking
+Breadcrumbs::for('booking', function(BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Booking', route('admin.booking.index'));
+});
+
+// Booking > Tambah Booking
+Breadcrumbs::for('booking.create', function(BreadcrumbTrail $trail) {
+    $trail->parent('booking');
+    $trail->push('Tambah Booking', route('admin.booking.create'));
+});
 

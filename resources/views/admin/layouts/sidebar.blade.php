@@ -30,6 +30,9 @@
             {{-- manajemen menu --}}
             <x-sidebar-menu name="Manajemen Katalog" icon="fas fa-bars" route="{{ route('admin.catalog-management.index') }}"
                 active="{{ request()->routeIs('admin.catalog-management.*') }}" />
+                {{-- booking --}}
+            <x-sidebar-menu name="Booking" icon="fas fa-book" route="{{ route('admin.booking.index') }}"
+                active="{{ request()->routeIs('admin.booking.*') }}" />
             {{-- logout --}}
             <li>
                 <form action="{{ route('logout') }}" method="POST">

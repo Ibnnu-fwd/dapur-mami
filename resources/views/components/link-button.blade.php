@@ -1,14 +1,14 @@
-@props(['route' => '', 'color' => 'green'])
+@props(['route' => '#', 'color' => 'green'])
 
 <a href="{{ $route }}" {!! $attributes->merge([
     'class' =>
         'inline-flex items-center px-4 py-2 border border-transparent rounded-md text-sm text-white bg-' .
         $color .
-        '-600 hover:bg-' .
+        '-800 hover:bg-' .
         $color .
-        '-700 focus:bg-' .
+        '-600 focus:bg-' .
         $color .
-        '-700 active:bg-' .
+        '-600 active:bg-' .
         $color .
         '-900 focus:outline-none focus:ring-2 focus:ring-' .
         $color .
