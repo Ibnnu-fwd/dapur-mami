@@ -42,11 +42,7 @@ class CatalogManagementRepository implements CatalogManagementInterface
 
     public function destroy($id): bool
     {
-        $menu = $this->menu->find($id);
-        if ($menu->image !== null) {
-            unlink(public_path($menu->image));
-        }
-        $menu->delete();
+        $this->menu->where('id', $id)->update(['status' => $this->menu::INACTIVE_STATUS]);
         return true;
     }
 

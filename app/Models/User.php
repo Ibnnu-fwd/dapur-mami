@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\HasActiveScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,6 +11,12 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    // Scope
+    protected static function booted()
+    {
+        static::addGlobalScope(new HasActiveScope);
+    }
 
     const CASHIER_ROLE = 1;
     const ADMIN_ROLE   = 2;
@@ -28,7 +35,8 @@ class User extends Authenticatable
         'birth_date',
         'profile_picture',
         'role',
-        'status'
+        'status',
+        'active'
     ];
 
     protected $hidden = [

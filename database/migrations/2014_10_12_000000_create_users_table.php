@@ -24,8 +24,8 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->date('birth_date')->nullable();
             $table->longText('profile_picture')->nullable();
-            $table->integer('role')->default(1); // 1: cashier, 2: admin
-            $table->integer('status')->default(1); // 1: active, 0: non active
+            $table->integer('role')->default(1); // 1: user, 2: admin
+            $table->integer('active')->default(1); // 1: active, 0: non active
             $table->rememberToken();
             $table->timestamps();
         });

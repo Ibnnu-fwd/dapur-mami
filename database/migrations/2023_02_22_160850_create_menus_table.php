@@ -17,9 +17,12 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('category'); // 1: food, 2: drink, 3: other
             $table->text('description')->nullable();
-            $table->integer('status'); // 1: available, 2: unavailable
             $table->integer('weight')->nullable();
+            $table->unsignedBigInteger('discounts_id')->nullable();
+            $table->integer('active')->default(1); // 1: active, 0: non active
             $table->timestamps();
+
+            $table->foreign('discounts_id')->references('id')->on('discounts');
         });
     }
 

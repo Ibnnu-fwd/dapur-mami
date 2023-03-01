@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\HasActiveScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,13 +10,19 @@ class Menu extends Model
 {
     use HasFactory;
 
+    // Scope
+    protected static function booted()
+    {
+        static::addGlobalScope(new HasActiveScope);
+    }
+
     const FOOD_CATEGORY  = 1;
     const DRINK_CATEGORY = 2;
-    const OTHER_CATEGORY = 3;
+    const SNACK_CATEGORY = 3;
 
     const FOOD_CATEGORY_MEANING  = 'Makanan';
     const DRINK_CATEGORY_MEANING = 'Minuman';
-    const OTHER_CATEGORY_MEANING = 'Lainnya';
+    const SNACK_CATEGORY_MEANING = 'Camilan';
 
     const CATEGORIES = [
         [
@@ -27,8 +34,8 @@ class Menu extends Model
             'name' => self::DRINK_CATEGORY_MEANING
         ],
         [
-            'id'   => self::OTHER_CATEGORY,
-            'name' => self::OTHER_CATEGORY_MEANING
+            'id'   => self::SNACK_CATEGORY,
+            'name' => self::SNACK_CATEGORY_MEANING
         ]
     ];
 
@@ -42,8 +49,13 @@ class Menu extends Model
         'price',
         'category',
         'description',
-        'status',
         'weight',
-        'image'
+        'image',
+        'active'
     ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::ACTIVE_STATUS);
+    }
 }
