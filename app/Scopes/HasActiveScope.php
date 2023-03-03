@@ -10,6 +10,6 @@ class HasActiveScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('status', 1);
+        $builder->where('active', 1);
     }
 }

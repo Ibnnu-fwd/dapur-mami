@@ -17,6 +17,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/', DashboardController::class)->name('admin.dashboard');
 
     // Menu
+    Route::get('menu/search', [MenuController::class, 'search'])->name('admin.menu.search');
+    Route::get('menu/category/{id}', [MenuController::class, 'category'])->name('admin.menu.category');
     Route::resource('menu', MenuController::class, ['as' => 'admin']);
 
     // Invoice

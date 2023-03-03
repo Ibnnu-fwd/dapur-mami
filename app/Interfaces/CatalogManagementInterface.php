@@ -8,4 +8,6 @@ interface CatalogManagementInterface {
     public function store($data) :bool;
     public function destroy($id) :bool;
     public function update($data,$id) :bool;
+    public function getMenuByCategory($id);
+    public function search($data);
 }

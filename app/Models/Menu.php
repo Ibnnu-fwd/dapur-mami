@@ -58,4 +58,11 @@ class Menu extends Model
     {
         return $query->where('status', self::ACTIVE_STATUS);
     }
+
+    // RELATIONSHIP
+
+    public function transactionDetails()
+    {
+        return $this->hasMany(TransactionDetail::class, 'menus_id', 'id');
+    }
 }

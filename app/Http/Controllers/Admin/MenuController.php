@@ -3,14 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\CatalogManagementInterface;
+use App\Models\Menu;
 use Illuminate\Http\Request;
+use Termwind\Components\Raw;
 
 class MenuController extends Controller
 {
+    private $menu;
 
-    public function index()
+    public function __construct(CatalogManagementInterface $menu)
     {
-        return view('admin.menu.index');
+        $this->menu = $menu;
+    }
+
+    public function index(Request $request)
+    {
+        $menus = $this->menu->get();
+        return view('admin.menu.index', [
+            'menus'      => $menus,
+            'categories' => Menu::CATEGORIES
+        ]);
     }
 
     public function create()
@@ -41,5 +54,28 @@ class MenuController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    // CUSTOM FUNCTION
+
+    public function category($id)
+    {
+        if($id == 'all') {
+            $menus = $this->menu->get();
+        } else {
+            $menus = $this->menu->getMenuByCategory($id);
+        }
+        return view('admin.menu.component.menu-item', [
+            'menus'      => $menus,
+            'categories' => Menu::CATEGORIES
+        ])->render();
+    }
+
+    public function search(Request $request) {
+        $menus = $this->menu->search($request->search);
+        return view('admin.menu.component.menu-item', [
+            'menus'      => $menus,
+            'categories' => Menu::CATEGORIES
+        ])->render();
     }
 }

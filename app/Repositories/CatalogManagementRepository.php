@@ -42,7 +42,7 @@ class CatalogManagementRepository implements CatalogManagementInterface
 
     public function destroy($id): bool
     {
-        $this->menu->where('id', $id)->update(['status' => $this->menu::INACTIVE_STATUS]);
+        $this->menu->where('id', $id)->update(['active' => $this->menu::INACTIVE_STATUS]);
         return true;
     }
 
@@ -78,5 +78,15 @@ class CatalogManagementRepository implements CatalogManagementInterface
         $menu->save();
 
         return true;
+    }
+
+    public function getMenuByCategory($id)
+    {
+        return $this->menu->where('category', $id)->get();
+    }
+
+    public function search($data)
+    {
+        return $this->menu->where('name', 'like', '%' . $data . '%')->get();
     }
 }

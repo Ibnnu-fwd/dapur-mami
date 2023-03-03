@@ -35,7 +35,6 @@ class User extends Authenticatable
         'birth_date',
         'profile_picture',
         'role',
-        'status',
         'active'
     ];
 
@@ -47,6 +46,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // RELATION
+    public function transactions(){
+        return $this->hasMany(Transaction::class, 'transactions_id', 'id');
+    }
+
+    // GETTER SETTER
 
     public function getBirthDate() {
         return date('m/d/Y', strtotime($this->birth_date));

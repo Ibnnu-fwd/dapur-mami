@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\InvoiceInterface;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    private $invoice;
+
+    public function __construct(InvoiceInterface $invoice) {
+        $this->invoice = $invoice;
+    }
+
     public function index()
     {
         return view('admin.invoice.index');
@@ -28,7 +33,12 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $this->invoice->store($request->all());
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
     }
 
     /**

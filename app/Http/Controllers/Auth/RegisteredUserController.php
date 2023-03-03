@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
                 'email'      => $request->email,
                 'password'   => password_hash($request->password, PASSWORD_DEFAULT),
                 'role'       => User::CASHIER_ROLE,
-                'status'     => User::ACTIVE_STATUS,
+                'active'     => User::ACTIVE_STATUS,
             ]);
 
             event(new Registered($user));
@@ -58,6 +58,7 @@ class RegisteredUserController extends Controller
 
             return redirect(RouteServiceProvider::HOME);
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return redirect()->back()->with('error', 'Gagal mendaftar');
         }
     }
