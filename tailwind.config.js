@@ -42,6 +42,7 @@ module.exports = {
                         warning: "#FBBD23",
                         error: "#F87272",
                         green: "#19743b",
+                        red: "#F87272",
                         accent: "#806043",
                         neutral: "#3D4451",
                         "base-100": "#FFFFFF",

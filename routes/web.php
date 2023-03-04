@@ -22,6 +22,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('menu', MenuController::class, ['as' => 'admin']);
 
     // Invoice
+    Route::post('invoice/update-status/{id}', [InvoiceController::class, 'updateStatus'])->name('admin.invoice.update-status');
+    Route::get('invoice/detail/{id}', [InvoiceController::class, 'detail'])->name('admin.invoice.detail');
+    Route::get('invoice/print/{id}', [InvoiceController::class, 'print'])->name('admin.invoice.print');
     Route::get('invoice/search', [InvoiceController::class, 'search'])->name('admin.invoice.search');
     Route::get('invoice/period', [InvoiceController::class, 'period'])->name('admin.invoice.period');
     Route::resource('invoice', InvoiceController::class, ['as' => 'admin']);

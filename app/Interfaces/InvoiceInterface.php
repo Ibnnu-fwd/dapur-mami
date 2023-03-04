@@ -8,4 +8,5 @@ interface InvoiceInterface {
     public function period($data);
     public function show($id);
     public function search($data);
+    public function updateStatus($id, $data);
 }

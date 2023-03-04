@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\InvoiceInterface;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Adapter\PDFLib;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -89,9 +91,39 @@ class InvoiceController extends Controller
         ])->render();
     }
 
-    public function search(Request $request) {
+    public function search(Request $request)
+    {
         return view('admin.invoice.component.invoice-item', [
             'invoices' => $this->invoice->search($request->search) ?? []
         ])->render();
+    }
+
+    public function print($id)
+    {
+        $invoice = $this->invoice->show($id);
+        return Pdf::loadView('admin.invoice.component.print', [
+            'invoice' => $invoice,
+            'totalItemOrder' => $invoice->transactionDetails->sum('quantity'),
+        ])->setOption('page-size', 'B5')->setOption('margin-top', 0)->setOption('margin-bottom', 0)->setOption('margin-left', 0)->setOption('margin-right', 0)->stream('invoice-' . $invoice->transaction_code . '.pdf');
+    }
+
+    public function detail($id) {
+        return $this->invoice->show($id);
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        try {
+            $this->invoice->updateStatus($id, $request->status);
+            return response()->json([
+                'status' => true,
+                'message' => 'Status berhasil diubah'
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 }

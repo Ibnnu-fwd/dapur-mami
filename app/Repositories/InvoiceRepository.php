@@ -32,6 +32,7 @@ class InvoiceRepository implements InvoiceInterface
                 'transaction_code' => $this->transaction->generateTransactionCode(),
                 'customer_name'    => $data['customer_name'],
                 'payment_method'   => Transaction::PAYMENT_METHOD_CASH,
+                'sub_total'        => $data['sub_total'],
                 'total_payment'    => $data['total'],
                 'status'           => Transaction::PENDING_STATUS,
             ]);
@@ -119,5 +120,12 @@ class InvoiceRepository implements InvoiceInterface
             ->where('transaction_code', 'like', '%' . $data . '%')
             ->orWhere('customer_name', 'like', '%' . $data . '%')
             ->get();
+    }
+
+    public function updateStatus($id, $data)
+    {
+        $transaction = $this->transaction->find($id);
+        $transaction->status = $data;
+        $transaction->save();
     }
 }

@@ -1,13 +1,17 @@
 @forelse ($invoices as $invoice)
     <div id="invoice-{{ $invoice->id }}" onclick="detailInvoice({{ $invoice->id }})"
-        class="w-full bg-white p-4 hover:border hover:border-white-300 rounded-2xl shadow-xl hover:shadow-2xl">
+        class="w-full bg-white p-4 hover:border hover:border-white-300 rounded-2xl shadow-xl hover:shadow-2xl cursor-pointer">
         <div class="flex justify-between items-center mb-1">
             <span class="font-semibold text-md">
                 {{ $invoice->transaction_code }}
             </span>
-            <span class="badge badge-sm badge-{{ $invoice->getStatusColor() }}">
-                {{ $invoice->getStatus() }}
-            </span>
+            @if ($invoice->status == 1)
+                <span class="badge badge-warning badge-sm">Menunggu</span>
+            @elseif($invoice->status == 2)
+                <span class="badge badge-primary badge-sm">Berhasil</span>
+            @elseif($invoice->status == 3)
+                <span class="badge badge-error badge-sm">Gagal</span>
+            @endif
         </div>
         <div class="flex justify-between items-center mb-1 mt-2">
             <span class="text-gray-800">

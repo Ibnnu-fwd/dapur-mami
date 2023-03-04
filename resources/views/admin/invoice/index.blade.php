@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-x-3 gap-y-4 mt-5" id="invoiceList">
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-x-3 gap-y-4 mt-5 cursor-pointer" id="invoiceList">
                 @forelse ($invoices as $invoice)
                     <div id="invoice-{{ $invoice->id }}" onclick="detailInvoice({{ $invoice->id }})"
                         class="w-full bg-white p-4 hover:border hover:border-white-300 rounded-2xl shadow-xl hover:shadow-2xl">
@@ -37,9 +37,13 @@
                             <span class="font-semibold text-md">
                                 {{ $invoice->transaction_code }}
                             </span>
-                            <span class="badge badge-sm badge-{{ $invoice->getStatusColor() }}">
-                                {{ $invoice->getStatus() }}
-                            </span>
+                            @if ($invoice->status == 1)
+                                <span class="badge badge-warning badge-sm">Menunggu</span>
+                            @elseif($invoice->status == 2)
+                                <span class="badge badge-primary badge-sm">Berhasil</span>
+                            @elseif($invoice->status == 3)
+                                <span class="badge badge-error badge-sm">Gagal</span>
+                            @endif
                         </div>
                         <div class="flex justify-between items-center mb-1 mt-2">
                             <span class="text-gray-800">
@@ -72,8 +76,131 @@
         <div class="hidden" id="detailOrder"></div>
     </div>
 
+    <!-- Put this part before </body> tag -->
+    <input type="checkbox" id="editStatusModal" class="modal-toggle" />
+    <label for="editStatusModal" class="modal cursor-pointer">
+        <label class="modal-box relative" for="">
+            <h3 class="text-lg font-bold">Formulir Ubah Status Tagihan</h3>
+            <div class="flex justify-between items-center mt-3">
+                <span class="text-gray-800">Kode Transaksi</span>
+                <span class="font-semibold text-md" id="transactionCode"></span>
+            </div>
+            <div class="flex justify-between items-center mt-3">
+                <span class="text-gray-800">Nama Pelanggan</span>
+                <span class="font-semibold text-md" id="customerName"></span>
+            </div>
+            <div class="flex justify-between items-center mt-3">
+                <span class="text-gray-800">Tanggal</span>
+                <span class="font-semibold text-md" id="transactionDate"></span>
+            </div>
+            <div class="flex justify-between items-center mt-3">
+                <span class="text-gray-800">Total</span>
+                <span class="font-semibold text-md" id="totalPayment"></span>
+            </div>
+            <div class="flex justify-between items-center mt-3">
+                <span class="text-gray-800">Status</span>
+                <span class="font-semibold text-md" id="status"></span>
+            </div>
+            <div class="flex gap-x-3 mt-6">
+                {{-- menunggu pembayaran --}}
+                <button type="button" id="btnWaiting"
+                    class="bg-yellow-500 w-full text-white px-3 py-2 text-center rounded-lg text-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                    <i class="fa-solid fa-clock mr-2"></i>
+                    Menunggu
+                </button>
+                <button type="button" id="btnSuccess"
+                    class="bg-primary w-full text-white px-3 py-2 text-center rounded-lg text-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                    <i class="fa-solid fa-check mr-2"></i>
+                    Selesai
+                </button>
+                <button type="button" id="btnFailed"
+                    class="bg-red-600 w-full text-white px-3 py-2 text-center rounded-lg text-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-800">
+                    <i class="fa-solid fa-times mr-2"></i>
+                    Gagal
+                </button>
+            </div>
+            <div class="modal-action">
+                <label for="editStatusModal"
+                    class="bg-gray-200 cursor-pointer w-full text-gray-800 px-4 py-3 text-center rounded-lg text-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray">
+                    Batal
+                </label>
+            </div>
+        </label>
+    </label>
+
     @push('js-internal')
         <script>
+            function updateStatus(id, value) {
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: "Anda tidak dapat mengembalikan data yang telah diubah!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#19743b',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, ubah status!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let url = "{{ route('admin.invoice.update-status', ':id') }}";
+                        $.ajax({
+                            url: url.replace(':id', id),
+                            type: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                id: value,
+                                status: value
+                            },
+                            success: function(data) {
+                                console.log(data);
+                                if (data.status == true) {
+                                    $('#invoice-' + id).remove();
+                                    $('#detailOrder').html('');
+                                    $('#editStatusModal').prop('checked', false);
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil',
+                                        text: 'Status tagihan berhasil diubah',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal',
+                                        text: 'Status tagihan gagal diubah',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                }
+                            }
+                        });
+                    } else {
+                        $('#editStatusModal').prop('checked', false);
+                    }
+                });
+            }
+
+            function editStatus(id) {
+                let url = "{{ route('admin.invoice.detail', ':id') }}";
+                $.ajax({
+                    url: url.replace(':id', id),
+                    type: 'GET',
+                    success: function(data) {
+                        console.log(data);
+                        $('label.modal #transactionCode').html(data.transaction_code);
+                        $('label.modal #customerName').html(data.customer_name);
+                        $('label.modal #transactionDate').html(formatTanggal(data.created_at));
+                        $('label.modal #totalPayment').html(formatRupiah(data.total_payment));
+                        $('label.modal #status').html(data.status == 1 ? 'Menunggu Pembayaran' : data.status == 2 ?
+                            'Pembayaran Selesai' : 'Pembayaran Gagal');
+
+                        $('label.modal #btnSuccess').attr('onclick', 'updateStatus(' + id + ', 2)');
+                        $('label.modal #btnFailed').attr('onclick', 'updateStatus(' + id + ', 3)');
+                        $('label.modal #btnWaiting').attr('onclick', 'updateStatus(' + id + ', 1)');
+                    }
+                });
+            }
+
             function detailInvoice(id) {
                 $('#invoiceContainer').removeClass('lg:w-full').addClass('lg:w-3/5');
                 $('#invoiceList').removeClass('xl:grid-cols-4').addClass('xl:grid-cols-3');

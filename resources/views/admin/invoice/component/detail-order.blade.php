@@ -4,14 +4,20 @@
         Detail Tagihan
     </p>
     <div class="flex justify-between items-center mt-4">
-        <span class="font-semibold text-lg" id="transactionCode">
-            {{ $invoice->transaction_code }}
-        </span>
-        <span class="badge badge-{{
-            $invoice->status == 1 ? 'warning' : ($invoice->status == 2 ? 'primary' : 'error')
-        }}">
-            {{ $invoice->getStatus() }}
-        </span>
+        <div class="">
+            <p class="font-semibold text-lg" id="transactionCode">
+                {{ $invoice->transaction_code }}
+            </p>
+            <span
+                class="mt-2 badge badge-{{ $invoice->status == 1 ? 'warning' : ($invoice->status == 2 ? 'primary' : 'error') }}">
+                {{ $invoice->getStatus() }}
+            </span>
+        </div>
+        <label for="editStatusModal" onclick="editStatus({{ $invoice->id }})"
+            class="cursor-pointer bg-gray-600 text-white px-3 py-2 text-center rounded-lg text-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray">
+            <i class="fas fa-edit mr-2"></i>
+            Ubah Status
+        </label>
     </div>
 
     <p class="font-semibold my-4">Detail</p>
@@ -74,18 +80,28 @@
     <div class="border border-t-1 my-2"></div>
 
     <div class="flex justify-between items-center">
-        <span class="font-semibold text-lg">Total</span>
-        <span class="font-semibold text-lg" id="transactionTotalPayment">Rp.
+        <span class="font-semibold">Sub Total</span>
+        <span class="font-semibold" id="transactionSubTotal">Rp.
+            {{ number_format($invoice->sub_total, 0, ',', '.') }}</span>
+    </div>
+    <div class="flex justify-between items-center">
+        <span class="font-semibold">Diskon</span>
+        <span class="font-semibold" id="transactionDiscount">
+            {{$invoice->discount ?? '-'}}</span>
+    </div>
+    <div class="flex justify-between items-center">
+        <span class="font-semibold">Total</span>
+        <span class="font-semibold" id="transactionTotalPayment">Rp.
             {{ number_format($invoice->total_payment, 0, ',', '.') }}</span>
     </div>
     <div class="sm:block xl:grid grid-cols-2 mt-4 gap-x-2">
         <button
-            class="bg-gray-200 px-4 py-3 rounded-md text-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+            class="bg-gray-200 px-4 py-3 rounded-lg text-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
             Batal
         </button>
-        <button
-            class="bg-primary text-white px-4 py-3 rounded-md text-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+        <a href="{{ route('admin.invoice.print', $invoice->id) }}" target="_blank"
+            class="bg-gray-800 text-white px-4 py-3 text-center rounded-lg text-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
             Cetak Bukti Pembayaran
-        </button>
+        </a>
     </div>
 </x-card-container>

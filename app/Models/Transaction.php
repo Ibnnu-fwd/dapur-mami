@@ -24,6 +24,7 @@ class Transaction extends Model
         'transaction_code',
         'customer_name',
         'payment_method',
+        'sub_total',
         'total_payment',
         'status'
     ];
