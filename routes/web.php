@@ -22,6 +22,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('menu', MenuController::class, ['as' => 'admin']);
 
     // Invoice
+    Route::get('invoice/search', [InvoiceController::class, 'search'])->name('admin.invoice.search');
+    Route::get('invoice/period', [InvoiceController::class, 'period'])->name('admin.invoice.period');
     Route::resource('invoice', InvoiceController::class, ['as' => 'admin']);
 
     // Setting

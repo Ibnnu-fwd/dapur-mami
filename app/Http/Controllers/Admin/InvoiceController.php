@@ -11,13 +11,16 @@ class InvoiceController extends Controller
 
     private $invoice;
 
-    public function __construct(InvoiceInterface $invoice) {
+    public function __construct(InvoiceInterface $invoice)
+    {
         $this->invoice = $invoice;
     }
 
     public function index()
     {
-        return view('admin.invoice.index');
+        return view('admin.invoice.index', [
+            'invoices' => $this->invoice->get()->sortByDesc('created_at')
+        ]);
     }
 
     /**
@@ -44,9 +47,13 @@ class InvoiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $invoice = $this->invoice->show($id);
+        return view('admin.invoice.component.detail-order', [
+            'invoice' => $invoice,
+            'totalItemOrder' => $invoice->transactionDetails->sum('quantity'),
+        ])->render();
     }
 
     /**
@@ -71,5 +78,20 @@ class InvoiceController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    // Custom function
+
+    public function period(Request $request)
+    {
+        return view('admin.invoice.component.invoice-item', [
+            'invoices' => $this->invoice->period($request->period) ?? []
+        ])->render();
+    }
+
+    public function search(Request $request) {
+        return view('admin.invoice.component.invoice-item', [
+            'invoices' => $this->invoice->search($request->search) ?? []
+        ])->render();
     }
 }

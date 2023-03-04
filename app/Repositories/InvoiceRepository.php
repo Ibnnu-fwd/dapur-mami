@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\InvoiceInterface;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class InvoiceRepository implements InvoiceInterface
@@ -57,5 +58,66 @@ class InvoiceRepository implements InvoiceInterface
         }
 
         DB::commit();
+    }
+
+    public function get()
+    {
+        return $this->transaction->with('transactionDetails')->get();
+    }
+
+    public function period($data)
+    {
+        // return yesterday data
+        if ($data == 'yesterday') {
+            return $this->transaction->with('transactionDetails')
+                ->whereDate('created_at', '=', Carbon::yesterday()->toDateString())
+                ->get();
+        }
+
+        // return today data
+        if ($data == 'day') {
+            return $this->transaction->with('transactionDetails')
+                ->whereDate('created_at', Carbon::today())
+                ->get();
+        }
+
+        // return this week data
+        if ($data == 'week') {
+            return $this->transaction->with('transactionDetails')
+                ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->get();
+        }
+
+        // return this month data
+        if ($data == 'month') {
+            return $this->transaction->with('transactionDetails')
+                ->whereMonth('created_at', Carbon::now()->month)
+                ->get();
+        }
+
+        // return this year data
+        if ($data == 'year') {
+            return $this->transaction->with('transactionDetails')
+                ->whereYear('created_at', Carbon::now()->year)
+                ->get();
+        }
+
+        // return all data
+        if ($data == 'all') {
+            return $this->transaction->with('transactionDetails')->get();
+        }
+    }
+
+    public function show($id)
+    {
+        return $this->transaction->with('transactionDetails')->find($id);
+    }
+
+    public function search($data)
+    {
+        return $this->transaction->with('transactionDetails')
+            ->where('transaction_code', 'like', '%' . $data . '%')
+            ->orWhere('customer_name', 'like', '%' . $data . '%')
+            ->get();
     }
 }

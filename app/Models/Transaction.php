@@ -61,4 +61,30 @@ class Transaction extends Model
 
         return $code;
     }
+
+    public function getStatus() {
+        switch ($this->status) {
+            case self::PENDING_STATUS:
+                return 'Menunggu';
+            case self::SUCCESS_STATUS:
+                return 'Selesai';
+            case self::FAILED_STATUS:
+                return 'Gagal';
+            default:
+                return '-';
+        }
+    }
+
+    public function getStatusColor() {
+        switch ($this->status) {
+            case self::PENDING_STATUS:
+                return 'warning';
+            case self::SUCCESS_STATUS:
+                return 'primary';
+            case self::FAILED_STATUS:
+                return 'error';
+            default:
+                return 'default';
+        }
+    }
 }

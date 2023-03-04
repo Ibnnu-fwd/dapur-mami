@@ -22,20 +22,37 @@ module.exports = {
         themes: [
             {
                 pbtheme: {
-                    primary   : "#19743b",
-                    secondary : "#16a34a",
-                    accent    : "#806043",
-                    neutral   : "#3D4451",
+                    primary: "#19743b",
+                    secondary: "#16a34a",
+                    info: "#3ABFF8",
+                    success: "#36D399",
+                    warning: "#FBBD23",
+                    error: "#F87272",
+                    green: "#19743b",
+                    accent: "#806043",
+                    neutral: "#3D4451",
                     "base-100": "#FFFFFF",
-                    info      : "#3ABFF8",
-                    success   : "#36D399",
-                    warning   : "#FBBD23",
-                    error     : "#F87272",
-                    green     : "#19743b",
+                },
+                extend: {
+                    colors: {
+                        primary: "#19743b",
+                        secondary: "#16a34a",
+                        info: "#3ABFF8",
+                        success: "#36D399",
+                        warning: "#FBBD23",
+                        error: "#F87272",
+                        green: "#19743b",
+                        accent: "#806043",
+                        neutral: "#3D4451",
+                        "base-100": "#FFFFFF",
+                    },
                 },
             },
         ],
     },
 
-    plugins: [require("daisyui"), require("flowbite/plugin")],
+    plugins: [
+        require("daisyui"),
+        require("flowbite/plugin"),
+    ],
 };
