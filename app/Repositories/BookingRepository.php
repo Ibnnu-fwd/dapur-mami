@@ -2,13 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\InvoiceInterface;
+use App\Interfaces\BookingInterface;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class InvoiceRepository implements InvoiceInterface
+class BookingRepository implements BookingInterface
 {
     private $transaction;
     private $transactionDetail;
@@ -19,25 +19,37 @@ class InvoiceRepository implements InvoiceInterface
         $this->transactionDetail = $transactionDetail;
     }
 
+    public function get()
+    {
+        return $this->transaction->with('transactionDetails')->where('event_name', '!=', null)->get();
+    }
+
+    public function find($id)
+    {
+        return $this->transaction->with('transactionDetails')->find($id);
+    }
 
     public function store($data)
     {
         DB::beginTransaction();
 
-        // Store to transactions table
+        // insert to transaction
         try {
             $transaction = $this->transaction->create([
                 'users_id'         => auth()->user()->id,
-                'discounts_id'     => isset($data['discounts_id']) ? $data['discounts_id'] : null,
                 'transaction_code' => $this->transaction->generateTransactionCode(),
-                'customer_name'    => $data['customer_name'],
+                'discounts_id'     => isset($data['discounts_id']) ? $data['discounts_id'] : null,
                 'payment_method'   => Transaction::PAYMENT_METHOD_CASH,
                 'sub_total'        => $data['sub_total'],
-                'total_payment'    => $data['total'],
+                'total_payment'    => $data['total_payment'],
                 'status'           => Transaction::PENDING_STATUS,
+                'event_name'       => $data['eventName'],
+                'total_guest'      => $data['totalGuest'],
+                'booking_date'     => date('Y-m-d', strtotime($data['bookingDate'])),   // convert to Y-m-d format
+                'booking_time'     => date('H:i', strtotime($data['bookingTime'])),   // convert to H:i:s format
             ]);
         } catch (\Exception $e) {
-            DB::rollback();
+            DB::rollBack();
             dd($e->getMessage());
         }
 
@@ -61,71 +73,57 @@ class InvoiceRepository implements InvoiceInterface
         DB::commit();
     }
 
-    public function get()
-    {
-        return $this->transaction->with('transactionDetails')->where('event_name', null)->get();
-    }
-
     public function period($data)
     {
+        $transactions = $this->transaction->where('customer_name', null)->with('transactionDetails')->get();
+
         // return yesterday data
         if ($data == 'yesterday') {
-            return $this->transaction->with('transactionDetails')
-                ->whereDate('created_at', '=', Carbon::yesterday()->toDateString())
-                ->get();
+            return $transactions->filter(function ($value, $key) {
+                return $value->created_at < Carbon::now()->subDay();
+            });
         }
 
         // return today data
         if ($data == 'day') {
-            return $this->transaction->with('transactionDetails')
-                ->whereDate('created_at', Carbon::today())
-                ->get();
+            return $transactions->filter(function ($value, $key) {
+                return $value->created_at->isToday();
+            });
         }
 
         // return this week data
         if ($data == 'week') {
-            return $this->transaction->with('transactionDetails')
-                ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-                ->get();
+            return $transactions->filter(function ($value, $key) {
+                return $value->created_at->isCurrentWeek();
+            });
         }
 
         // return this month data
         if ($data == 'month') {
-            return $this->transaction->with('transactionDetails')
-                ->whereMonth('created_at', Carbon::now()->month)
-                ->get();
+            return $transactions->filter(function ($value, $key) {
+                return $value->created_at->isCurrentMonth();
+            });
         }
 
         // return this year data
         if ($data == 'year') {
-            return $this->transaction->with('transactionDetails')
-                ->whereYear('created_at', Carbon::now()->year)
-                ->get();
+            return $transactions->filter(function ($value, $key) {
+                return $value->created_at->isCurrentYear();
+            });
         }
 
         // return all data
         if ($data == 'all') {
-            return $this->transaction->with('transactionDetails')->get();
+            return $transactions;
         }
     }
 
-    public function show($id)
+    public function updateStatus($id, $status)
     {
-        return $this->transaction->with('transactionDetails')->find($id);
-    }
+        $this->transaction->find($id)->update([
+            'status' => $status
+        ]);
 
-    public function search($data)
-    {
-        return $this->transaction->with('transactionDetails')
-            ->where('transaction_code', 'like', '%' . $data . '%')
-            ->orWhere('customer_name', 'like', '%' . $data . '%')
-            ->get();
-    }
-
-    public function updateStatus($id, $data)
-    {
-        $transaction = $this->transaction->find($id);
-        $transaction->status = $data;
-        $transaction->save();
+        return true;
     }
 }

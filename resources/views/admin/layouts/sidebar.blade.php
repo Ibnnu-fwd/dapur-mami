@@ -24,22 +24,24 @@
             {{-- tagihan --}}
             <x-sidebar-menu name="Tagihan" icon="fas fa-receipt" route="{{ route('admin.invoice.index') }}"
                 active="{{ request()->routeIs('admin.invoice.*') }}" />
+            {{-- booking --}}
+            <x-sidebar-menu name="Booking" icon="fas fa-book" route="{{ route('admin.booking.index') }}"
+                active="{{ request()->routeIs('admin.booking.*') }}" />
+            {{-- manajemen menu --}}
+            <x-sidebar-menu name="Manajemen Katalog" icon="fas fa-bars"
+                route="{{ route('admin.catalog-management.index') }}"
+                active="{{ request()->routeIs('admin.catalog-management.*') }}" />
             {{-- pengaturan --}}
             <x-sidebar-menu name="Pengaturan" icon="fas fa-cog" route="{{ route('admin.setting.index') }}"
                 active="{{ request()->routeIs('admin.setting.*') }}" />
-            {{-- manajemen menu --}}
-            <x-sidebar-menu name="Manajemen Katalog" icon="fas fa-bars" route="{{ route('admin.catalog-management.index') }}"
-                active="{{ request()->routeIs('admin.catalog-management.*') }}" />
-                {{-- booking --}}
-            <x-sidebar-menu name="Booking" icon="fas fa-book" route="{{ route('admin.booking.index') }}"
-                active="{{ request()->routeIs('admin.booking.*') }}" />
             {{-- logout --}}
             <li>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit"
                         class="flex w-full items-center p-3 font-normal text-gray-900 rounded-md dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <i class="fas fa-sign-out-alt w-4 h-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <i
+                            class="fas fa-sign-out-alt w-4 h-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="ml-3">Keluar</span>
                     </button>
                 </form>

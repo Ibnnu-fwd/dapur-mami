@@ -26,7 +26,12 @@ class Transaction extends Model
         'payment_method',
         'sub_total',
         'total_payment',
-        'status'
+        'status',
+        // for booking event //
+        'event_name',
+        'total_guest',
+        'booking_date',
+        'booking_time',
     ];
 
     public function user()
