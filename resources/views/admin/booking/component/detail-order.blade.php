@@ -95,9 +95,9 @@
             {{ number_format($booking->total_payment, 0, ',', '.') }}</span>
     </div>
     <div class="sm:block xl:grid grid-cols-2 mt-4 gap-x-2">
-        <button
-            class="bg-gray-200 px-4 py-3 rounded-lg text-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-            Batal
+        <button onclick="btnCancel('{{$booking->id}}')"
+            class="bg-red-600 px-4 py-3 rounded-lg text-sm text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red">
+            Batalkan Booking
         </button>
         <a href="{{ route('admin.booking.print', $booking->id) }}" target="_blank"
             class="bg-gray-800 text-white px-4 py-3 text-center rounded-lg text-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">

@@ -126,4 +126,28 @@ class BookingRepository implements BookingInterface
 
         return true;
     }
+
+    public function cancel($id)
+    {
+        DB::beginTransaction();
+        $booking = $this->transaction->find($id);
+
+        try {
+            foreach ($booking->transactionDetails as $transaction) {
+                $transaction->delete();
+            }
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            DB::rollBack();
+        }
+
+        try {
+            $booking->delete();
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            DB::rollBack();
+        }
+
+        DB::commit();
+    }
 }

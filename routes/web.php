@@ -36,6 +36,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('catalog-management', CatalogManagementController::class, ['as' => 'admin']);
 
     // Booking
+    Route::post('booking/cancel/{id}', [BookingController::class, 'cancel'])->name('admin.booking.cancel');
     Route::post('booking/update-status/{id}', [BookingController::class, 'updateStatus'])->name('admin.booking.update-status');
     Route::get('booking/period', [BookingController::class, 'period'])->name('admin.booking.period');
     Route::get('booking/print/{id}', [BookingController::class, 'print'])->name('admin.booking.print');

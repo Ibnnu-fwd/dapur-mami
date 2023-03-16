@@ -147,6 +147,46 @@
     </label>
     @push('js-internal')
         <script>
+            function btnCancel(id) {
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: "Anda tidak dapat mengembalikan data yang telah diubah!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: 'Ya, Batalkan Booking!'
+                }).then((result) => {
+                    let url = "{{ route('admin.booking.cancel', ':id') }}";
+                    $.ajax({
+                        url: url.replace(':id', id),
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(data) {
+                            if (data.status == true) {
+                                Swal.fire({
+                                    title: 'Berhasil!',
+                                    text: data.message,
+                                    icon: 'success',
+                                    confirmButtonColor: '#19743b',
+                                }).then((result) => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Gagal!',
+                                    text: data.message,
+                                    icon: 'error',
+                                    confirmButtonColor: '#19743b',
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+
             function updateStatus(id, value) {
                 Swal.fire({
                     title: 'Apakah anda yakin?',

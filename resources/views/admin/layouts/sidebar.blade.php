@@ -11,11 +11,10 @@
 <aside id="logo-sidebar"
     class="fixed top-0 left-0 z-40 w-64 h-screen border border-r transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar">
-    <div class="h-full px-4 py-8 overflow-y-hidden">
-        <a href="#" class="flex items-center pl-2.5 mb-8">
-            <img src="{{ asset('assets/images/logo.png') }}" class="h-8 mr-3 sm:h-8" alt="Dapur Mami logo" />
-            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Dapur Mami</span>
-        </a>
+    <div class="h-full px-4 py-8 overflow-y-auto">
+        {{-- <a href="#" class="flex items-center pl-2.5 mb-8">
+            <img src="{{ asset('assets/images/logo.png') }}" class="mr-3 sm:h-8" alt="Dapur Mami logo" />
+        </a> --}}
         <ul class="space-y-3">
             <x-sidebar-menu name="Dashboard" icon="fas fa-home" route="{{ route('admin.dashboard') }}"
                 active="{{ request()->routeIs('admin.dashboard') }}" />
@@ -48,7 +47,7 @@
             </li>
         </ul>
 
-        <div id="dropdown-cta" class="p-4 mt-12 rounded-2xl border-b border-gray-200 sm:rounded-2xl shadow-xl"
+        {{-- <div id="dropdown-cta" class="p-4 mt-12 rounded-2xl border-b border-gray-200 sm:rounded-2xl shadow-xl"
             role="alert">
             <div class="flex items-center text-center justify-center flex-col">
                 <div class="avatar">
@@ -65,11 +64,11 @@
                 </p>
 
                 {{-- open profile button light --}}
-                <a href="{{ route('admin.setting.index') }}"
+                {{-- <a href="{{ route('admin.setting.index') }}"
                     class="w-full px-4 py-2 mt-6 text-xs font-medium bg-gray-100 border border-transparent rounded-md shadow-sm">
                     <span>Buka Profil</span>
                 </a>
-            </div>
-        </div>
+            </div> --}}
+        </div> --}}
     </div>
 </aside>

@@ -8,19 +8,19 @@
         <x-input id="fullname" label="Nama Lengkap" name="fullname" type="text" required />
         <div class="form-control mb-4">
             <label class="label">
-                <span class="font-medium text-sm text-gray-700 2xl:label-text">Jenis Kelamin</span>
+                <span class="font-medium text-xs text-gray-700 2xl:label-text">Jenis Kelamin</span>
             </label>
             <label class="input-group">
                 <div class="form-control">
                     <label class="label cursor-pointer">
                         <input type="radio" name="sex" value="1" class="radio checked:bg-primary" />
-                        <span class="text-sm text-gray-700 2xl:label-text bg-transparent">Pria</span>
+                        <span class="text-xs text-gray-700 2xl:label-text bg-transparent">Pria</span>
                     </label>
                 </div>
                 <div class="form-control">
                     <label class="label cursor-pointer">
                         <input type="radio" name="sex" value="2" class="radio checked:bg-primary" />
-                        <span class="text-sm text-gray-700 2xl:label-text bg-transparent">Wanita</span>
+                        <span class="text-xs text-gray-700 2xl:label-text bg-transparent">Wanita</span>
                     </label>
                 </div>
             </label>
@@ -35,7 +35,7 @@
             required />
 
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600" href="{{ route('login') }}">
+            <a class="underline text-xs text-gray-600" href="{{ route('login') }}">
                 {{ __('Sudah punya akun?') }}
             </a>
 

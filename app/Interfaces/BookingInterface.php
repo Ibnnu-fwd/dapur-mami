@@ -8,4 +8,5 @@ interface BookingInterface {
     public function find($id);
     public function period($data);
     public function updateStatus($id, $status);
+    public function cancel($id);
 }

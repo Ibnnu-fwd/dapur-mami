@@ -104,4 +104,19 @@ class BookingController extends Controller
             ], 500);
         }
     }
+
+    public function cancel($id) {
+        try {
+            $this->booking->cancel($id);
+            return response()->json([
+                'status' => true,
+                'message' => 'Booking berhasil dibatalkan'
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
 }
