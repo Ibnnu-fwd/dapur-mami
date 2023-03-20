@@ -9,4 +9,5 @@ interface InvoiceInterface {
     public function show($id);
     public function search($data);
     public function updateStatus($id, $data);
+    public function getAll();
 }

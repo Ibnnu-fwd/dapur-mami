@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-breadcrumbs name="booking.create" />
-    <h1 class="font-semibold text-2xl my-8">Tambah Booking</h1>
+    <h1 class="font-semibold text-2xl my-8">Tambah Reservasi</h1>
 
     <x-card-container>
         <form action="{{ route('admin.booking.store') }}" method="POST">
@@ -8,7 +8,7 @@
             <p class="font-semibold text-lg mb-3">Informasi Acara</p>
             <div class="grid grid-cols-2 gap-x-3">
                 <x-input id="event_name" label="Nama Acara" placeholder="Masukan nama" name="event_name" type="text" />
-                <x-input-single-datepicker label="Tanggal booking" id="booking_date" name="booking_date"
+                <x-input-single-datepicker label="Tanggal Reservasi" id="booking_date" name="booking_date"
                     autocomplete="off" />
             </div>
             <div class="grid grid-cols-2 gap-x-3">
@@ -101,7 +101,7 @@
     <input type="checkbox" id="confirmOrderModal" class="modal-toggle" />
     <label for="confirmOrderModal" class="modal cursor-pointer">
         <label class="modal-box relative" for="">
-            <h3 class="text-lg font-bold">Detail Booking</h3>
+            <h3 class="text-lg font-bold">Detail Reservasi</h3>
             <p class="py-4">
             <h3 class="font-semibold mb-4">Informasi Acara</h3>
             <ul class="mb-8 space-y-2 text-left text-gray-500 dark:text-gray-400">

@@ -15,11 +15,13 @@
             <x-card-container>
                 <div class="flex justify-between items-center">
                     <h3 class="font-semibold">Total Pendapatan</h3>
-                    <select id="favoriteMenuSelect"
+                    <select id="totalSalesTypeOfMenuSelect"
                         class="block max-w-auto p-2 text-sm text-gray-900 border border-gray-300 rounded-lg  focus:ring-primary focus:border-primary">
                         <option value="day">Harian</option>
                         <option value="week">Mingguan</option>
                         <option value="month">Bulanan</option>
+                        <option value="year">Tahunan</option>
+                        <option value="all">Semua</option>
                     </select>
                 </div>
                 <div style="height: 300px" class="relative">
@@ -27,7 +29,7 @@
                     <div class="absolute inset-0 flex items-center justify-center">
                         <div class="flex flex-col items-center sm:mb-12 mb-14">
                             <span class="text-gray-500">Rupiah</span>
-                            <span class="sm:text-xl text-lg font-semibold">1.000.000</span>
+                            <span class="sm:text-xl text-lg font-semibold" id="totalIncome">1.000.000</span>
                         </div>
                     </div>
                 </div>
@@ -45,12 +47,12 @@
                             Total Pemesanan
                         </h3>
                         <span class="text-gray-500">
-                            +34 %
+                            +<span id="totalOrderToday"></span>
                         </span>
                     </div>
                 </div>
                 <div class="text-center mt-7">
-                    <h3 class="text-4xl font-semibold">1.000</h3>
+                    <h3 class="text-4xl font-semibold" id="totalOrder"></h3>
                     <div class="w-full bg-gray-200 rounded-full h-1 dark:bg-gray-700 mt-5 mb-3">
                         <div class="bg-green-600 h-1 rounded-full" style="width: 45%"></div>
                     </div>
@@ -67,12 +69,12 @@
                             Total Pelanggan
                         </h3>
                         <span class="text-gray-500">
-                            +34 %
+                            +<span id="totalCustomerToday"></span>
                         </span>
                     </div>
                 </div>
                 <div class="text-center mt-7">
-                    <h3 class="text-4xl font-semibold">500</h3>
+                    <h3 class="text-4xl font-semibold" id="totalCustomer"></h3>
                     <div class="w-full bg-gray-200 rounded-full h-1 dark:bg-gray-700 mt-5 mb-3">
                         <div class="bg-green-600 h-1 rounded-full" style="width: 45%"></div>
                     </div>
@@ -86,35 +88,41 @@
             <x-card-container>
                 <div class="flex justify-between items-center">
                     <h3 class="font-semibold">Menu Favorit</h3>
-                    <select id="favoriteMenuSelect"
+                    {{-- <select id="favoriteMenuSelect"
                         class="block max-w-auto p-2 text-sm text-gray-900 border border-gray-300 rounded-lg  focus:ring-primary focus:border-primary">
                         <option value="day">Harian</option>
                         <option value="week">Mingguan</option>
                         <option value="month">Bulanan</option>
-                    </select>
+                    </select> --}}
                 </div>
                 <div class="flex justify-between mt-4">
                     <span class="font-medium text-gray-600">Menu</span>
                     <span class="font-medium text-gray-600">Pesanan</span>
                 </div>
                 {{-- Data Menu --}}
-                @for ($i = 1; $i <= 4; $i++)
+                @foreach ($favoriteMenu as $fm)
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-x-3 my-2">
                             <div class="avatar">
                                 <div class="w-12 rounded-xl rounded">
-                                    <img src="https://cdn1-production-images-kly.akamaized.net/KxuztQKl3tnUN0Fw5iAwKsnX_u0=/0x148:1920x1230/640x360/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/3093328/original/069244600_1585909700-fried-2509089_1920.jpg"
+                                    <img src="{{ $fm->menu->image ? asset($fm->menu->image) : asset('images/menu/default.jpg') }}"
                                         alt="">
                                 </div>
                             </div>
                             <div>
-                                <span class="badge badge-primary badge-sm">Makanan</span>
-                                <h3 class="font-semibold mt-1 text-md">Nasi Goreng</h3>
+                                <span class="badge badge-primary badge-sm">
+                                    {{ $fm->menu->getCategoryNameAttribute() }}
+                                </span>
+                                <h3 class="font-semibold mt-1 text-md">
+                                    {{ $fm->menu->name }}
+                                </h3>
                             </div>
                         </div>
-                        <span class="font-semibold text-md">600</span>
+                        <span class="font-semibold text-md">
+                            {{ $fm->total_quantity }}
+                        </span>
                     </div>
-                @endfor
+                @endforeach
             </x-card-container>
         </div>
         <div class="lg:w-3/5">
@@ -130,22 +138,6 @@
                             <th>Total Bayar</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @for ($i = 1; $i <= 5; $i++)
-                            <tr>
-                                <td>Ibnnu</td>
-                                <td>
-                                    <ul class="list-none">
-                                        <li>Nasi Goreng <span class="text-gray-500">x2</span></li>
-                                        <li>Soto <span class="text-gray-500">x2</span></li>
-                                    </ul>
-                                </td>
-                                <td><span class="text-gray-400">TR0011212</span></td>
-                                <td><span class="text-gray-400">#00001</span></td>
-                                <td><span class="text-gray-400">Rp. 50.000</span></td>
-                            </tr>
-                        @endfor
-                    </tbody>
                 </table>
             </x-card-container>
         </div>
@@ -164,9 +156,70 @@
                     paginate: false,
                     info: false,
                     searching: false,
-                    dom: '<"top"i>rt<"bottom"flp><"clear">',
+                    serverSide: true,
+                    ajax: "{{ route('admin.dashboard') }}",
+                    columns: [{
+                            data: 'customer',
+                            name: 'customer'
+                        },
+                        {
+                            data: 'menu',
+                            name: 'menu'
+                        },
+                        {
+                            data: 'invoice',
+                            name: 'invoice'
+                        },
+                        {
+                            data: 'order_number',
+                            name: 'order_number'
+                        },
+                        {
+                            data: 'total_payment',
+                            name: 'total_payment'
+                        },
+                    ]
                 });
+
+                $('#totalSalesTypeOfMenuSelect').on('change', function() {
+                    let value = $(this).val();
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('dashboard.total-sales-type-of-menu') }}",
+                        data: {
+                            type: value
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            let totalSalesTypeOfMenu = response.totalSalesTypeOfMenu;
+                            totalIncomeChart.data.datasets[0].data = totalSalesTypeOfMenu;
+                            totalIncomeChart.update();
+
+                            let totalIncome = response.totalIncome;
+                            $('#totalIncome').text(formatRupiah(totalIncome, 'Rp. '));
+                        }
+                    });
+                })
+
             });
+            let totalSalesHourly = @json($totalSalesHourly);
+            let totalSalesTypeOfMenu = @json($totalSalesTypeOfMenu);
+            let totalIncome = @json($totalIncome);
+            let totalOrder = @json($totalOrder);
+            let totalOrderToday = @json($totalOrderToday);
+            let totalCustomer = @json($totalCustomer);
+            let totalCustomerToday = @json($totalCustomerToday);
+            let favoriteMenu = @json($favoriteMenu);
+
+            $('#totalIncome').text(
+                formatIncome(totalIncome)
+            );
+
+            $('#totalOrder').text(totalOrder);
+            $('#totalOrderToday').text(totalOrderToday == null ? 0 : totalOrderToday);
+
+            $('#totalCustomer').text(totalCustomer);
+            $('#totalCustomerToday').text(totalCustomerToday == null ? 0 : totalCustomerToday);
         </script>
         <script src="{{ asset('js/daily-sales.js') }}"></script>
         <script src="{{ asset('js/total-income.js') }}"></script>

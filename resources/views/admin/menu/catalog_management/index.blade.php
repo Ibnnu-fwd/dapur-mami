@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-breadcrumbs name="catalog-management" />
-    <h1 class="font-semibold text-2xl my-8">Manajemen Katalog</h1>
+    <h1 class="font-semibold text-2xl my-8">Manajemen Menu</h1>
 
     <x-card-container>
 

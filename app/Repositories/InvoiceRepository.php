@@ -128,4 +128,9 @@ class InvoiceRepository implements InvoiceInterface
         $transaction->status = $data;
         $transaction->save();
     }
+
+    public function getAll()
+    {
+        return $this->transaction->with('transactionDetails')->get();
+    }
 }

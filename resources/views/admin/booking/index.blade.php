@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-breadcrumbs name="booking" />
-    <h1 class="font-semibold text-2xl my-8">Booking</h1>
+    <h1 class="font-semibold text-2xl my-8">Reservasi</h1>
 
     <div class="lg:flex gap-x-4">
         <div class="lg:w-full" id="bookingListContainer">
@@ -19,7 +19,7 @@
                 </div>
                 <x-input id="search" label="Cari" placeholder="Masukan nama acara" name="search" type="text" />
                 <x-link-button route="{{ route('admin.booking.create') }}" class="mb-4 ml-auto" color="gray">
-                    Tambah Booking
+                    Tambah Reservasi
                 </x-link-button>
             </div>
 

@@ -59,6 +59,11 @@ class Menu extends Model
         return $query->where('status', self::ACTIVE_STATUS);
     }
 
+    public function getCategoryNameAttribute()
+    {
+        return self::CATEGORIES[$this->category - 1]['name'];
+    }
+
     // RELATIONSHIP
 
     public function transactionDetails()

@@ -95,8 +95,25 @@
             return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
         }
 
+        function formatIncome(angka) {
+            // convert 0 = 3 = K, 6 = M, 9 = B
+            var number_string = angka.toString().replace(/[^,\d]/g, '');
+            // hitung jumlah angka 0 di belakang
+            var count = number_string.length - 1;
+            // hitung jumlah angka 0 di belakang dibagi 3
+            var count3 = count / 3;
+            // hitung jumlah angka 0 di belakang dibagi 3 dibulatkan ke bawah
+            var count3floor = Math.floor(count3);
+            return count3floor == 0 ? formatRupiah(angka) : formatRupiah(angka / Math.pow(10, count3floor * 3)) + ['', ' K', ' Jt', ' M'][count3floor];
+        }
+
         // set all tag <a> with cursor-pointer
         $('a').addClass('cursor-pointer');
+
+        $('select').select2();
+
+        // set layout to -80%
+        $('.layout').css('width', '-80%');
     </script>
 
     @stack('js-internal')

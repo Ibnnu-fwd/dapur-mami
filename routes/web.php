@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\Admin\CashierController;
 use App\Http\Controllers\Admin\CatalogManagementController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InvoiceController;
@@ -14,6 +15,7 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
+    Route::get('/total-sales-type-of-menu', [DashboardController::class, 'totalSalesTypeOfMenu'])->name('dashboard.total-sales-type-of-menu');
     Route::get('/', DashboardController::class)->name('admin.dashboard');
 
     // Menu
@@ -22,6 +24,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('menu', MenuController::class, ['as' => 'admin']);
 
     // Invoice
+    Route::get('invoice/transaction-history/export', [InvoiceController::class, 'export'])->name('admin.transaction-history.export');
+    Route::get('invoice/transaction-history', [InvoiceController::class, 'transactionHistory'])->name('admin.transaction-history');
     Route::post('invoice/update-status/{id}', [InvoiceController::class, 'updateStatus'])->name('admin.invoice.update-status');
     Route::get('invoice/detail/{id}', [InvoiceController::class, 'detail'])->name('admin.invoice.detail');
     Route::get('invoice/print/{id}', [InvoiceController::class, 'print'])->name('admin.invoice.print');
@@ -43,6 +47,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('booking/detail/{id}', [BookingController::class, 'detail'])->name('admin.booking.detail');
     Route::post('booking/add-cart/{id}', [BookingController::class, 'addCart'])->name('admin.booking.add-cart');
     Route::resource('booking', BookingController::class, ['as' => 'admin']);
+
+    // Cashier
+    Route::resource('cashier', CashierController::class, ['as' => 'admin']);
 });
 
 require __DIR__ . '/auth.php';

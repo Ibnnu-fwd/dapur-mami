@@ -4,7 +4,7 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
 // Dashboard
 Breadcrumbs::for('dashboard', function(BreadcrumbTrail $trail) {
-    $trail->push('Dashboard', route('admin.dashboard'));
+    $trail->push('Halaman Utama', route('admin.dashboard'));
 });
 
 // Menu
@@ -19,6 +19,11 @@ Breadcrumbs::for('invoice', function(BreadcrumbTrail $trail) {
     $trail->push('Tagihan', route('admin.invoice.index'));
 });
 
+Breadcrumbs::for('transaction-history', function(BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Riwayat Transaksi', route('admin.transaction-history'));
+});
+
 // Setting
 Breadcrumbs::for('setting', function(BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
@@ -28,7 +33,7 @@ Breadcrumbs::for('setting', function(BreadcrumbTrail $trail) {
 // Catalog Management
 Breadcrumbs::for('catalog-management', function(BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push('Manajemen Katalog', route('admin.catalog-management.index'));
+    $trail->push('Manajemen Menu', route('admin.catalog-management.index'));
 });
 
 // Catalog Management > Tambah Menu
@@ -46,12 +51,29 @@ Breadcrumbs::for('catalog-management.edit', function(BreadcrumbTrail $trail, $da
 // Booking
 Breadcrumbs::for('booking', function(BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push('Booking', route('admin.booking.index'));
+    $trail->push('Reservasi', route('admin.booking.index'));
 });
 
 // Booking > Tambah Booking
 Breadcrumbs::for('booking.create', function(BreadcrumbTrail $trail) {
     $trail->parent('booking');
-    $trail->push('Tambah Booking', route('admin.booking.create'));
+    $trail->push('Tambah Rerservasi', route('admin.booking.create'));
 });
 
+// Cashier
+Breadcrumbs::for('cashier', function(BreadCrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Manajemen Kasir', route('admin.cashier.index'));
+});
+
+// Cashier > Tambah Kasir
+Breadcrumbs::for('cashier.create', function(BreadCrumbTrail $trail) {
+    $trail->parent('cashier');
+    $trail->push('Tambah Kasir', route('admin.cashier.create'));
+});
+
+// Cashier > Update Kasir
+Breadcrumbs::for('cashier.edit', function(BreadCrumbTrail $trail, $data) {
+    $trail->parent('cashier');
+    $trail->push($data->fullname, route('admin.cashier.edit', $data->id));
+});

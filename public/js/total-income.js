@@ -5,11 +5,11 @@ let totalIncomeChart = new Chart(totalIncomeCtx, {
     // makanan, minuman, lainnya
     type: "doughnut",
     data: {
-        labels: ["Makanan", "Minuman", "Lainnya"],
+        labels: ["Makanan", "Minuman", "Snack"],
         datasets: [
             {
-                label: "Total Pendapatan",
-                data: [100, 200, 250],
+                label: "Total Pemesanan",
+                data: totalSalesTypeOfMenu,
                 backgroundColor: ["#806043", "#19743b", "#3D4451"],
                 hoverBackgroundColor: ["#806043", "#19743b", "#3D4451"],
                 hoverBorderColor: "rgba(234, 236, 244, 1)",
@@ -29,7 +29,7 @@ let totalIncomeChart = new Chart(totalIncomeCtx, {
                     pointRadius: 5,
                     padding: 16,
                 },
-            }
+            },
         },
     },
 });

@@ -16,23 +16,34 @@
             <img src="{{ asset('assets/images/logo.png') }}" class="mr-3 sm:h-8" alt="Dapur Mami logo" />
         </a> --}}
         <ul class="space-y-3">
-            <x-sidebar-menu name="Dashboard" icon="fas fa-home" route="{{ route('admin.dashboard') }}"
+            <x-sidebar-menu name="Halaman Utama" icon="fas fa-home" route="{{ route('admin.dashboard') }}"
                 active="{{ request()->routeIs('admin.dashboard') }}" />
             <x-sidebar-menu name="Makanan & Minuman" icon="fas fa-utensils" route="{{ route('admin.menu.index') }}"
                 active="{{ request()->routeIs('admin.menu.*') }}" />
             {{-- tagihan --}}
             <x-sidebar-menu name="Tagihan" icon="fas fa-receipt" route="{{ route('admin.invoice.index') }}"
                 active="{{ request()->routeIs('admin.invoice.*') }}" />
-            {{-- booking --}}
-            <x-sidebar-menu name="Booking" icon="fas fa-book" route="{{ route('admin.booking.index') }}"
+            {{-- Reservasi --}}
+            <x-sidebar-menu name="Reservasi" icon="fas fa-book" route="{{ route('admin.booking.index') }}"
                 active="{{ request()->routeIs('admin.booking.*') }}" />
-            {{-- manajemen menu --}}
-            <x-sidebar-menu name="Manajemen Katalog" icon="fas fa-bars"
-                route="{{ route('admin.catalog-management.index') }}"
-                active="{{ request()->routeIs('admin.catalog-management.*') }}" />
             {{-- pengaturan --}}
             <x-sidebar-menu name="Pengaturan" icon="fas fa-cog" route="{{ route('admin.setting.index') }}"
                 active="{{ request()->routeIs('admin.setting.*') }}" />
+            {{-- divide --}}
+            <li class="border-t border-gray-200 dark:border-gray-700"></li>
+            @if (auth()->user()->role == 2)
+                {{-- manajemen menu --}}
+                <x-sidebar-menu name="Manajemen Menu" icon="fas fa-bars"
+                    route="{{ route('admin.catalog-management.index') }}"
+                    active="{{ request()->routeIs('admin.catalog-management.*') }}" />
+                {{-- cashier --}}
+                <x-sidebar-menu name="Manajemen Kasir" icon="fas fa-user-tie"
+                    route="{{ route('admin.cashier.index') }}" active="{{ request()->routeIs('admin.cashier.*') }}" />
+            @endif
+            {{-- Catatan Transaksi --}}
+            <x-sidebar-menu name="Riwayat Transaksi" icon="fas fa-history"
+                route="{{ route('admin.transaction-history') }}"
+                active="{{ request()->routeIs('admin.transaction-history') }}" />
             {{-- logout --}}
             <li>
                 <form action="{{ route('logout') }}" method="POST">
@@ -64,11 +75,11 @@
                 </p>
 
                 {{-- open profile button light --}}
-                {{-- <a href="{{ route('admin.setting.index') }}"
+        {{-- <a href="{{ route('admin.setting.index') }}"
                     class="w-full px-4 py-2 mt-6 text-xs font-medium bg-gray-100 border border-transparent rounded-md shadow-sm">
                     <span>Buka Profil</span>
                 </a>
             </div> --}}
-        </div> --}}
+    </div> --}}
     </div>
 </aside>

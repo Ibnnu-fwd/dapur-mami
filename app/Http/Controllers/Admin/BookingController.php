@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Interfaces\BookingInterface;
 use App\Interfaces\CatalogManagementInterface;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Svg\Tag\Rect;
 
@@ -82,6 +83,12 @@ class BookingController extends Controller
 
     public function print($id)
     {
+        // dd($this->booking->find($id));
+        $booking = $this->booking->find($id);
+        return Pdf::loadView('admin.booking.component.print', [
+            'booking'        => $booking,
+            'totalItemOrder' => $booking->transactionDetails->sum('quantity'),
+        ])->setOption('page-size', 'B5')->setOption('margin-top', 0)->setOption('margin-bottom', 0)->setOption('margin-left', 0)->setOption('margin-right', 0)->stream('booking-' . $booking->transaction_code . '.pdf');
     }
 
     public function period(Request $request)
@@ -105,7 +112,8 @@ class BookingController extends Controller
         }
     }
 
-    public function cancel($id) {
+    public function cancel($id)
+    {
         try {
             $this->booking->cancel($id);
             return response()->json([

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\TransactionExport;
 use App\Http\Controllers\Controller;
 use App\Interfaces\InvoiceInterface;
+use App\Models\Transaction;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Dompdf\Adapter\PDFLib;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceController extends Controller
 {
@@ -125,5 +128,45 @@ class InvoiceController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+    public function transactionHistory(Request $request) {
+        if($request->ajax()) {
+            return datatables()
+            ->of($this->invoice->getAll())
+            ->addColumn('invoice', function($data) {
+                return $data->transaction_code;
+            })
+            ->addColumn('customer', function($data) {
+                return $data->customer_name ?? $data->event_name;
+            })
+            ->addColumn('menu', function($data) {
+                return view('admin.invoice.columns.menu', [
+                    'menus' => $data->transactionDetails
+                ]);
+            })
+            // ->addColumn('qty', function($data) {
+            //     return $data->transactionDetails->sum('quantity');
+            // })
+            ->addColumn('total', function($data) {
+                return 'Rp. ' . number_format($data->total_payment, 0, ',', '.');
+            })
+            ->addColumn('status', function($data) {
+                return view('admin.invoice.columns.status', [
+                    'status' => $data->status
+                ]);
+            })
+            ->addColumn('created_at', function($data) {
+                return $data->created_at->format('d M Y');
+            })
+            ->addIndexColumn()
+            ->make(true);
+        }
+
+        return view('admin.invoice.transaction-history');
+    }
+
+    public function export() {
+        return Excel::download(new TransactionExport, 'riwayat-transaksi.xlsx');
     }
 }

@@ -8,11 +8,13 @@
             {{ $booking->event_name }}
         </span>
         {{-- TODO: UPDATE BUTTON TO MODAL FOR UPDATE STATUS TRANSACTION --}}
-        <label for="editStatusModal" onclick="editStatus({{ $booking->id }})"
-            class="cursor-pointer bg-gray-700 text-white px-3 py-2 text-center rounded-lg text-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray">
-            <i class="fas fa-edit mr-2"></i>
-            Ubah Status
-        </label>
+        @if ($booking->status == 1)
+            <label for="editStatusModal" onclick="editStatus({{ $booking->id }})"
+                class="cursor-pointer bg-gray-700 text-white px-3 py-2 text-center rounded-lg text-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray">
+                <i class="fas fa-edit mr-2"></i>
+                Ubah Status
+            </label>
+        @endif
     </div>
 
     <p class="font-semibold my-4">Detail</p>
@@ -94,14 +96,18 @@
         <span class="font-semibold" id="transactionTotalPayment">Rp.
             {{ number_format($booking->total_payment, 0, ',', '.') }}</span>
     </div>
-    <div class="sm:block xl:grid grid-cols-2 mt-4 gap-x-2">
-        <button onclick="btnCancel('{{$booking->id}}')"
-            class="bg-red-600 px-4 py-3 rounded-lg text-sm text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red">
-            Batalkan Booking
-        </button>
-        <a href="{{ route('admin.booking.print', $booking->id) }}" target="_blank"
-            class="bg-gray-800 text-white px-4 py-3 text-center rounded-lg text-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-            Cetak Bukti Pembayaran
-        </a>
+    <div class="{{ $booking->status == 1 ? 'sm:block xl:grid grid-cols-2' : '' }} mt-4 gap-x-2">
+        @if ($booking->status == 1)
+            <button onclick="btnCancel('{{ $booking->id }}')"
+                class="bg-red-600 px-4 py-3 rounded-lg text-sm text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red">
+                Hapus Booking
+            </button>
+        @endif
+        @if ($booking->status == 1 || $booking->status == 2)
+            <a href="{{ route('admin.booking.print', $booking->id) }}" target="_blank"
+                class="bg-gray-800 text-white {{ $booking->status == 1 ? '' : 'flex justify-center w-full' }} px-4 py-3 text-center rounded-lg text-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                Cetak Bukti Pembayaran
+            </a>
+        @endif
     </div>
 </x-card-container>
