@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CashierController;
 use App\Http\Controllers\Admin\CatalogManagementController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\ProfileController;
@@ -50,6 +51,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
 
     // Cashier
     Route::resource('cashier', CashierController::class, ['as' => 'admin']);
+
+    // Material
+    Route::resource('material', MaterialController::class, ['as' => 'admin']);
 });
 
 require __DIR__ . '/auth.php';

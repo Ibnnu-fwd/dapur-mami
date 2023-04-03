@@ -132,7 +132,9 @@
                             <td>
                                 Kasir: {{ $invoice->user->fullname }}<br />
                                 Pelanggan: {{ $invoice->customer_name }}<br />
-                                Jam: {{ date('H:i', strtotime($invoice->created_at)) }} WIB
+                                Jam: {{ date('H:i', strtotime($invoice->created_at)) }} WIB <br>
+                                Status:
+                                <b>{{ $invoice->status == 1 ? 'Belum Dibayar' : ($invoice->status == 2 ? 'Sudah Dibayar' : 'Sudah Dibayar dan Diantar') }}</b>
                             </td>
                             <td>
                                 Dapur Mami<br />

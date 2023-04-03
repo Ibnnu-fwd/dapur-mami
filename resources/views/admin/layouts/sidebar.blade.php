@@ -44,6 +44,10 @@
             <x-sidebar-menu name="Riwayat Transaksi" icon="fas fa-history"
                 route="{{ route('admin.transaction-history') }}"
                 active="{{ request()->routeIs('admin.transaction-history') }}" />
+            {{-- Manajemen Bahan --}}
+            <x-sidebar-menu name="Manajemen Bahan" icon="fas fa-book-open"
+                route="{{ route('admin.material.index') }}"
+                active="{{ request()->routeIs('admin.material.*') }}" />
             {{-- logout --}}
             <li>
                 <form action="{{ route('logout') }}" method="POST">

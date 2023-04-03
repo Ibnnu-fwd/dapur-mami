@@ -2,17 +2,6 @@
     <x-breadcrumbs name="transaction-history" />
     <h1 class="font-semibold text-2xl my-8">Riwayat Transaksi</h1>
 
-    <div class="flex justify-end gap-x-2 mb-4">
-        <x-link-button route="{{route('admin.transaction-history.export')}}" color="gray">
-            <i class="fas fa-file-excel mr-2"></i>
-            <span>Export</span>
-        </x-link-button>
-        <x-link-button onclick="btnPrint()" color="gray">
-            <i class="fas fa-print mr-2"></i>
-            <span>Cetak</span>
-        </x-link-button>
-    </div>
-
     <div class="overflow-x-auto">
         <table class="w-full" id="transactionTable">
             <thead>
@@ -21,6 +10,7 @@
                     <th>Invoice</th>
                     <th>Pelanggan</th>
                     <th>Menu</th>
+                    <th>Qty</th>
                     {{-- <th>Jumlah</th> --}}
                     <th>Total</th>
                     <th>Status</th>
@@ -60,6 +50,10 @@
                             name: 'menu'
                         },
                         {
+                            data: 'quantity',
+                            name: 'quantity'
+                        },
+                        {
                             data: 'total',
                             name: 'total'
                         },
@@ -71,7 +65,15 @@
                             data: 'created_at',
                             name: 'created_at'
                         },
-                    ]
+                    ],
+                    dom: 'Bfrtip',
+                    buttons: [{
+                        extend: 'excelHtml5',
+                        title: 'Data export'
+                    }, {
+                        extend: 'pdfHtml5',
+                        title: 'Data export'
+                    }],
                 });
             });
         </script>

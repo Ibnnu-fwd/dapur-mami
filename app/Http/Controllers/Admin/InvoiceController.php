@@ -145,9 +145,11 @@ class InvoiceController extends Controller
                     'menus' => $data->transactionDetails
                 ]);
             })
-            // ->addColumn('qty', function($data) {
-            //     return $data->transactionDetails->sum('quantity');
-            // })
+            ->addColumn('quantity', function($data) {
+                return view('admin.invoice.columns.quantity', [
+                    'menus' => $data->transactionDetails
+                ]);
+            })
             ->addColumn('total', function($data) {
                 return 'Rp. ' . number_format($data->total_payment, 0, ',', '.');
             })
@@ -164,9 +166,5 @@ class InvoiceController extends Controller
         }
 
         return view('admin.invoice.transaction-history');
-    }
-
-    public function export() {
-        return Excel::download(new TransactionExport, 'riwayat-transaksi.xlsx');
     }
 }

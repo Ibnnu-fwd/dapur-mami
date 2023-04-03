@@ -104,7 +104,9 @@
 
 <body>
     <div class="booking-box">
-        <p style="text-align: center">-------------------------------------------------{{$booking->getStatus()}}----------------------------------------------------</p>
+        <p style="text-align: center">
+            -------------------------------------------------{{ $booking->getStatus() }}----------------------------------------------------
+        </p>
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
                 <td colspan="4">
@@ -134,7 +136,9 @@
                                 Kasir: {{ $booking->user->fullname }}<br />
                                 Nama Event: {{ $booking->event_name }}<br />
                                 Jam: {{ date('H:i', strtotime($booking->booking_time)) }} WIB <br>
-                                Tanggal: {{ date('d/m/Y', strtotime($booking->booking_date)) }}
+                                Tanggal: {{ date('d/m/Y', strtotime($booking->booking_date)) }} <br>
+                                Status:
+                                <b>{{ $booking->status == 1 ? 'Belum Dibayar' : ($booking->status == 2 ? 'Sudah Dibayar' : 'Sudah Dibayar dan Diantar') }}</b>
                             </td>
                             <td>
                                 Dapur Mami<br />

@@ -76,7 +76,7 @@
         <div class="hidden" id="detailOrder"></div>
     </div>
 
-    <!-- Put this part before </body> tag -->
+    <!-- Modal Update Status -->
     <input type="checkbox" id="editStatusModal" class="modal-toggle" />
     <label for="editStatusModal" class="modal cursor-pointer">
         <label class="modal-box relative" for="">
@@ -197,6 +197,18 @@
                         $('label.modal #btnSuccess').attr('onclick', 'updateStatus(' + id + ', 2)');
                         $('label.modal #btnFailed').attr('onclick', 'updateStatus(' + id + ', 3)');
                         $('label.modal #btnWaiting').attr('onclick', 'updateStatus(' + id + ', 1)');
+
+                        // check status
+                        if(data.status == 1) {
+                            $('label.modal #btnWaiting').addClass('hidden');
+                            $('label.modal #btnSuccess').removeClass('hidden');
+                        } else if(data.status == 2) {
+                            $('label.modal #btnSuccess').addClass('hidden');
+                            $('label.modal #btnWaiting').removeClass('hidden');
+                        } else {
+                            $('label.modal #btnFailed').addClass('hidden');
+                            $('label.modal #btnWaiting').removeClass('hidden');
+                        }
                     }
                 });
             }

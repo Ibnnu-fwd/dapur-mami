@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.jqueryui.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -30,6 +31,13 @@
 
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <style>
+        .dt-buttons,
+        #transactionTable_filter {
+            margin-bottom: 10px;
+        }
+    </style>
 
 </head>
 
@@ -52,8 +60,15 @@
 
     <!-- Datatable -->
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.jqueryui.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.jshttps://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js">
+    </script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
 
     <!-- Icons -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
@@ -104,7 +119,9 @@
             var count3 = count / 3;
             // hitung jumlah angka 0 di belakang dibagi 3 dibulatkan ke bawah
             var count3floor = Math.floor(count3);
-            return count3floor == 0 ? formatRupiah(angka) : formatRupiah(angka / Math.pow(10, count3floor * 3)) + ['', ' K', ' Jt', ' M'][count3floor];
+            return count3floor == 0 ? formatRupiah(angka) : formatRupiah(angka / Math.pow(10, count3floor * 3)) + ['', ' K',
+                ' Jt', ' M'
+            ][count3floor];
         }
 
         // set all tag <a> with cursor-pointer

@@ -77,3 +77,9 @@ Breadcrumbs::for('cashier.edit', function(BreadCrumbTrail $trail, $data) {
     $trail->parent('cashier');
     $trail->push($data->fullname, route('admin.cashier.edit', $data->id));
 });
+
+// Material
+Breadcrumbs::for('material', function(BreadCrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Manajemen Bahan', route('admin.material.index'));
+});
