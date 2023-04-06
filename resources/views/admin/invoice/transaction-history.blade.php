@@ -15,6 +15,7 @@
                     <th>Total</th>
                     <th>Status</th>
                     <th>Tanggal</th>
+                    <th>Kasir</th>
                 </tr>
             </thead>
         </table>
@@ -65,6 +66,10 @@
                             data: 'created_at',
                             name: 'created_at'
                         },
+                        {
+                            data: 'user',
+                            name: 'user'
+                        }
                     ],
                     dom: 'Bfrtip',
                     buttons: [{
@@ -73,7 +78,36 @@
                     }, {
                         extend: 'pdfHtml5',
                         title: 'Data export'
-                    }],
+                    }, {
+                        // filter status
+                        extend: 'collection',
+                        text: 'Filter Status',
+                        buttons: [{
+                                text: 'Semua',
+                                action: function(e, dt, node, config) {
+                                    dt.search('').draw();
+                                }
+                            },
+                            {
+                                text: 'Menunggu',
+                                action: function(e, dt, node, config) {
+                                    dt.search('Menunggu').draw();
+                                }
+                            },
+                            {
+                                text: 'Dibayar',
+                                action: function(e, dt, node, config) {
+                                    dt.search('Dibayar').draw();
+                                }
+                            },
+                            {
+                                text: 'Dibatalkan',
+                                action: function(e, dt, node, config) {
+                                    dt.search('Dibatalkan').draw();
+                                }
+                            }
+                        ]
+                    }]
                 });
             });
         </script>

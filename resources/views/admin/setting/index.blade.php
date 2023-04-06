@@ -66,7 +66,6 @@
 
                     <div class="text-end">
                         <x-button class="px-8">
-                            <i class="fas fa-save mr-3"></i>
                             <span>Simpan</span>
                         </x-button>
                     </div>

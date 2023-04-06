@@ -6,7 +6,7 @@
         <span class="badge badge-sm badge-primary">Dibayar</span>
         @break
     @case(3)
-        <span class="badge badge-sm badge-danger">Dibatalkan</span>
+        <span class="badge badge-sm badge-error">Dibatalkan</span>
         @break
     @default
         <span class="badge badge-sm badge-warning">Menunggu</span>

@@ -161,6 +161,9 @@ class InvoiceController extends Controller
             ->addColumn('created_at', function($data) {
                 return $data->created_at->format('d M Y');
             })
+            ->addColumn('user', function($data) {
+                return $data->user->first_name;
+            })
             ->addIndexColumn()
             ->make(true);
         }

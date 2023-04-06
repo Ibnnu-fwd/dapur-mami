@@ -163,6 +163,8 @@
                                         showConfirmButton: false,
                                         timer: 1500
                                     });
+                                    // reload page
+                                    location.reload();
                                 } else {
                                     Swal.fire({
                                         icon: 'error',
