@@ -3,32 +3,82 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\MaterialInterface;
+use App\Models\MaterialTransaction;
 use Illuminate\Http\Request;
 
 class MaterialController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private $material;
+
+    public function __construct(MaterialInterface $material)
     {
+        $this->material = $material;
+    }
+
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            return datatables()
+                ->of($this->material->get())
+                ->addColumn('date', function ($data) {
+                    return $data->created_at->translatedFormat('d F Y');
+                })
+                ->addColumn('total_paid', function ($data) {
+                    return 'Rp. ' . number_format($data->total_paid, 0, ',', '.');
+                })
+                ->addColumn('total_return', function ($data) {
+                    return 'Rp. ' . number_format($data->total_return, 0, ',', '.');
+                })
+                ->addColumn('total_purchase', function ($data) {
+                    return 'Rp. ' . number_format($data->total_purchase, 0, ',', '.');
+                })
+                ->addColumn('status', function ($data) {
+                    return MaterialTransaction::STATUS[$data->status];
+                })
+                ->addColumn('supplier', function ($data) {
+                    return $data->supplier ?? '-';
+                })
+                ->addColumn('user', function ($data) {
+                    return $data->user->first_name ?? '-';
+                })
+                ->addColumn('purchase_date', function ($data) {
+                    return $data->status == 1 ? '-' : date('d F Y', strtotime($data->purchase_date));
+                })
+                ->addColumn('purchase_proof', function ($data) {
+                    return view('admin.material.column.purchase_proof', [
+                        'data' => $data,
+                    ]);
+                })
+                ->addColumn('action', function ($data) {
+                    return view('admin.material.column.action', [
+                        'data' => $data,
+                    ]);
+                })
+                ->addColumn('detail', function ($data) {
+                    return view('admin.material.column.detail', [
+                        'data' => $data->materialTransactionDetail,
+                    ]);
+                })
+                ->addIndexColumn()
+                ->make(true);
+        }
         return view('admin.material.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.material.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        try {
+            $this->material->store($request->all());
+            return ['status' => true, 'message' => 'Pembelian berhasil ditambahkan'];
+        } catch (\Throwable $th) {
+            return ['status' => false, 'message' => $th->getMessage()];
+        }
     }
 
     /**
@@ -44,7 +94,15 @@ class MaterialController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        if (auth()->user()->role == 2) {
+            return view('admin.material.edit', [
+                'material' => $this->material->find($id)
+            ]);
+        } elseif(auth()->user()->role == 1) {
+            return view('admin.material.cashier.edit', [
+                'material' => $this->material->find($id)
+            ]);
+        }
     }
 
     /**
@@ -52,14 +110,53 @@ class MaterialController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $this->material->update($request->all(), $id);
+            return true;
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ]);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //
+    }
+
+    // Custom Function
+    public function process($id)
+    {
+        try {
+            $this->material->process($id);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Pembelian berhasil diproses'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
+
+    public function confirmed(Request $request, $id)
+    {
+        // dd($request->all());
+        try {
+            $this->material->confirmed($request->all(), $id);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Pembelian berhasil dikonfirmasi'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ]);
+        }
     }
 }

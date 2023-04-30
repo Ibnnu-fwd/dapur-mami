@@ -53,6 +53,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('cashier', CashierController::class, ['as' => 'admin']);
 
     // Material
+    Route::post('material/confirmed/{id}', [MaterialController::class, 'confirmed'])->name('admin.material.confirmed');
+    Route::post('material/process/{id}', [MaterialController::class, 'process'])->name('admin.material.process');
     Route::resource('material', MaterialController::class, ['as' => 'admin']);
 });
 

@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class, 'transactions_id', 'id');
     }
 
+    public function material()
+    {
+        return $this->hasMany(MaterialTransaction::class);
+    }
+
     // GETTER SETTER
 
     public function getBirthDate() {

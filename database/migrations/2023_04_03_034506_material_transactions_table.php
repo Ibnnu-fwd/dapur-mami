@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('total_paid');
             $table->integer('total_return');
             $table->integer('total_purchase');
-            $table->integer('status')->default(1); // 1 = waiting for payment, 2 = paid, 3 = canceled
+            $table->integer('status')->default(1);
             $table->json('suppliers')->nullable();
             $table->integer('user_id')->nullable();
             $table->timestamps();

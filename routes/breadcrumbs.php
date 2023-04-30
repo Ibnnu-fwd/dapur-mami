@@ -83,3 +83,15 @@ Breadcrumbs::for('material', function(BreadCrumbTrail $trail) {
     $trail->parent('dashboard');
     $trail->push('Manajemen Bahan', route('admin.material.index'));
 });
+
+// Material > Tambah Bahan
+Breadcrumbs::for('material.create', function(BreadCrumbTrail $trail) {
+    $trail->parent('material');
+    $trail->push('Tambah Bahan', route('admin.material.create'));
+});
+
+// Material > Edit Bahan
+Breadcrumbs::for('material.edit', function(BreadCrumbTrail $trail, $data) {
+    $trail->parent('material');
+    $trail->push($data->transaction_code, route('admin.material.edit', $data->id));
+});

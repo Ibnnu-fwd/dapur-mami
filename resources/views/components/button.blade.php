@@ -1,6 +1,6 @@
-@props(['color' => 'green', 'type' => 'submit'])
+@props(['color' => 'green', 'type' => 'submit', 'id' => ''])
 
-<button
+<button id="{{ $id }}"
     {{ $attributes->merge([
         'type' => $type == 'submit' ? 'submit' : 'button',
         'class' =>
