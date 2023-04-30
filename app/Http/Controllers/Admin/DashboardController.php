@@ -32,6 +32,12 @@ class DashboardController extends Controller
             ->addColumn('total_payment', function($data) {
                 return 'Rp. '.number_format($data->total_payment, 0, ',', '.');
             })
+            ->addColumn('created_at', function($data) {
+                return $data->created_at->format('d-m-Y H:i');
+            })
+            ->addColumn('status', function($data) {
+                return $data->status == 1 ? 'Menunggu' : ($data->status == 2 ? 'Selesai' : 'Dibatalkan');
+            })
             ->addIndexColumn()
             ->make(true);
         }
@@ -123,7 +129,8 @@ class DashboardController extends Controller
                 $totalIncome += $transaction->quantity * $transaction->price;
             }
         } elseif ($request->type == 'week') {
-            $transactions = TransactionDetail::whereBetween('created_at', [date('Y-m-d', strtotime('monday this week')), date('Y-m-d', strtotime('sunday this week'))])->get();
+            // get transaction of this week
+            $transactions = TransactionDetail::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
             // get total income
             foreach ($transactions as $transaction) {
                 $totalIncome += $transaction->quantity * $transaction->price;

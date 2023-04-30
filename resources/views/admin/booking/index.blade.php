@@ -157,34 +157,36 @@
                     cancelButtonColor: '#6b7280',
                     confirmButtonText: 'Ya, Batalkan Booking!'
                 }).then((result) => {
-                    let url = "{{ route('admin.booking.cancel', ':id') }}";
-                    $.ajax({
-                        url: url.replace(':id', id),
-                        type: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(data) {
-                            if (data.status == true) {
-                                Swal.fire({
-                                    title: 'Berhasil!',
-                                    text: data.message,
-                                    icon: 'success',
-                                    confirmButtonColor: '#19743b',
-                                }).then((result) => {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire({
-                                    title: 'Gagal!',
-                                    text: data.message,
-                                    icon: 'error',
-                                    confirmButtonColor: '#19743b',
-                                });
+                    if (result.isConfirmed) {
+                        let url = "{{ route('admin.booking.cancel', ':id') }}";
+                        $.ajax({
+                            url: url.replace(':id', id),
+                            type: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(data) {
+                                if (data.status == true) {
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: data.message,
+                                        icon: 'success',
+                                        confirmButtonColor: '#19743b',
+                                    }).then((result) => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: data.message,
+                                        icon: 'error',
+                                        confirmButtonColor: '#19743b',
+                                    });
+                                }
                             }
-                        }
-                    });
-                });
+                        });
+                    }
+                })
             }
 
             function updateStatus(id, value) {
@@ -291,8 +293,8 @@
                             period: value
                         },
                         success: function(data) {
-                            console.log(data);
-                            // $('#listBooking').html(data);
+                            // console.log(data);
+                            $('#listBooking').html(data);
                         }
                     });
                 });

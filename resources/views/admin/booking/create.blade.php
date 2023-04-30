@@ -367,36 +367,46 @@
             }
 
             function btnLastConfirmOrder() {
-                $.ajax({
-                    url: "{{ route('admin.booking.store') }}",
-                    type: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        eventName: eventName,
-                        totalGuest: totalGuest,
-                        bookingDate: bookingDate,
-                        bookingTime: bookingTime,
-                        cart: cart,
-                        sub_total: subTotal,
-                        total_payment: total
-                    },
-                    success: function(data) {
-                        if (data == true) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: 'Pesanan berhasil dibuat!',
-                            })
-                            location.reload();
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Pesanan gagal dibuat!',
-                            })
+                let today = new Date();
+                if (today > new Date(bookingDate)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Tanggal acara tidak boleh kurang dari hari ini!',
+                    })
+                    return false;
+                } else {
+                    $.ajax({
+                        url: "{{ route('admin.booking.store') }}",
+                        type: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            eventName: eventName,
+                            totalGuest: totalGuest,
+                            bookingDate: bookingDate,
+                            bookingTime: bookingTime,
+                            cart: cart,
+                            sub_total: subTotal,
+                            total_payment: total
+                        },
+                        success: function(data) {
+                            if (data == true) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: 'Pesanan berhasil dibuat!',
+                                })
+                                location.reload();
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Pesanan gagal dibuat!',
+                                })
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
 
             $(function() {

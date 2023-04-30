@@ -24,12 +24,21 @@
 /*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
 
--- Membuang data untuk tabel dapur_mami.material_transactions: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel dapur_mami.material_transactions: ~1 rows (lebih kurang)
 /*!40000 ALTER TABLE `material_transactions` DISABLE KEYS */;
+INSERT IGNORE INTO `material_transactions` (`id`, `transaction_code`, `total_paid`, `total_return`, `total_purchase`, `status`, `suppliers`, `purchase_note`, `purchase_proof`, `purchase_date`, `user_id`, `created_at`, `updated_at`) VALUES
+	(18, 'MT642edd6dbcc76', 20000, 12000, 12000, 3, NULL, NULL, '1682815854_WhatsApp Image 2023-04-29 at 08.40.17.jpeg', '2023-04-30', 1, '2023-04-06 14:55:41', '2023-04-30 00:50:54'),
+	(20, 'MT644dc00429a64', 50000, 3000, 22000, 3, NULL, NULL, '1682817571_David Camposi.jpg', '2023-04-30', 1, '2023-04-30 01:10:28', '2023-04-30 01:19:31');
 /*!40000 ALTER TABLE `material_transactions` ENABLE KEYS */;
 
--- Membuang data untuk tabel dapur_mami.material_transaction_details: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel dapur_mami.material_transaction_details: ~3 rows (lebih kurang)
 /*!40000 ALTER TABLE `material_transaction_details` DISABLE KEYS */;
+INSERT IGNORE INTO `material_transaction_details` (`id`, `material_transaction_id`, `name`, `unit_type`, `quantity`, `ppu`, `total`, `status`, `created_at`, `updated_at`) VALUES
+	(1, 18, 'Beras', 'kg', 2, 1000, 2000, 2, '2023-04-06 14:55:41', '2023-04-30 00:50:54'),
+	(2, 18, 'Gula', 'l', 2, 2000, 4000, 2, '2023-04-06 14:55:41', '2023-04-30 00:50:54'),
+	(8, 18, 'Garam', 'kg', 3, 2000, 6000, 1, '2023-04-29 22:21:14', '2023-04-29 22:28:28'),
+	(9, 20, 'Minyak', 'l', 1, 12000, 12000, 1, '2023-04-30 01:10:28', '2023-04-30 01:19:12'),
+	(11, 20, 'Gula', 'kg', 1, 10000, 10000, 1, '2023-04-30 01:15:14', '2023-04-30 01:19:31');
 /*!40000 ALTER TABLE `material_transaction_details` ENABLE KEYS */;
 
 -- Membuang data untuk tabel dapur_mami.menus: ~9 rows (lebih kurang)
@@ -47,7 +56,7 @@ INSERT IGNORE INTO `menus` (`id`, `name`, `price`, `category`, `description`, `w
 	(10, 'Es Teler', 5000, 2, 'safsd', 50, NULL, 1, '2023-03-20 13:46:32', '2023-03-20 13:46:51', NULL);
 /*!40000 ALTER TABLE `menus` ENABLE KEYS */;
 
--- Membuang data untuk tabel dapur_mami.migrations: ~13 rows (lebih kurang)
+-- Membuang data untuk tabel dapur_mami.migrations: ~12 rows (lebih kurang)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT IGNORE INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(12, '2014_10_12_000000_create_users_table', 1),
@@ -68,7 +77,10 @@ INSERT IGNORE INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(27, '2023_03_05_044002_add_some_columns_transactions', 6),
 	(28, '2023_03_05_044915_update_customer_name_transactions', 7),
 	(29, '2023_04_03_034506_material_transactions_table', 8),
-	(30, '2023_04_03_034841_material_transaction_details_table', 9);
+	(30, '2023_04_03_034841_material_transaction_details_table', 9),
+	(31, '2023_04_06_070133_update_unit_type_column_material_transaction_details', 10),
+	(32, '2023_04_06_075824_update_some_columns_material_transaction', 11),
+	(33, '2023_04_29_232355_add_purchase_note_and_puchase_proof_material_transaction_table', 12);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Membuang data untuk tabel dapur_mami.password_reset_tokens: ~0 rows (lebih kurang)
@@ -79,15 +91,16 @@ INSERT IGNORE INTO `migrations` (`id`, `migration`, `batch`) VALUES
 /*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
 /*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
 
--- Membuang data untuk tabel dapur_mami.transactions: ~3 rows (lebih kurang)
+-- Membuang data untuk tabel dapur_mami.transactions: ~4 rows (lebih kurang)
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
 INSERT IGNORE INTO `transactions` (`id`, `users_id`, `discounts_id`, `transaction_code`, `customer_name`, `payment_method`, `total_payment`, `sub_total`, `status`, `created_at`, `updated_at`, `event_name`, `total_guest`, `booking_date`, `booking_time`) VALUES
-	(20, 1, NULL, 'INV-2023-0001', 'Ibnu', 1, 65000, 65000, 1, '2023-03-24 01:01:56', '2023-03-24 01:01:56', NULL, NULL, NULL, NULL),
+	(20, 1, NULL, 'INV-2023-0001', 'Ibnu', 1, 65000, 65000, 2, '2023-03-24 01:01:56', '2023-04-05 09:05:32', NULL, NULL, NULL, NULL),
 	(21, 1, NULL, 'INV-2023-0002', 'Ibnu', 1, 65000, 65000, 1, '2023-03-24 01:01:57', '2023-03-24 01:01:57', NULL, NULL, NULL, NULL),
-	(22, 1, NULL, 'INV-2023-0003', 'Hera', 1, 20000, 20000, 2, '2023-04-03 03:00:08', '2023-04-03 03:00:17', NULL, NULL, NULL, NULL);
+	(22, 1, NULL, 'INV-2023-0003', 'Hera', 1, 20000, 20000, 2, '2023-04-03 03:00:08', '2023-04-03 03:00:17', NULL, NULL, NULL, NULL),
+	(23, 1, NULL, 'INV-2023-0004', 'Fahiim', 1, 45000, 45000, 3, '2023-04-05 09:05:01', '2023-04-06 05:48:21', NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 
--- Membuang data untuk tabel dapur_mami.transaction_details: ~10 rows (lebih kurang)
+-- Membuang data untuk tabel dapur_mami.transaction_details: ~13 rows (lebih kurang)
 /*!40000 ALTER TABLE `transaction_details` DISABLE KEYS */;
 INSERT IGNORE INTO `transaction_details` (`id`, `transactions_id`, `menus_id`, `discounts_id`, `price`, `quantity`, `created_at`, `updated_at`) VALUES
 	(48, 20, 1, NULL, 10000, 2, '2023-03-24 01:01:56', '2023-03-24 01:01:56'),
@@ -99,7 +112,10 @@ INSERT IGNORE INTO `transaction_details` (`id`, `transactions_id`, `menus_id`, `
 	(54, 21, 3, NULL, 10000, 1, '2023-03-24 01:01:57', '2023-03-24 01:01:57'),
 	(55, 21, 4, NULL, 5000, 1, '2023-03-24 01:01:57', '2023-03-24 01:01:57'),
 	(56, 22, 8, NULL, 5000, 2, '2023-04-03 03:00:08', '2023-04-03 03:00:08'),
-	(57, 22, 9, NULL, 5000, 2, '2023-04-03 03:00:08', '2023-04-03 03:00:08');
+	(57, 22, 9, NULL, 5000, 2, '2023-04-03 03:00:08', '2023-04-03 03:00:08'),
+	(58, 23, 3, NULL, 10000, 2, '2023-04-05 09:05:01', '2023-04-05 09:05:01'),
+	(59, 23, 2, NULL, 15000, 1, '2023-04-05 09:05:01', '2023-04-05 09:05:01'),
+	(60, 23, 4, NULL, 5000, 2, '2023-04-05 09:05:01', '2023-04-05 09:05:01');
 /*!40000 ALTER TABLE `transaction_details` ENABLE KEYS */;
 
 -- Membuang data untuk tabel dapur_mami.users: ~2 rows (lebih kurang)

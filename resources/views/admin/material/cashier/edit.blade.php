@@ -25,7 +25,7 @@
             <table class="">
                 <tr>
                     <td>
-                        Total pembelian
+                        Total uang yang diberikan
                     </td>
                     <td>:</td>
                     <td>
@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Uang yang diberikan admin
+                        Total pembelian
                     </td>
                     <td>:</td>
                     <td>

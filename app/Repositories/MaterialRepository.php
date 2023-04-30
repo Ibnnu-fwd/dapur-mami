@@ -120,7 +120,7 @@ class MaterialRepository implements MaterialInterface
 
     public function get()
     {
-        return $this->materialTransaction->with(['materialTransactionDetail', 'user'])->get();
+        return $this->materialTransaction->with(['materialTransactionDetail', 'user', 'cashier'])->get();
     }
 
     public function find($id)
@@ -155,7 +155,8 @@ class MaterialRepository implements MaterialInterface
                 'status' => 3,
                 'purchase_date' => date('Y-m-d'),
                 'purchase_proof' => $data['purchase_proof'],
-                'total_return' => $data['total_return'] ?? 0
+                'total_return' => $data['total_return'] ?? 0,
+                'cashier_id' => auth()->user()->id
             ]);
         } catch (\Throwable $th) {
             DB::rollback();

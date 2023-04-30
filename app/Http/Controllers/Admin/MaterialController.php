@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Interfaces\MaterialInterface;
 use App\Models\MaterialTransaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MaterialController extends Controller
@@ -18,6 +19,8 @@ class MaterialController extends Controller
 
     public function index(Request $request)
     {
+        // $material = $this->material->get();
+        // dd($material);
         if ($request->ajax()) {
             return datatables()
                 ->of($this->material->get())
@@ -40,7 +43,7 @@ class MaterialController extends Controller
                     return $data->supplier ?? '-';
                 })
                 ->addColumn('user', function ($data) {
-                    return $data->user->first_name ?? '-';
+                    return $data->cashier->first_name ?? '-';
                 })
                 ->addColumn('purchase_date', function ($data) {
                     return $data->status == 1 ? '-' : date('d F Y', strtotime($data->purchase_date));
@@ -98,7 +101,7 @@ class MaterialController extends Controller
             return view('admin.material.edit', [
                 'material' => $this->material->find($id)
             ]);
-        } elseif(auth()->user()->role == 1) {
+        } elseif (auth()->user()->role == 1) {
             return view('admin.material.cashier.edit', [
                 'material' => $this->material->find($id)
             ]);

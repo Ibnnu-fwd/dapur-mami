@@ -93,7 +93,10 @@ class BookingController extends Controller
 
     public function period(Request $request)
     {
-        return response()->json($this->booking->period($request->period));
+        $bookings = $this->booking->period($request->period);
+        return view('admin.booking.component.list-booking', [
+            'bookings' => $bookings
+        ])->render();
     }
 
     public function updateStatus(Request $request, $id)

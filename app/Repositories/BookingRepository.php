@@ -80,7 +80,7 @@ class BookingRepository implements BookingInterface
         // return yesterday data
         if ($data == 'yesterday') {
             return $transactions->filter(function ($value, $key) {
-                return $value->created_at < Carbon::now()->subDay();
+                return $value->created_at->isYesterday();
             });
         }
 

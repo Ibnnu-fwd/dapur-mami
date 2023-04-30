@@ -30,9 +30,10 @@
         <script>
             $(function() {
                 $('#catalogMenuTable').DataTable({
-                    responsive: false,
+                    responsive: true,
                     serverSide: true,
                     processing: true,
+                    autoWidth: false,
                     ajax: {
                         url: '{{ route('admin.catalog-management.index') }}',
                         type: 'GET',

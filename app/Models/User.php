@@ -48,6 +48,7 @@ class User extends Authenticatable
     ];
 
     // RELATION
+
     public function transactions(){
         return $this->hasMany(Transaction::class, 'transactions_id', 'id');
     }
@@ -55,6 +56,11 @@ class User extends Authenticatable
     public function material()
     {
         return $this->hasMany(MaterialTransaction::class);
+    }
+
+    public function cashier()
+    {
+        return $this->hasMany(MaterialTransaction::class, 'cashier_id', 'id');
     }
 
     // GETTER SETTER

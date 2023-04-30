@@ -26,8 +26,14 @@ class MaterialTransaction extends Model
         'purchase_note',
         'purchase_proof',
         'purchase_date',
-        'user_id'
+        'user_id',
+        'cashier_id'
     ];
+
+    public function cashier()
+    {
+        return $this->belongsTo(User::class, 'cashier_id', 'id');
+    }
 
     public function user()
     {

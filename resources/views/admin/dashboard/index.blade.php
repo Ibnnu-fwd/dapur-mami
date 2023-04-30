@@ -17,11 +17,11 @@
                     <h3 class="font-semibold">Total Pendapatan</h3>
                     <select id="totalSalesTypeOfMenuSelect"
                         class="block max-w-auto p-2 text-sm text-gray-900 border border-gray-300 rounded-lg  focus:ring-primary focus:border-primary">
-                        <option value="day">Harian</option>
+                        <option value="day">Hari Ini</option>
                         <option value="week">Mingguan</option>
                         <option value="month">Bulanan</option>
                         <option value="year">Tahunan</option>
-                        <option value="all">Semua</option>
+                        <option value="all" selected>Semua</option>
                     </select>
                 </div>
                 <div style="height: 300px" class="relative">
@@ -96,26 +96,36 @@
                     </select> --}}
                 </div>
                 <div class="flex justify-between mt-4">
-                    <span class="font-medium text-gray-600">Menu</span>
-                    <span class="font-medium text-gray-600">Pesanan</span>
+                    <div class="flex">
+                    <span class="font-medium text-gray-600 mr-2">Nomor</span>
+                    <span class="font-medium text-gray-600">Nama Menu</span>
+                    </div>
+                    <span class="font-medium text-gray-600">Jumlah Pesanan</span>
                 </div>
+                {{-- divider --}}
+                <div class="border-b border-gray-200 my-2"></div>
                 {{-- Data Menu --}}
                 @foreach ($favoriteMenu as $fm)
                     <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-x-3 my-2">
-                            <div class="avatar">
-                                <div class="w-12 rounded-xl rounded">
-                                    <img src="{{ $fm->menu->image ? asset($fm->menu->image) : asset('images/menu/default.jpg') }}"
-                                        alt="">
+                        <div class="flex items-center">
+                            <span class="font-semibold text-md mr-11">
+                                {{ $loop->iteration }}
+                            </span>
+                            <div class="flex items-center gap-x-3 my-2">
+                                <div class="avatar">
+                                    <div class="w-12 rounded-xl rounded">
+                                        <img src="{{ $fm->menu->image ? asset($fm->menu->image) : asset('images/menu/default.jpg') }}"
+                                            alt="">
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <span class="badge badge-primary badge-sm">
-                                    {{ $fm->menu->getCategoryNameAttribute() }}
-                                </span>
-                                <h3 class="font-semibold mt-1 text-md">
-                                    {{ $fm->menu->name }}
-                                </h3>
+                                <div>
+                                    <span class="badge badge-primary badge-sm">
+                                        {{ $fm->menu->getCategoryNameAttribute() }}
+                                    </span>
+                                    <h3 class="font-semibold mt-1 text-md">
+                                        {{ $fm->menu->name }}
+                                    </h3>
+                                </div>
                             </div>
                         </div>
                         <span class="font-semibold text-md">
@@ -132,10 +142,12 @@
                     <thead>
                         <tr>
                             <th>Pelanggan</th>
-                            <th>Menu</th>
                             <th>Invoice</th>
                             <th>No. Pesanan</th>
                             <th>Total Bayar</th>
+                            <th>Waktu</th>
+                            <th>Status</th>
+                            <th>Menu</th>
                         </tr>
                     </thead>
                 </table>
@@ -153,18 +165,11 @@
                 $('#recentOrderTable').DataTable({
                     responsive: true,
                     autoWidth: false,
-                    paginate: false,
-                    info: false,
-                    searching: false,
                     serverSide: true,
                     ajax: "{{ route('admin.dashboard') }}",
                     columns: [{
                             data: 'customer',
                             name: 'customer'
-                        },
-                        {
-                            data: 'menu',
-                            name: 'menu'
                         },
                         {
                             data: 'invoice',
@@ -177,6 +182,18 @@
                         {
                             data: 'total_payment',
                             name: 'total_payment'
+                        },
+                        {
+                            data: 'created_at',
+                            name: 'created_at'
+                        },
+                        {
+                            data: 'status',
+                            name: 'status'
+                        },
+                        {
+                            data: 'menu',
+                            name: 'menu'
                         },
                     ]
                 });

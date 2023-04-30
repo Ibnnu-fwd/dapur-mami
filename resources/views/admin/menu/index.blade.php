@@ -109,7 +109,7 @@
     <input type="checkbox" id="confirmOrderModal" class="modal-toggle" />
     <label class="modal">
         <label class="modal-box relative" for="">
-            <h3 class="text-lg font-bold">Detail Booking</h3>
+            <h3 class="text-lg font-bold">Detail Pesanan</h3>
             <p class="py-4">
             <h3 class="font-semibold mb-4">Informasi Acara</h3>
             <ul class="mb-8 space-y-2 text-left text-gray-500 dark:text-gray-400">
