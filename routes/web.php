@@ -35,6 +35,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('invoice', InvoiceController::class, ['as' => 'admin']);
 
     // Setting
+    Route::post('setting/password/update', [SettingController::class, 'passwordUpdate'])->name('admin.setting.password.update');
+    Route::post('setting/password/check', [SettingController::class, 'passwordCheck'])->name('admin.setting.password.check');
     Route::resource('setting', SettingController::class, ['as' => 'admin']);
 
     // Catalog Management

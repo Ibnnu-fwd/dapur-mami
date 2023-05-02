@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Interfaces\SettingInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class SettingController extends Controller
 {
@@ -78,5 +79,22 @@ class SettingController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    // Custom Function
+    public function passwordCheck(Request $request)
+    {
+        // return true;
+        return $this->setting->passwordCheck($request->password) ? response()->json(['status' => true]) : response()->json(['status' => false]);
+    }
+
+    public function passwordUpdate(Request $request)
+    {
+        try {
+            $this->setting->passwordUpdate($request->confirm_password);
+            return redirect()->back()->with('success', 'Password berhasil diperbarui');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Password gagal diperbarui');
+        }
     }
 }

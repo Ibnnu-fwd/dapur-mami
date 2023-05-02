@@ -53,31 +53,42 @@ class CatalogManagementRepository implements CatalogManagementInterface
 
     public function update($data, $id): bool
     {
-        $menu = $this->menu->find($id);
+        try {
+            $menu = $this->menu->find($id);
 
-        if (isset($data['image'])) {
-            if ($menu->image) {
-                $oldImage = public_path($menu->image);
-                if (file_exists($oldImage)) {
-                    unlink($oldImage);
+            if (isset($data['image'])) {
+                if ($menu->image) {
+                    $oldImage = public_path($menu->image);
+                    if (file_exists($oldImage)) {
+                        unlink($oldImage);
+                    }
+                }
+
+                $image     = $data['image'];
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/menu'), $imageName);
+                $menu->image = 'images/menu/' . $imageName;
+            }
+
+            $menu->name        = $data['name'];
+            $menu->price       = $data['price'];
+            $menu->category    = $data['category'];
+            $menu->weight      = $data['weight'];
+            $menu->description = $data['description'];
+
+            $menu->save();
+
+            return true;
+        } catch (\Throwable $th) {
+            if (isset($data['image'])) {
+                $newImage = public_path($menu->image);
+                if (file_exists($newImage)) {
+                    unlink($newImage);
                 }
             }
 
-            $image     = $data['image'];
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/menu'), $imageName);
-            $menu->image = 'images/menu/' . $imageName;
+            return false;
         }
-
-        $menu->name        = $data['name'];
-        $menu->price       = $data['price'];
-        $menu->category    = $data['category'];
-        $menu->weight      = $data['weight'];
-        $menu->description = $data['description'];
-
-        $menu->save();
-
-        return true;
     }
 
     public function getMenuByCategory($id)

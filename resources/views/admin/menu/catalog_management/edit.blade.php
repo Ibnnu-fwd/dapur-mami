@@ -78,23 +78,23 @@
                 });
 
                 $('#category').select2();
-
-                @if (Session::has('success'))
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: '{{ Session::get('success') }}
-                    });
-                @endif
-
-                @if (Session::has('error'))
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Berhasil',
-                        text: '{{ Session::get('error') }}
-                    });
-                @endif
             });
+
+            @if (Session::has('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: '{{ Session::get('success') }}'
+                });
+            @endif
+
+            @if (Session::has('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: '{{ Session::get('error') }}'
+                });
+            @endif
         </script>
     @endpush
 </x-app-layout>

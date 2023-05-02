@@ -93,13 +93,19 @@ class CatalogManagementController extends Controller
                 'category' => ['required'],
                 'weight'   => ['required'],
                 'image'    => ['nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            ], [
+                'name.required'     => 'Nama menu tidak boleh kosong',
+                'price.required'    => 'Harga menu tidak boleh kosong',
+                'category.required' => 'Kategori menu tidak boleh kosong',
+                'weight.required'   => 'Berat menu tidak boleh kosong',
+                'image.mimes'       => 'Gambar menu harus berupa file gambar',
+                'image.max'         => 'Ukuran gambar menu maksimal 2MB',
             ]);
 
             $this->catalogManagement->update($request->all(), $id);
             return redirect()->route('admin.catalog-management.index')->with('success', 'Menu berhasil diubah');
         } catch (\Throwable $th) {
-            dd($th->getMessage());
-            return redirect()->back()->with('Menu gagal diubah');
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 

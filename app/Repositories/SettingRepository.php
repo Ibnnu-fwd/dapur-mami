@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Interfaces\SettingInterface;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class SettingRepository implements SettingInterface
 {
@@ -40,6 +42,18 @@ class SettingRepository implements SettingInterface
         $user->address    = $data['address'];
         $user->birth_date = date('Y-m-d', strtotime($data['birth_date']));
 
+        return $user->save();
+    }
+
+    public function passwordCheck($password)
+    {
+        return app('hash')->check($password, auth()->user()->password);
+    }
+
+    public function passwordUpdate($password)
+    {
+        $user = $this->user->find(auth()->user()->id);
+        $user->password = password_hash($password, PASSWORD_DEFAULT);
         return $user->save();
     }
 }
