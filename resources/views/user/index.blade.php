@@ -79,7 +79,7 @@
     <section class="bg-white dark:bg-gray-900">
         <div class="px-4 mx-auto max-w-screen-xl text-center py-8 lg:py-16">
             <h1 class="text-2xl font-extrabold tracking-tight leading-none md:text-4xl lg:text-4xl">
-                Yang Kami Tawarkan
+                Yang Kami Cintahh
             </h1>
         </div>
         <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
