@@ -132,6 +132,10 @@
                                 data: formData,
                                 contentType: false,
                                 processData: false,
+                                beforeSend: function() {
+                                    $('button[type="submit"]').attr('disabled', 'disabled')
+                                        .html('<i class="fa fa-spinner fa-spin"></i> Loading...');
+                                },
                                 success: function(data) {
                                     Swal.fire({
                                         icon: 'success',

@@ -11,11 +11,11 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('login', function () {
     return view('auth.login');
-})->name('user.login');
+})->name('login');
 
-Route::get('home', [HomeController::class, 'index'])->name('user.home');
+Route::get('/', [HomeController::class, 'index'])->name('user.home');
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/total-sales-type-of-menu', [DashboardController::class, 'totalSalesTypeOfMenu'])->name('dashboard.total-sales-type-of-menu');

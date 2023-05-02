@@ -124,6 +124,11 @@
                                 total_paid: total_paid,
                                 total_purchase: total_purchase
                             },
+                            // on process
+                            beforeSend: function() {
+                                $('button[type="submit"]').attr('disabled', 'disabled')
+                                    .html('<i class="fa fa-spinner fa-spin"></i> Loading...');
+                            },
                             success: function(res) {
                                 if (res.status) {
                                     Swal.fire({
