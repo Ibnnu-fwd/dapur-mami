@@ -178,6 +178,7 @@
             }
 
             function addCart(id) {
+                $('#btnConfirmation').addClass('hidden');
                 $('#cartLabel-' + id).html('<i class="fas fa-check"></i> Ditambahkan');
                 $('#addCart-' + id).addClass('bg-gray-400 cursor-not-allowed');
 
