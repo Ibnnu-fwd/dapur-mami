@@ -249,16 +249,6 @@
                 });
                 $('#search').on('keyup', function() {
                     let value = $(this).val();
-                    // $.ajax({
-                    //     url: '{{ route('admin.invoice.search') }}',
-                    //     type: 'GET',
-                    //     data: {
-                    //         search: value
-                    //     },
-                    //     success: function(data) {
-                    //         $('#invoiceList').html(data);
-                    //     }
-                    // });
                     $('#invoiceList .bg-white').filter(function() {
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });

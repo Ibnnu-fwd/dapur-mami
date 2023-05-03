@@ -10,4 +10,7 @@ interface CatalogManagementInterface {
     public function update($data,$id) :bool;
     public function getMenuByCategory($id);
     public function search($data);
+    public function getWithTotalSales();
+    public function sortByPrice($value);
+    public function sortByCategory($value);
 }

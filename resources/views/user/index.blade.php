@@ -1,55 +1,8 @@
 <x-guest-layout>
-
-    <!-- Header -->
-    <nav class="bg-white border-gray-200 dark:bg-gray-900">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="{{ route('user.home') }}" class="flex items-center">
-                <img src="{{ asset('assets/images/logo.png') }}" class="h-8 mr-3" alt="Flowbite Logo" />
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Dapur Mami</span>
-            </a>
-            <div class="flex md:order-2">
-                <x-link-button route="{{ route('login') }}" class="bg-primary">
-                    Masuk
-                </x-link-button>
-                <button data-collapse-toggle="navbar-cta" type="button"
-                    class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                    aria-controls="navbar-cta" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </button>
-            </div>
-            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-cta">
-                <ul
-                    class="flex flex-col font-normal p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                    <li>
-                        <a href="#"
-                            class="block py-2 pl-3 pr-4 text-white bg-green-700 rounded md:bg-transparent md:text-green-700 md:p-0 md:dark:text-green-500"
-                            aria-current="page">Home</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <x-user-header />
 
     {{-- heading --}}
-    <section class="bg-white dark:bg-gray-900">
+    <section class="bg-white">
         <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
             <div class="mr-auto place-self-center lg:col-span-7">
                 <h1
@@ -76,13 +29,8 @@
     </section>
 
     {{-- CTA --}}
-    <section class="bg-white dark:bg-gray-900">
-        <div class="px-4 mx-auto max-w-screen-xl text-center py-8 lg:py-16">
-            <h1 class="text-2xl font-extrabold tracking-tight leading-none md:text-4xl lg:text-4xl">
-                Yang Kami Cintahh
-            </h1>
-        </div>
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <section class="bg-white">
+        <div class="py-6 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
             <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-12 md:space-y-0">
                 <div>
                     <div
@@ -152,5 +100,41 @@
         </div>
     </section>
 
+    {{-- Booking --}}
+    <section class="bg-white dark:bg-gray-900">
+        <div class="pt-16 pb-8 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
+            <div class="mx-auto max-w-screen-sm text-center">
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-gray-900 dark:text-white">
+                    Buat Kegiatan Jadi Lebih Berkesan</h2>
+                <p class="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">
+                    Kami menyediakan ruangan yang dapat digunakan untuk berbagai macam kegiatan seperti rapat,
+                    seminar, workshop, dan lain-lain
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="bg-white dark:bg-gray-900">
+        <div class="gap-16 items-center pt-6 pb-6 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-10 lg:px-6">
+            <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
+                    Reservasi Tempat</h2>
+                <p class="mb-4">
+                    Fitur reservasi pada website Dapur Mami memungkinkan pengguna memesan tempat dengan mudah dan cepat.
+                    Pengguna dapat memilih tanggal dan waktu kunjungan, jumlah orang, serta melihat ketersediaan meja
+                    pada jam kunjungan. Setelah memilih meja, pengguna bisa reservasi dan menerima konfirmasi pada
+                    admin.
+                    <br><br>
+                    Pengguna dapat menjamin tempat mereka dan menikmati makanan yang lezat tanpa khawatir tidak
+                    mendapatkan tempat.
+                </p>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mt-8">
+                <img class="w-full rounded-lg" src="{{ asset('assets/images/gathering1.jpg') }}" alt="office content 1">
+                <img class="mt-4 w-full lg:mt-10 rounded-lg" src="{{ asset('assets/images/gathering2.jpg') }}"
+                    alt="office content 2">
+            </div>
+        </div>
+    </section>
 
+    <x-user-footer />
 </x-guest-layout>
