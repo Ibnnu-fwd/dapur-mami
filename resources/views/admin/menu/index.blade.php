@@ -44,10 +44,10 @@
                                 {{ $menu->weight }} gram
                             </p>
                             <div class="flex items-end justify-between">
-                                <span
-                                    class="flex md:text-lg lg:text-xl xl:text-lg font-bold text-gray-900 dark:text-white">
-                                    Rp. {{ number_format($menu->price, 0, ',', '.') }}
-                                </span>
+                                <p>
+                                    <span class="inline-block align-text-bottom text-sm">Rp</span>
+                                    {{ number_format($menu->price, 0, ',', '.') }}
+                                </p>
                             </div>
                         </div>
                     </div>

@@ -15,6 +15,10 @@ Route::get('login', function () {
     return view('auth.login');
 })->name('login');
 
+Route::get('menu/add-cart/{id}', [HomeController::class, 'addCart'])->name('user.menu.add-cart');
+Route::get('menu/sort-by-category', [HomeController::class, 'sortByCategory'])->name('user.menu.sort-by-category');
+Route::get('menu/sort-by-price', [HomeController::class, 'sortByPrice'])->name('user.menu.sort-by-price');
+Route::get('menu', [HomeController::class, 'menu'])->name('user.menu');
 Route::get('/', [HomeController::class, 'index'])->name('user.home');
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {

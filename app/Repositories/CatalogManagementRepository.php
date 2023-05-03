@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\CatalogManagementInterface;
 use App\Models\Menu;
+use Illuminate\Support\Facades\DB;
 
 class CatalogManagementRepository implements CatalogManagementInterface
 {
@@ -99,5 +100,37 @@ class CatalogManagementRepository implements CatalogManagementInterface
     public function search($data)
     {
         return $this->menu->where('name', 'like', '%' . $data . '%')->get();
+    }
+
+    public function getWithTotalSales()
+    {
+        // get quantity of menu in transaction detail
+        $menu = $this->menu->withCount([
+            'transactionDetails as sold' => function ($query) {
+                $query->select(DB::raw('sum(quantity)'));
+            }
+        ])->get();
+
+        return $menu;
+    }
+
+    public function sortByPrice($value)
+    {
+        $menus = $this->get();
+        if($value == 'minmax') {
+            $menus = $menus->sortBy('price');
+        } elseif($value == 'maxmin') {
+            $menus = $menus->sortByDesc('price');
+        } else {
+            $menus = $menus->sortBy('name');
+        }
+
+        return $menus;
+    }
+
+    public function sortByCategory($value)
+    {
+        $menus = $this->get();
+        return $value == 'all' ? $menus : $menus->where('category', $value);
     }
 }
