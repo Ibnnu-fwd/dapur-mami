@@ -21,7 +21,7 @@ class BookingRepository implements BookingInterface
 
     public function get()
     {
-        return $this->transaction->with('transactionDetails')->where('event_name', '!=', null)->get();
+        return $this->transaction->with('transactionDetails')->where('event_name', '!=', null)->orderBy('id', 'desc')->get();
     }
 
     public function find($id)

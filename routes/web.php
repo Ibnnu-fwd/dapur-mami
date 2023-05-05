@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\ReservationConfigController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -64,6 +65,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::post('material/confirmed/{id}', [MaterialController::class, 'confirmed'])->name('admin.material.confirmed');
     Route::post('material/process/{id}', [MaterialController::class, 'process'])->name('admin.material.process');
     Route::resource('material', MaterialController::class, ['as' => 'admin']);
+
+    // Reservation Config
+    Route::post('reservation-config/check', [ReservationConfigController::class, 'check'])->name('admin.reservation-config.check');
+    Route::resource('reservation-config', ReservationConfigController::class, ['as' => 'admin']);
 });
 
 require __DIR__ . '/auth.php';

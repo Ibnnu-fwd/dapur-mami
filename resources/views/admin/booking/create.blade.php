@@ -12,15 +12,20 @@
                     autocomplete="off" />
             </div>
             <div class="grid grid-cols-2 gap-x-3">
-                <x-input id="total_person" label="Jumlah Tamu" name="total_guest" type="number" />
+                <x-input id="total_guest" label="Jumlah Tamu (Orang)" name="total_guest" type="number" />
                 <x-input id="booking_time" label="Waktu" placeholder="Masukan waktu" name="booking_time"
                     type="time" />
+            </div>
+            <div class="flex justify-end">
+                <x-button type="button" id="btnCheck" class="text-end">
+                    Cek Ketersediaan Tempat
+                </x-button>
             </div>
         </form>
     </x-card-container>
 
     <p class="font-semibold text-lg mb-3 mt-4">Detail Pesanan</p>
-    <div class="flex gap-x-3">
+    <div class="flex gap-x-3 hidden" id="detailOrderForm">
         <div class="lg:w-full" id="listMenu">
             {{-- Menu Item --}}
             <div class="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 mt-8" id="menuList">
@@ -395,14 +400,14 @@
                                     icon: 'success',
                                     title: 'Berhasil',
                                     text: 'Pesanan berhasil dibuat!',
-                                })
-                                location.reload();
+                                });
+                                window.location.href = "{{ route('admin.booking.index') }}";
                             } else {
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Oops...',
                                     text: 'Pesanan gagal dibuat!',
-                                })
+                                });
                             }
                         }
                     });
@@ -438,6 +443,51 @@
                             $('#menuList').html(data);
                         }
                     });
+                });
+
+                $('#btnCheck').on('click', function(e) {
+                    e.preventDefault();
+                    let reservationDate = $('#booking_date').val();
+                    let reservationTime = $('#booking_time').val();
+                    let reservationGuest = $('#total_guest').val();
+
+                    if (reservationDate != '' && reservationTime != '' && reservationGuest != '') {
+                        $.ajax({
+                            url: '{{ route('admin.reservation-config.check') }}',
+                            type: 'POST',
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                booking_date: reservationDate,
+                                booking_time: reservationTime,
+                                total_guest: reservationGuest
+                            },
+                            success: function(response) {
+                                if (response.data.isFull == true || response.data.isMaxBooking == true) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Kuota reservasi sudah penuh! Sisa kuota pada tanggal ' +
+                                            reservationDate + ' : ' + response.data
+                                            .remainingCapacity + ' orang!',
+                                    });
+                                    $('#detailOrderForm').addClass('hidden');
+                                } else {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil',
+                                        text: 'Kuota reservasi masih tersedia! Silahkan memesan!',
+                                    });
+                                    $('#detailOrderForm').removeClass('hidden');
+                                }
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Mohon lengkapi detail reservasi!',
+                        });
+                    }
                 });
             });
         </script>
