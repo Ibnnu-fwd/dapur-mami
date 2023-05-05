@@ -6,7 +6,8 @@
         <div class="lg:w-full" id="bookingListContainer">
             <div class="lg:flex gap-x-3 items-end">
                 <div class="mb-4">
-                    <label for="bookingSelect" class="block mb-2 text-sm font-medium text-gray-900">Filter Tagihan</label>
+                    <label for="bookingSelect" class="block mb-2 text-sm font-medium text-gray-900">Filter
+                        Tagihan</label>
                     <select id="bookingSelect"
                         class="block max-w-auto p-2 text-sm text-gray-900 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary">
                         <option value="all">Semua Tagihan</option>
@@ -18,9 +19,15 @@
                     </select>
                 </div>
                 <x-input id="search" label="Cari" placeholder="Masukan nama acara" name="search" type="text" />
-                <x-link-button route="{{ route('admin.booking.create') }}" class="mb-4 ml-auto" color="gray">
-                    Tambah Reservasi
-                </x-link-button>
+                @if ($bookingStatus == true)
+                    <x-link-button route="{{ route('admin.booking.create') }}" class="mb-4 ml-auto" color="gray">
+                        Tambah Reservasi
+                    </x-link-button>
+                    @else
+                    <x-link-button class="mb-4 ml-auto" color="gray" disabled>
+                        Layanan reservasi sedang tidak aktif
+                    </x-link-button>
+                @endif
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-x-3 gap-y-4 mt-5" id="listBooking">

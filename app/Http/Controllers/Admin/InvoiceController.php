@@ -159,7 +159,7 @@ class InvoiceController extends Controller
                 ]);
             })
             ->addColumn('created_at', function($data) {
-                return $data->created_at->format('d M Y');
+                return $data->created_at->format('d-m-Y H:i');
             })
             ->addColumn('user', function($data) {
                 return $data->user->first_name;
@@ -168,6 +168,21 @@ class InvoiceController extends Controller
             ->make(true);
         }
 
-        return view('admin.invoice.transaction-history');
+        return view('admin.invoice.transaction-history', [
+            'months' => [
+                '01' => 'Januari',
+                '02' => 'Februari',
+                '03' => 'Maret',
+                '04' => 'April',
+                '05' => 'Mei',
+                '06' => 'Juni',
+                '07' => 'Juli',
+                '08' => 'Agustus',
+                '09' => 'September',
+                '10' => 'Oktober',
+                '11' => 'November',
+                '12' => 'Desember',
+            ],
+        ]);
     }
 }

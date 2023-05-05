@@ -29,9 +29,14 @@
             {{-- pengaturan --}}
             <x-sidebar-menu name="Pengaturan" icon="fas fa-cog" route="{{ route('admin.setting.index') }}"
                 active="{{ request()->routeIs('admin.setting.*') }}" />
+            {{-- konfigurasi reservasi --}}
+            <x-sidebar-menu name="Konfigurasi Reservasi" icon="fas fa-cog"
+                route="{{ route('admin.reservation-config.index') }}"
+                active="{{ request()->routeIs('admin.reservation-config.*') }}" />
             {{-- divide --}}
             <li class="border-t border-gray-200 dark:border-gray-700"></li>
             @if (auth()->user()->role == 2)
+                {{-- cashier --}}
                 {{-- manajemen menu --}}
                 <x-sidebar-menu name="Manajemen Menu" icon="fas fa-bars"
                     route="{{ route('admin.catalog-management.index') }}"
@@ -45,8 +50,7 @@
                 route="{{ route('admin.transaction-history') }}"
                 active="{{ request()->routeIs('admin.transaction-history') }}" />
             {{-- Manajemen Bahan --}}
-            <x-sidebar-menu name="Manajemen Bahan" icon="fas fa-book-open"
-                route="{{ route('admin.material.index') }}"
+            <x-sidebar-menu name="Manajemen Bahan" icon="fas fa-book-open" route="{{ route('admin.material.index') }}"
                 active="{{ request()->routeIs('admin.material.*') }}" />
             {{-- logout --}}
             <li>
@@ -84,6 +88,5 @@
                     <span>Buka Profil</span>
                 </a>
             </div> --}}
-    </div> --}}
-    </div>
+    {{-- </div> --}}
 </aside>

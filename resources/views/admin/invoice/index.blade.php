@@ -5,15 +5,24 @@
     <div class="lg:flex gap-x-4">
         <div class="lg:w-full" id="invoiceContainer">
             <div class="flex justify-between items-center">
-                <select id="invoiceSelect"
-                    class="block max-w-auto p-2 text-sm text-gray-900 border border-gray-300 rounded-lg  focus:ring-primary focus:border-primary">
-                    <option value="all">Semua Tagihan</option>
-                    <option value="yesterday">Kemarin</option>
-                    <option value="day">Harian</option>
-                    <option value="week">Mingguan</option>
-                    <option value="month">Bulanan</option>
-                    <option value="year">Tahunan</option>
-                </select>
+                <div class="flex gap-x-3">
+                    <select id="invoiceSelect"
+                        class="block max-w-auto p-2 text-sm text-gray-900 border border-gray-300 rounded-lg  focus:ring-primary focus:border-primary">
+                        <option value="all">Semua Tagihan</option>
+                        <option value="yesterday">Kemarin</option>
+                        <option value="day">Harian</option>
+                        <option value="week">Mingguan</option>
+                        <option value="month">Bulanan</option>
+                        <option value="year">Tahunan</option>
+                    </select>
+                    <select id="invoiceStatusSelect"
+                        class="block max-w-auto p-2 text-sm text-gray-900 border border-gray-300 rounded-lg  focus:ring-primary focus:border-primary">
+                        <option value="all">Semua Jenis</option>
+                        <option value="1">Menunggu</option>
+                        <option value="2">Berhasil</option>
+                        <option value="3">Gagal</option>
+                    </select>
+                </div>
                 <div class="flex gap-x-3">
                     <div class="relative">
                         <input type="text" id="search"
@@ -29,9 +38,11 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-x-3 gap-y-4 mt-5 cursor-pointer" id="invoiceList">
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-x-3 gap-y-4 mt-5 cursor-pointer"
+                id="invoiceList">
                 @forelse ($invoices as $invoice)
                     <div id="invoice-{{ $invoice->id }}" onclick="detailInvoice({{ $invoice->id }})"
+                        data-status="{{ $invoice->status }}"
                         class="w-full bg-white p-4 hover:border hover:border-white-300 rounded-2xl shadow-xl hover:shadow-2xl">
                         <div class="flex justify-between items-center mb-1">
                             <span class="font-semibold text-md">
@@ -201,10 +212,10 @@
                         $('label.modal #btnWaiting').attr('onclick', 'updateStatus(' + id + ', 1)');
 
                         // check status
-                        if(data.status == 1) {
+                        if (data.status == 1) {
                             $('label.modal #btnWaiting').addClass('hidden');
                             $('label.modal #btnSuccess').removeClass('hidden');
-                        } else if(data.status == 2) {
+                        } else if (data.status == 2) {
                             $('label.modal #btnSuccess').addClass('hidden');
                             $('label.modal #btnWaiting').removeClass('hidden');
                         } else {
@@ -247,10 +258,18 @@
                         }
                     });
                 });
+                $('#invoiceStatusSelect').on('change', function() {
+                    // filter invoiceList by status
+                    let value = $(this).val();
+                    console.log(value);
+                    $('#invoiceList .bg-white').filter(function() {
+                        $(this).toggle($(this).data('status') == value || value == 'all')
+                    });
+                });
                 $('#search').on('keyup', function() {
                     let value = $(this).val();
-                    $('#invoiceList .bg-white').filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    $('#invoiceList').filter(function() {
+                        $(this).toggle($(this).data('search') == value || value == '')
                     });
                 });
             });

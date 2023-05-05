@@ -95,3 +95,9 @@ Breadcrumbs::for('material.edit', function(BreadCrumbTrail $trail, $data) {
     $trail->parent('material');
     $trail->push($data->transaction_code, route('admin.material.edit', $data->id));
 });
+
+// Reservation Config
+Breadcrumbs::for('reservation-config', function(BreadCrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Konfigurasi Reservasi', route('admin.reservation-config.index'));
+});

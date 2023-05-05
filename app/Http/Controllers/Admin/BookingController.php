@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Interfaces\BookingInterface;
 use App\Interfaces\CatalogManagementInterface;
+use App\Models\ReservationConfig;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Svg\Tag\Rect;
@@ -23,7 +24,8 @@ class BookingController extends Controller
     public function index()
     {
         return view('admin.booking.index', [
-            'bookings' => $this->booking->get()
+            'bookings' => $this->booking->get(),
+            'bookingStatus' => ReservationConfig::first()->is_active
         ]);
     }
 
