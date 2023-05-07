@@ -28,7 +28,11 @@ class AuthenticatedSessionController extends Controller
         try {
             $request->authenticate();
             $request->session()->regenerate();
-            return redirect()->intended(RouteServiceProvider::HOME);
+            if (Auth::user()->role == 3) {
+                return redirect()->intended(RouteServiceProvider::CUSTOMER);
+            } else {
+                return redirect()->intended(RouteServiceProvider::HOME);
+            }
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Email atau password salah');
         }

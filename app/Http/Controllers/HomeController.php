@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\CatalogManagementInterface;
+use App\Models\DeliveryOrder;
+use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,7 +26,10 @@ class HomeController extends Controller
     public function menu()
     {
         return view('user.menu', [
-            'products' => $this->menu->getWithTotalSales()
+            'products' => $this->menu->getWithTotalSales(),
+            'setting' => Setting::first(),
+            'invoice' => DeliveryOrder::generateInvoice(),
+            'customer' => Auth::user()
         ]);
     }
 

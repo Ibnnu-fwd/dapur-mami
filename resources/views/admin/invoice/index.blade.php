@@ -4,7 +4,7 @@
 
     <div class="lg:flex gap-x-4">
         <div class="lg:w-full" id="invoiceContainer">
-            <div class="flex justify-between items-center">
+            <div class="lg:flex justify-between items-center">
                 <div class="flex gap-x-3">
                     <select id="invoiceSelect"
                         class="block max-w-auto p-2 text-sm text-gray-900 border border-gray-300 rounded-lg  focus:ring-primary focus:border-primary">
@@ -72,7 +72,7 @@
                         </div>
                         <div class="border-t border-gray-200 my-4"></div>
                         <div class="flex justify-between items-center">
-                            <span class="text-gray-500">Total</span>
+                            <span class="">Total</span>
                             <span class="font-semibold text-md">Rp.
                                 {{ number_format($invoice->total_payment, 0, ',', '.') }}</span>
                         </div>
@@ -227,6 +227,7 @@
             }
 
             function detailInvoice(id) {
+                event.preventDefault();
                 $('#invoiceContainer').removeClass('lg:w-full').addClass('lg:w-3/5');
                 $('#invoiceList').removeClass('xl:grid-cols-4').addClass('xl:grid-cols-3');
                 $('#detailOrder').removeClass('hidden');

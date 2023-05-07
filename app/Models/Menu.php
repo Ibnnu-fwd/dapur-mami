@@ -70,4 +70,9 @@ class Menu extends Model
     {
         return $this->hasMany(TransactionDetail::class, 'menus_id', 'id');
     }
+
+    public function detailDeliveryOrders()
+    {
+        return $this->hasMany(DetailDeliveryOrder::class, 'menu_id', 'id');
+    }
 }

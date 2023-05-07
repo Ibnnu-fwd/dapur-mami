@@ -11,7 +11,7 @@
 <aside id="logo-sidebar"
     class="fixed top-0 left-0 z-40 w-64 h-screen border border-r transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar">
-    <div class="h-full px-4 py-8 overflow-y-auto">
+    <div class="h-full px-4 py-8 overflow-y-auto bg-white">
         {{-- <a href="#" class="flex items-center pl-2.5 mb-8">
             <img src="{{ asset('assets/images/logo.png') }}" class="mr-3 sm:h-8" alt="Dapur Mami logo" />
         </a> --}}

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\TransactionExport;
 use App\Http\Controllers\Controller;
 use App\Interfaces\InvoiceInterface;
-use App\Models\Transaction;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Dompdf\Adapter\PDFLib;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
+
+use function Pest\Laravel\json;
 
 class InvoiceController extends Controller
 {
@@ -110,7 +109,8 @@ class InvoiceController extends Controller
         ])->setOption('page-size', 'B5')->setOption('margin-top', 0)->setOption('margin-bottom', 0)->setOption('margin-left', 0)->setOption('margin-right', 0)->stream('invoice-' . $invoice->transaction_code . '.pdf');
     }
 
-    public function detail($id) {
+    public function detail($id)
+    {
         return $this->invoice->show($id);
     }
 
@@ -130,42 +130,44 @@ class InvoiceController extends Controller
         }
     }
 
-    public function transactionHistory(Request $request) {
-        if($request->ajax()) {
+    public function transactionHistory(Request $request)
+    {
+        if ($request->ajax()) {
             return datatables()
-            ->of($this->invoice->getAll())
-            ->addColumn('invoice', function($data) {
-                return $data->transaction_code;
-            })
-            ->addColumn('customer', function($data) {
-                return $data->customer_name ?? $data->event_name;
-            })
-            ->addColumn('menu', function($data) {
-                return view('admin.invoice.columns.menu', [
-                    'menus' => $data->transactionDetails
-                ]);
-            })
-            ->addColumn('quantity', function($data) {
-                return view('admin.invoice.columns.quantity', [
-                    'menus' => $data->transactionDetails
-                ]);
-            })
-            ->addColumn('total', function($data) {
-                return 'Rp. ' . number_format($data->total_payment, 0, ',', '.');
-            })
-            ->addColumn('status', function($data) {
-                return view('admin.invoice.columns.status', [
-                    'status' => $data->status
-                ]);
-            })
-            ->addColumn('created_at', function($data) {
-                return $data->created_at->format('d-m-Y H:i');
-            })
-            ->addColumn('user', function($data) {
-                return $data->user->first_name;
-            })
-            ->addIndexColumn()
-            ->make(true);
+                ->of($this->invoice->getAll())
+                ->addColumn('invoice', function ($data) {
+                    return $data->transaction_code;
+                })
+                ->addColumn('customer', function ($data) {
+                    return $data->customer_name ?? $data->event_name;
+                })
+                ->addColumn('menu', function ($data) {
+                    return view('admin.invoice.columns.menu', [
+                        'menus' => $data->transactionDetails
+                    ]);
+                })
+                ->addColumn('quantity', function ($data) {
+                    return view('admin.invoice.columns.quantity', [
+                        'menus' => $data->transactionDetails
+                    ]);
+                })
+                ->addColumn('total', function ($data) {
+                    return 'Rp. ' . number_format($data->total_payment, 0, ',', '.');
+                })
+                ->addColumn('status', function ($data) {
+                    return view('admin.invoice.columns.status', [
+                        'status' => $data->status
+                    ]);
+                })
+                ->addColumn('created_at', function ($data) {
+                    setlocale(LC_TIME, 'id_ID');
+                    return Carbon::parse($data->created_at)->formatLocalized('%d %B %Y');
+                })
+                ->addColumn('user', function ($data) {
+                    return $data->user->first_name;
+                })
+                ->addIndexColumn()
+                ->make(true);
         }
 
         return view('admin.invoice.transaction-history', [
@@ -184,5 +186,30 @@ class InvoiceController extends Controller
                 '12' => 'Desember',
             ],
         ]);
+    }
+
+    public function filterByDateRange(Request $request)
+    {
+        $invoices = $this->invoice->filterByDateRange($request->start_date, $request->end_date);
+        $invoices = $invoices->map(function ($invoice) {
+            return [
+                'invoice' => $invoice->transaction_code,
+                'customer' => $invoice->customer_name ?? $invoice->event_name,
+                'menu' => view('admin.invoice.columns.menu', [
+                    'menus' => $invoice->transactionDetails
+                ])->render(),
+                'quantity' => view('admin.invoice.columns.quantity', [
+                    'menus' => $invoice->transactionDetails
+                ])->render(),
+                'total' => 'Rp. ' . number_format($invoice->total_payment, 0, ',', '.'),
+                'status' => view('admin.invoice.columns.status', [
+                    'status' => $invoice->status
+                ])->render(),
+                'created_at' => Carbon::parse($invoice->created_at)->formatLocalized('%d %B %Y'),
+                'user' => $invoice->user->first_name,
+            ];
+        });
+
+        return response()->json($invoices);
     }
 }

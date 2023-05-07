@@ -381,7 +381,7 @@
                                 title: 'Berhasil',
                                 text: 'Pesanan berhasil dibuat!',
                             })
-                            location.reload();
+                            window.location.href = "{{ route('admin.invoice.index') }}";
                         } else {
                             Swal.fire({
                                 icon: 'error',

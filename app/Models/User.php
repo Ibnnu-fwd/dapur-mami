@@ -18,8 +18,9 @@ class User extends Authenticatable
         static::addGlobalScope(new HasActiveScope);
     }
 
-    const CASHIER_ROLE = 1;
-    const ADMIN_ROLE   = 2;
+    const CASHIER_ROLE    = 1;
+    const ADMIN_ROLE      = 2;
+    const CUSTOMER_ROLE   = 3;
 
     const ACTIVE_STATUS  = 1;
 

@@ -6,12 +6,12 @@
         <form action="{{ route('admin.booking.store') }}" method="POST">
             @csrf
             <p class="font-semibold text-lg mb-3">Informasi Acara</p>
-            <div class="grid grid-cols-2 gap-x-3">
+            <div class="xl:grid grid-cols-2 gap-x-3">
                 <x-input id="event_name" label="Nama Acara" placeholder="Masukan nama" name="event_name" type="text" />
                 <x-input-single-datepicker label="Tanggal Reservasi" id="booking_date" name="booking_date"
                     autocomplete="off" />
             </div>
-            <div class="grid grid-cols-2 gap-x-3">
+            <div class="xl:grid grid-cols-2 gap-x-3">
                 <x-input id="total_guest" label="Jumlah Tamu (Orang)" name="total_guest" type="number" />
                 <x-input id="booking_time" label="Waktu" placeholder="Masukan waktu" name="booking_time"
                     type="time" />
@@ -28,7 +28,7 @@
     <div class="flex gap-x-3 hidden" id="detailOrderForm">
         <div class="lg:w-full" id="listMenu">
             {{-- Menu Item --}}
-            <div class="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 mt-8" id="menuList">
+            <div class="xl:grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 mt-8" id="menuList">
                 @forelse ($menus as $menu)
                     <div onclick="addCart({{ $menu->id }} , {{ $menu->price }})" id="menu-{{ $menu->id }}"
                         class="w-full bg-white h-fit rounded-2xl shadow-xl hover:shadow-2xl">
@@ -462,7 +462,7 @@
                                 total_guest: reservationGuest
                             },
                             success: function(response) {
-                                if (response.data.isFull == true || response.data.isMaxBooking == true) {
+                                if (response.data.isFull == true || response.data.isMaxBooking == true && response.data.isAvailable == false) {
                                     Swal.fire({
                                         icon: 'error',
                                         title: 'Oops...',

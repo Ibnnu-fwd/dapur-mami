@@ -1,6 +1,6 @@
 @props(['id' => '', 'name' => '', 'label' => '', 'isFit' => true])
 
-<div class="form-control w-full {{ $isFit == true ? 'max-w-xs' : '' }}">
+<div class="form-control w-full {{ $isFit == true ? 'max-w-sm' : '' }}">
     <label class="label">
         <span class="label-text font-medium">{{ $label }}</span>
     </label>
