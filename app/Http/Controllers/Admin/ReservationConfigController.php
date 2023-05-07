@@ -45,8 +45,6 @@ class ReservationConfigController extends Controller
             'is_active' => 'required',
         ]);
 
-        // dd($request->all());
-
         try {
             ReservationConfig::find($id)->update([
                 'capacity' => $request->capacity,
@@ -103,6 +101,7 @@ class ReservationConfigController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => [
+                'isAvailable' => $reservation->isEmpty() ? true : false,
                 'reservationConfig' => $reservationConfig,
                 'reservation' => $reservation,
                 'totalGuest' => $totalGuest,

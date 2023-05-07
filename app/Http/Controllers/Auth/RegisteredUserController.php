@@ -48,15 +48,12 @@ class RegisteredUserController extends Controller
                 'address'    => $request->address,
                 'email'      => $request->email,
                 'password'   => password_hash($request->password, PASSWORD_DEFAULT),
-                'role'       => User::CASHIER_ROLE,
+                'role'       => User::CUSTOMER_ROLE,
                 'active'     => User::ACTIVE_STATUS,
             ]);
 
             event(new Registered($user));
-
-            Auth::login($user);
-
-            return redirect(RouteServiceProvider::HOME);
+            return redirect()->route('login')->with('success', 'Berhasil mendaftar, silahkan login');
         } catch (\Throwable $th) {
             dd($th->getMessage());
             return redirect()->back()->with('error', 'Gagal mendaftar');

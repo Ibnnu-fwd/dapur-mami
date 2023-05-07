@@ -10,4 +10,6 @@ interface InvoiceInterface {
     public function search($data);
     public function updateStatus($id, $data);
     public function getAll();
+    public function filterByMonth($month);
+    public function filterByDateRange($start, $end);
 }

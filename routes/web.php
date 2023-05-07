@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\CashierController;
 use App\Http\Controllers\Admin\CatalogManagementController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DeliveryOrderController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Admin\MenuController;
@@ -16,6 +17,7 @@ Route::get('login', function () {
     return view('auth.login');
 })->name('login');
 
+// Menu
 Route::get('menu/add-cart/{id}', [HomeController::class, 'addCart'])->name('user.menu.add-cart');
 Route::get('menu/sort-by-category', [HomeController::class, 'sortByCategory'])->name('user.menu.sort-by-category');
 Route::get('menu/sort-by-price', [HomeController::class, 'sortByPrice'])->name('user.menu.sort-by-price');
@@ -23,8 +25,12 @@ Route::get('menu', [HomeController::class, 'menu'])->name('user.menu');
 Route::get('/', [HomeController::class, 'index'])->name('user.home');
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
+    // Dashboard
     Route::get('/total-sales-type-of-menu', [DashboardController::class, 'totalSalesTypeOfMenu'])->name('dashboard.total-sales-type-of-menu');
     Route::get('/', DashboardController::class)->name('admin.dashboard');
+
+    // Delivery Order
+    Route::resource('delivery-order', DeliveryOrderController::class, ['as' => 'admin']);
 
     // Menu
     Route::get('menu/search', [MenuController::class, 'search'])->name('admin.menu.search');
@@ -32,6 +38,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('menu', MenuController::class, ['as' => 'admin']);
 
     // Invoice
+    Route::get('invoice/transaction-history/filter/date-range', [InvoiceController::class, 'filterByDateRange'])->name('admin.transaction-history.filter.date-range');
+    Route::get('invoice/transaction-history/filter/by-month', [InvoiceController::class, 'filterByMonth'])->name('admin.transaction-history.filter.by-month');
     Route::get('invoice/transaction-history/export', [InvoiceController::class, 'export'])->name('admin.transaction-history.export');
     Route::get('invoice/transaction-history', [InvoiceController::class, 'transactionHistory'])->name('admin.transaction-history');
     Route::post('invoice/update-status/{id}', [InvoiceController::class, 'updateStatus'])->name('admin.invoice.update-status');

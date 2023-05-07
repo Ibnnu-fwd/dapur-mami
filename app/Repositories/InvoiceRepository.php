@@ -133,4 +133,24 @@ class InvoiceRepository implements InvoiceInterface
     {
         return $this->transaction->with('transactionDetails')->get();
     }
+
+    public function filterByMonth($month)
+    {
+        return $this->transaction->with('transactionDetails')
+            ->whereMonth('created_at', $month)
+            ->get();
+    }
+
+    public function filterByDateRange($start, $end)
+    {
+        $start = date('Y-m-d', strtotime($start));
+        $end = date('Y-m-d', strtotime($end));
+
+        return $this->transaction->with('transactionDetails')
+        ->where([
+            ['created_at', '>=', $start],
+            ['created_at', '<=', $end]
+        ])
+        ->get();
+    }
 }

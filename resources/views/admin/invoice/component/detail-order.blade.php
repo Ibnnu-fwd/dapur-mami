@@ -87,21 +87,20 @@
     <div class="flex justify-between items-center">
         <span class="font-semibold">Diskon</span>
         <span class="font-semibold" id="transactionDiscount">
-            {{$invoice->discount ?? '-'}}</span>
+            {{ $invoice->discount ?? '-' }}</span>
     </div>
     <div class="flex justify-between items-center">
         <span class="font-semibold">Total</span>
         <span class="font-semibold" id="transactionTotalPayment">Rp.
             {{ number_format($invoice->total_payment, 0, ',', '.') }}</span>
     </div>
-    <div class="sm:block xl:grid grid-cols-2 mt-4 gap-x-2">
-        <button
-            class="bg-gray-200 px-4 py-3 rounded-lg text-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-            Batal
-        </button>
-        <a href="{{ route('admin.invoice.print', $invoice->id) }}" target="_blank"
-            class="bg-gray-800 text-white px-4 py-3 text-center rounded-lg text-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-            Cetak Bukti Pembayaran
-        </a>
+    <div class="lg:grid grid-cols-2 mt-4 gap-x-3">
+            <x-link-button class="w-full justify-center" color="red">
+                Batal
+            </x-link-button>
+        <x-link-button route="{{ route('admin.invoice.print', $invoice->id) }}" target="_blank" color="gray"
+            class="w-full justify-center">
+            Cetak
+        </x-link-button>
     </div>
 </x-card-container>

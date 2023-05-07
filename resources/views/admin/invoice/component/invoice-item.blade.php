@@ -29,7 +29,7 @@
         </div>
         <div class="border-t border-gray-200 my-4"></div>
         <div class="flex justify-between items-center">
-            <span class="text-gray-500">Total</span>
+            <span class="">Total</span>
             <span class="font-semibold text-md">Rp.
                 {{ number_format($invoice->total_payment, 0, ',', '.') }}</span>
         </div>

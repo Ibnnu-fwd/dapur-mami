@@ -15,8 +15,8 @@
     </div>
 
     <div class="flex gap-x-4">
-        <x-input id="quantity-{{ $menu->id }}" onkeyup="hideConfirmationButton()" name="quantity" type="number" class="w-15" value="0"
-            min="0" max="100" />
+        <x-input id="quantity-{{ $menu->id }}" onkeyup="hideConfirmationButton()" name="quantity" type="number" class="w-15" value="1"
+            min="1" max="100" />
         <button onclick="removeCartItem('{{ $menu->id }}')">
             <i class="fas fa-trash-alt text-error"></i>
         </button>

@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\BookingInterface::class, \App\Repositories\BookingRepository::class);
         $this->app->bind(\App\Interfaces\UserInterface::class, \App\Repositories\UserRepository::class);
         $this->app->bind(\App\Interfaces\MaterialInterface::class, \App\Repositories\MaterialRepository::class);
+        $this->app->bind(\App\Interfaces\DeliveryOrderInterface::class, \App\Repositories\DeliveryOrderRepository::class);
     }
 
     /**
