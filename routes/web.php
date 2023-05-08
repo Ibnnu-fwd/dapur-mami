@@ -30,6 +30,14 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/', DashboardController::class)->name('admin.dashboard');
 
     // Delivery Order
+    Route::post('delivery-order/cancel-order', [DeliveryOrderController::class, 'cancelOrder'])->name('admin.delivery-order.cancel-order');
+    Route::post('delivery-order/confirm-payment', [DeliveryOrderController::class, 'confirmPayment'])->name('admin.delivery-order.confirm-payment');
+    Route::get('delivery-order/list', [DeliveryOrderController::class, 'list'])->name('admin.delivery-order.list');
+    Route::get('delivery-order/filter/sort-by', [DeliveryOrderController::class, 'filterBySortBy'])->name('admin.delivery-order.filter.sort-by');
+    Route::get('delivery-order/filter/period', [DeliveryOrderController::class, 'filterByPeriod'])->name('admin.delivery-order.filter.period');
+    Route::get('delivery-order/filter/range-date', [DeliveryOrderController::class, 'filterByRangeDate'])->name('admin.delivery-order.filter.range-date');
+    Route::get('delivery-order/filter/status', [DeliveryOrderController::class, 'filterByStatus'])->name('admin.delivery-order.filter.status');
+    Route::get('delivery-order/search', [DeliveryOrderController::class, 'search'])->name('admin.delivery-order.search');
     Route::resource('delivery-order', DeliveryOrderController::class, ['as' => 'admin']);
 
     // Menu
