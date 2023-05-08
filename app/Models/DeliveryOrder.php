@@ -31,7 +31,9 @@ class DeliveryOrder extends Model
         'delivery_phone',
         'delivery_note',
         'updated_by',
-        'payment_proof'
+        'payment_proof',
+        'payment_at',
+        'expired_at'
     ];
 
     public function detailDeliveryOrders()

@@ -12,7 +12,7 @@
                 <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
                     Rasakan makanan penuh kasih dan sentuhan rasa memukau di tempat kami. Selamat datang!
                 </p>
-                <a href="#"
+                <a href="{{route('user.menu')}}"
                     class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-900">
                     Jelajahi Menu
                     <i class="fas fa-arrow-right ml-2"></i>
@@ -113,6 +113,7 @@
             </div>
         </div>
     </section>
+
     <section class="bg-white dark:bg-gray-900">
         <div class="gap-16 items-center pt-6 pb-6 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-10 lg:px-6">
             <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">

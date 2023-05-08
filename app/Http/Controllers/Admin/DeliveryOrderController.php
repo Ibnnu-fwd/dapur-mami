@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\DeliveryOrderInterface;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class DeliveryOrderController extends Controller
@@ -18,6 +19,14 @@ class DeliveryOrderController extends Controller
     public function index()
     {
         return view('user.delivery-order.index', [
+            'transactions' => $this->deliveryOrder->getByUserId(auth()->user()->id),
+            'setting' => Setting::first()
+        ]);
+    }
+
+    public function list()
+    {
+        return view('user.delivery-order.component.order-item', [
             'transactions' => $this->deliveryOrder->getByUserId(auth()->user()->id)
         ]);
     }
@@ -54,12 +63,9 @@ class DeliveryOrderController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        return response()->json($this->deliveryOrder->find($id));
     }
 
     /**
@@ -84,5 +90,74 @@ class DeliveryOrderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    // Custom Function
+    public function search(Request $request)
+    {
+        return view('user.delivery-order.component.order-item', [
+            'transactions' => $this->deliveryOrder->search($request->keyword)
+        ])->render();
+    }
+
+    public function filterByStatus(Request $request)
+    {
+        return view('user.delivery-order.component.order-item', [
+            'transactions' => $this->deliveryOrder->filterByStatus($request->status)
+        ])->render();
+    }
+
+    public function filterByRangeDate(Request $request)
+    {
+        return view('user.delivery-order.component.order-item', [
+            'transactions' => $this->deliveryOrder->filterByRangeDate($request->start_date, $request->end_date)
+        ])->render();
+    }
+
+    public function filterByPeriod(Request $request)
+    {
+        return view('user.delivery-order.component.order-item', [
+            'transactions' => $this->deliveryOrder->filterByPeriod($request->period)
+        ])->render();
+    }
+
+    public function filterBySortBy(Request $request)
+    {
+        return view('user.delivery-order.component.order-item', [
+            'transactions' => $this->deliveryOrder->filterBySortBy($request->sort_by)
+        ])->render();
+    }
+
+    public function confirmPayment(Request $request)
+    {
+        try {
+            $this->deliveryOrder->confirmPayment($request->id, $request->proof);
+            return response()->json([
+                'status'    => 'success',
+                'message'   => 'Konfirmasi pembayaran berhasil dilakukan!'
+            ]);
+        } catch (\Throwable $th) {
+            dd($th);
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $th->getMessage()
+            ]);
+        }
+    }
+
+    public function cancelOrder(Request $request)
+    {
+        try {
+            $this->deliveryOrder->cancelOrder($request->id);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Pesanan berhasil dibatalkan!'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ]);
+        }
     }
 }
