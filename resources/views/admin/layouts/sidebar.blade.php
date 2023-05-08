@@ -45,10 +45,14 @@
                 <x-sidebar-menu name="Manajemen Kasir" icon="fas fa-user-tie"
                     route="{{ route('admin.cashier.index') }}" active="{{ request()->routeIs('admin.cashier.*') }}" />
             @endif
-            {{-- Catatan Transaksi --}}
-            <x-sidebar-menu name="Riwayat Transaksi" icon="fas fa-history"
+            {{-- Riwayat Pemesanan --}}
+            <x-sidebar-menu name="Riwayat Pemesanan" icon="fas fa-history"
                 route="{{ route('admin.transaction-history') }}"
                 active="{{ request()->routeIs('admin.transaction-history') }}" />
+            {{-- Riwayat Pengiriman --}}
+            <x-sidebar-menu name="Riwayat Pengiriman" icon="fas fa-history"
+                route="{{ route('admin.delivery-order-history.index') }}"
+                active="{{ request()->routeIs('admin.delivery-order-history.*') }}" />
             {{-- Manajemen Bahan --}}
             <x-sidebar-menu name="Manajemen Bahan" icon="fas fa-book-open" route="{{ route('admin.material.index') }}"
                 active="{{ request()->routeIs('admin.material.*') }}" />

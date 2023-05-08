@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CashierController;
 use App\Http\Controllers\Admin\CatalogManagementController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DeliveryOrderController;
+use App\Http\Controllers\Admin\DeliveryOrderHistoryController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Admin\MenuController;
@@ -28,6 +29,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     // Dashboard
     Route::get('/total-sales-type-of-menu', [DashboardController::class, 'totalSalesTypeOfMenu'])->name('dashboard.total-sales-type-of-menu');
     Route::get('/', DashboardController::class)->name('admin.dashboard');
+
+    // Delivery Order History
+    Route::post('delivery-order-history/status/change', [DeliveryOrderHistoryController::class, 'changeStatus'])->name('admin.delivery-order-history.status.change');
+    Route::resource('delivery-order-history', DeliveryOrderHistoryController::class, ['as' => 'admin']);
 
     // Delivery Order
     Route::post('delivery-order/cancel-order', [DeliveryOrderController::class, 'cancelOrder'])->name('admin.delivery-order.cancel-order');

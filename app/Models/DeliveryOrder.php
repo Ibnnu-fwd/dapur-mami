@@ -17,6 +17,14 @@ class DeliveryOrder extends Model
     CONST STATUS_DELIVERED          = 3;
     CONST STATUS_CANCELED           = 4;
 
+    CONST STATUS = [
+        0 => 'Menunggu Pembayaran',
+        1 => 'Pembayaran Dikonfirmasi',
+        2 => 'Pesanan Dikirim',
+        3 => 'Pesanan Diterima',
+        4 => 'Pesanan Dibatalkan'
+    ];
+
     protected $fillable = [
         'users_id',
         'invoice',

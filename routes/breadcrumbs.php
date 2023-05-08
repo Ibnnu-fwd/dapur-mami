@@ -101,3 +101,9 @@ Breadcrumbs::for('reservation-config', function(BreadCrumbTrail $trail) {
     $trail->parent('dashboard');
     $trail->push('Konfigurasi Reservasi', route('admin.reservation-config.index'));
 });
+
+// Delivery Order History
+Breadcrumbs::for('delivery-order-history', function(BreadCrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Riwayat Pengiriman', route('admin.delivery-order-history.index'));
+});
