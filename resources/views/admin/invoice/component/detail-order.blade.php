@@ -13,11 +13,13 @@
                 {{ $invoice->getStatus() }}
             </span>
         </div>
-        <label for="editStatusModal" onclick="editStatus({{ $invoice->id }})"
-            class="cursor-pointer bg-gray-600 text-white px-3 py-2 text-center rounded-lg text-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray">
-            <i class="fas fa-edit mr-2"></i>
-            Ubah Status
-        </label>
+        @if ($invoice->status == 0)
+            <label for="editStatusModal" onclick="editStatus({{ $invoice->id }})"
+                class="cursor-pointer bg-gray-600 text-white px-3 py-2 text-center rounded-lg text-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray">
+                <i class="fas fa-edit mr-2"></i>
+                Ubah Status
+            </label>
+        @endif
     </div>
 
     <p class="font-semibold my-4">Detail</p>
@@ -95,9 +97,9 @@
             {{ number_format($invoice->total_payment, 0, ',', '.') }}</span>
     </div>
     <div class="lg:grid grid-cols-2 mt-4 gap-x-3">
-            <x-link-button class="w-full justify-center" color="red">
-                Batal
-            </x-link-button>
+        <x-link-button class="w-full justify-center" color="red">
+            Batal
+        </x-link-button>
         <x-link-button route="{{ route('admin.invoice.print', $invoice->id) }}" target="_blank" color="gray"
             class="w-full justify-center">
             Cetak
