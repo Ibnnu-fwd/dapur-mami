@@ -101,6 +101,45 @@
         </div>
     </section>
 
+    {{-- Popular Food --}}
+    <section class="bg-white dark:bg-gray-900">
+        <div class="max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-16 lg:py-32 grid grid-cols-12">
+            <div class="col-span-4">
+                <h1 class="max-w-2xl mb-4 text-3xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-4xl">
+                    Menu Favorit Kami
+                </h1>
+                <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-lg">
+                    Berikut adalah menu favorit kami yang paling banyak dipesan oleh pelanggan kami.
+                </p>
+                <a href="{{ route('user.menu') }}"
+                    class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-700 hover:text-white">
+                    Jelajahi Menu
+                </a>
+            </div>
+            <div class="carousel carousel-center w-full p-4 space-x-4 rounded-box h-96 col-span-8">
+                @foreach ($favoriteMenu as $data)
+                    <div class="carousel-item block">
+                        <div class="avatar">
+                            <div class="w-64 h-64 rounded rounded-lg">
+                                <img
+                                    src="{{ $data->menu->image ? asset($data->menu->image) : asset('images/menu/default.jpg') }}" />
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <a href="{{ route('user.menu') }}" class="font-medium mt-6" data-carousel-title>
+                                {{ $data->menu->name }}
+                            </a>
+                            <i class="fas fa-chevron-right ml-4 mt-6 fa-sm" data-carousel-next></i>
+                        </div>
+                        <span class="text-sm font-light">
+                            <i class="fas fa-bell-concierge text-yellow-500"></i>
+                            Terjual {{ $data->total_quantity }} item</span>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     {{-- Booking --}}
     <section class="bg-white dark:bg-gray-900">
         <div class="pt-16 pb-8 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
@@ -130,17 +169,20 @@
                 </p>
             </div>
             <div class="grid grid-cols-2 gap-4 mt-8">
-                <img class="w-full rounded-lg" src="{{ asset('assets/images/gathering1.jpg') }}" alt="office content 1">
+                <img class="w-full rounded-lg" src="{{ asset('assets/images/gathering1.jpg') }}"
+                    alt="office content 1">
                 <img class="mt-4 w-full lg:mt-10 rounded-lg" src="{{ asset('assets/images/gathering2.jpg') }}"
                     alt="office content 2">
             </div>
         </div>
     </section>
     <section class="bg-white dark:bg-gray-900">
-        <div class="gap-16 items-center pt-6 pb-6 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-10 lg:px-6">
+        <div
+            class="gap-16 items-center pt-6 pb-6 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-10 lg:px-6">
 
             <div class="grid grid-cols-2 gap-4 mt-8">
-                <img class="w-full rounded-lg" src="{{ asset('assets/images/deliveryorder1.jpg') }}" alt="office content 1">
+                <img class="w-full rounded-lg" src="{{ asset('assets/images/deliveryorder1.jpg') }}"
+                    alt="office content 1">
                 <img class="mt-4 w-full lg:mt-10 rounded-lg" src="{{ asset('assets/images/deliveryorder2.jpg') }}"
                     alt="office content 2">
             </div>
@@ -148,7 +190,9 @@
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
                     Pesan Antar</h2>
                 <p class="mb-4">
-                    Fitur pesan antar memungkinkan pengguna melakukan proses pemesanan makanan dan minuman secara online. Pengguna hanya perlu melakukan proses konfirmasi pembayaran, dan makanan akan diantar ke alamat yang diinginkan.
+                    Fitur pesan antar memungkinkan pengguna melakukan proses pemesanan makanan dan minuman secara
+                    online. Pengguna hanya perlu melakukan proses konfirmasi pembayaran, dan makanan akan diantar ke
+                    alamat yang diinginkan.
                     <br><br>
                     Pengguna dapat melakukan tracking pada makanan yang diantar
                 </p>
@@ -157,4 +201,9 @@
     </section>
 
     <x-user-footer />
+
+    @push('js-internet')
+        <script>
+        </script>
+    @endpush
 </x-guest-layout>

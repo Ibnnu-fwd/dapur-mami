@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\CatalogManagementInterface;
 use App\Models\DeliveryOrder;
+use App\Models\Menu;
 use App\Models\Setting;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -20,7 +23,26 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('user.index');
+        // dd($this->favoriteMenu());
+        return view('user.index', [
+            'favoriteMenu'         => $this->favoriteMenu(),
+        ]);
+    }
+
+    public function favoriteMenu()
+    {
+        // find favorite menu by count menus_id in transaction_details and sum quantity, make limit 5 menu
+        $favoriteMenu = TransactionDetail::select('menus_id', DB::raw('sum(quantity) as total_quantity'))
+            ->groupBy('menus_id')
+            ->orderBy('total_quantity', 'desc')
+            ->get();
+
+        // get menu detail
+        foreach ($favoriteMenu as $menu) {
+            $menu->menu = Menu::find($menu->menus_id);
+        }
+
+        return $favoriteMenu;
     }
 
     public function menu()
