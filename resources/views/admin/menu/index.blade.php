@@ -27,7 +27,7 @@
                 </div>
             </div>
             {{-- Menu Item --}}
-            <div class="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 mt-8" id="menuList">
+            <div class="grid sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-x-4 gap-y-6 mt-8" id="menuList">
                 @forelse ($menus as $menu)
                     <div onclick="addCart({{ $menu->id }} , {{ $menu->price }})" id="menu-{{ $menu->id }}"
                         class="w-full bg-white h-fit rounded-2xl shadow-xl hover:shadow-2xl">
