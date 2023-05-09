@@ -172,17 +172,4 @@ class DeliveryOrderRepository implements DeliveryOrderInterface
             'status' => DeliveryOrder::STATUS_CANCELED
         ]);
     }
-
-    public function get()
-    {
-        return $this->deliveryOrder->with(['detailDeliveryOrders', 'user'])->orderBy('created_at', 'desc')->get();
-    }
-
-    public function changeStatus($data)
-    {
-        $deliveryOrder = $this->deliveryOrder->find($data['id']);
-        $deliveryOrder->update([
-            'status' => $data['status']
-        ]);
-    }
 }

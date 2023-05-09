@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Interfaces\SettingInterface;
-use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -11,12 +10,10 @@ use Illuminate\Support\Facades\Hash;
 class SettingRepository implements SettingInterface
 {
     private $user;
-    private $setting;
 
-    public function __construct(User $user, Setting $setting)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->setting = $setting;
     }
 
     public function update(array $data, string $id): bool
@@ -58,11 +55,5 @@ class SettingRepository implements SettingInterface
         $user = $this->user->find(auth()->user()->id);
         $user->password = password_hash($password, PASSWORD_DEFAULT);
         return $user->save();
-    }
-
-    public function configurationStoreUpdate($data)
-    {
-        $setting = $this->setting->first();
-        $setting->update($data);
     }
 }

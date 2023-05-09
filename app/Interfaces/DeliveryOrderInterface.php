@@ -13,8 +13,4 @@ interface DeliveryOrderInterface {
     public function filterBySortBy($sort);
     public function confirmPayment($id, $proof);
     public function cancelOrder($id);
-
-    // Delivery Order History
-    public function get();
-    public function changeStatus($data);
 }

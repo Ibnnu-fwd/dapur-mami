@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\SettingInterface;
-use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -96,23 +95,6 @@ class SettingController extends Controller
             return redirect()->back()->with('success', 'Password berhasil diperbarui');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Password gagal diperbarui');
-        }
-    }
-
-    public function configurationStore()
-    {
-        return view('admin.setting.store.index', [
-            'setting' => Setting::first()
-        ]);
-    }
-
-    public function configurationStoreUpdate(Request $request)
-    {
-        try {
-            $this->setting->configurationStoreUpdate($request->all());
-            return redirect()->back()->with('success', 'Konfigurasi berhasil diperbarui');
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Konfigurasi gagal diperbarui');
         }
     }
 }

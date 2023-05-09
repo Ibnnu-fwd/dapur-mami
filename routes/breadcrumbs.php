@@ -21,7 +21,7 @@ Breadcrumbs::for('invoice', function(BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('transaction-history', function(BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push('Riwayat Pemesanan', route('admin.transaction-history'));
+    $trail->push('Riwayat Transaksi', route('admin.transaction-history'));
 });
 
 // Setting
@@ -100,16 +100,4 @@ Breadcrumbs::for('material.edit', function(BreadCrumbTrail $trail, $data) {
 Breadcrumbs::for('reservation-config', function(BreadCrumbTrail $trail) {
     $trail->parent('dashboard');
     $trail->push('Konfigurasi Reservasi', route('admin.reservation-config.index'));
-});
-
-// Delivery Order History
-Breadcrumbs::for('delivery-order-history', function(BreadCrumbTrail $trail) {
-    $trail->parent('dashboard');
-    $trail->push('Riwayat Pengiriman', route('admin.delivery-order-history.index'));
-});
-
-// Setting Configuration Store
-Breadcrumbs::for('setting.configuration-store', function(BreadCrumbTrail $trail) {
-    $trail->parent('dashboard');
-    $trail->push('Konfigurasi Toko', route('admin.configuration-store'));
 });

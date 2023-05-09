@@ -40,16 +40,7 @@
         #transactionTable_filter {
             margin-bottom: 10px;
         }
-
-        /* set width of scroll bar */
-        ::-webkit-scrollbar {
-            width: 0px;
-        }
     </style>
-
-    <!-- Toastr -->
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
 </head>
 
@@ -98,37 +89,6 @@
 
     <!-- Chart Js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
-    <!-- Pusher -->
-    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
-    <script>
-        // Enable pusher logging - don't include this in production
-        // Pusher.logToConsole = true;
-
-        var pusher = new Pusher('2f313d094d056ab959ee', {
-            cluster: 'ap1'
-        });
-
-        var channel = pusher.subscribe('popup-channel');
-        channel.bind('new-order', function(data) {
-            toastr.success('Pesanan baru', JSON.stringify(data.invoice), {
-                timeOut: 5000,
-                closeButton: true,
-                progressBar: true,
-                positionClass: 'toast-top-right'
-            });
-        });
-        channel.bind('new-user-login', function(data) {
-            toastr.success(JSON.stringify(data.name), 'New User Login', {
-                timeOut: 5000,
-                closeButton: true,
-                progressBar: true,
-                positionClass: 'toast-top-right'
-            });
-        });
-    </script>
 
     <script>
         Chart.defaults.font.family = 'Lexend Deca';

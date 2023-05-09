@@ -14,14 +14,11 @@
                 <a href="{{route('user.menu')}}" class="mr-4 hover:underline md:mr-6 ">Menu</a>
             </li>
             <li>
-                <a href="#" class="mr-4 hover:underline md:mr-6 ">
-                    {{-- soon badge --}}
-                    Pengumuman <span class="px-2 py-1 ml-2 text-xs font-semibold text-white bg-red-500 rounded-full">Soon</span>
-                </a>
+                <a href="#" class="mr-4 hover:underline md:mr-6 ">Pengumuman</a>
             </li>
-            {{-- <li>
+            <li>
                 <a href="#" class="mr-4 hover:underline md:mr-6 ">Kontak Kami</a>
-            </li> --}}
+            </li>
         </ul>
         <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="#"
                 class="hover:underline">Suka Maju™</a>. All Rights Reserved.</span>

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-breadcrumbs name="transaction-history" />
-    <h1 class="font-semibold text-2xl my-8">Riwayat Pemesanan</h1>
+    <h1 class="font-semibold text-2xl my-8">Riwayat Transaksi</h1>
 
     <x-card-container>
         <h1 class="mb-4">Filter Transaksi</h1>

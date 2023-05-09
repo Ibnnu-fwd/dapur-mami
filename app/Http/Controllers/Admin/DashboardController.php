@@ -14,32 +14,32 @@ class DashboardController extends Controller
 {
     public function __invoke(Request $request)
     {
-        if ($request->ajax()) {
+        if($request->ajax()) {
             return datatables()
-                ->of($this->transactionToday())
-                ->addColumn('customer', function ($data) {
-                    return $data->customer_name ?? $data->event_name;
-                })
-                ->addColumn('menu', function ($data) {
-                    return view('admin.dashboard.columns.menu', ['transactionDetails' => $data->transactionDetails]);
-                })
-                ->addColumn('invoice', function ($data) {
-                    return $data->transaction_code;
-                })
-                ->addColumn('order_number', function ($data) {
-                    return explode('-', $data->transaction_code)[2];
-                })
-                ->addColumn('total_payment', function ($data) {
-                    return 'Rp. ' . number_format($data->total_payment, 0, ',', '.');
-                })
-                ->addColumn('created_at', function ($data) {
-                    return $data->created_at->format('d-m-Y H:i');
-                })
-                ->addColumn('status', function ($data) {
-                    return $data->status == 1 ? 'Menunggu' : ($data->status == 2 ? 'Selesai' : 'Dibatalkan');
-                })
-                ->addIndexColumn()
-                ->make(true);
+            ->of($this->transactionToday())
+            ->addColumn('customer', function($data){
+                return $data->customer_name ?? $data->event_name;
+            })
+            ->addColumn('menu', function($data) {
+                return view('admin.dashboard.columns.menu', ['transactionDetails' => $data->transactionDetails]);
+            })
+            ->addColumn('invoice', function($data) {
+                return $data->transaction_code;
+            })
+            ->addColumn('order_number', function($data) {
+                return explode('-', $data->transaction_code)[2];
+            })
+            ->addColumn('total_payment', function($data) {
+                return 'Rp. '.number_format($data->total_payment, 0, ',', '.');
+            })
+            ->addColumn('created_at', function($data) {
+                return $data->created_at->format('d-m-Y H:i');
+            })
+            ->addColumn('status', function($data) {
+                return $data->status == 1 ? 'Menunggu' : ($data->status == 2 ? 'Selesai' : 'Dibatalkan');
+            })
+            ->addIndexColumn()
+            ->make(true);
         }
 
         return view('admin.dashboard.index', [
@@ -57,12 +57,11 @@ class DashboardController extends Controller
     // custom function
     public function totalSalesHourly()
     {
-
-        $sales1 = [];
-        $sales2 = [];
-        $sales3 = [];
-        $sales4 = [];
-        $sales5 = [];
+        $sales1 = []; // 17:00 - 18:00
+        $sales2 = []; // 18:00 - 19:00
+        $sales3 = []; // 19:00 - 20:00
+        $sales4 = []; // 20:00 - 21:00
+        $sales5 = []; // 21:00 - 22:00
 
         $transactions = TransactionDetail::all();
 
@@ -124,7 +123,7 @@ class DashboardController extends Controller
         $totalIncome = 0;
 
         if ($request->type == 'day') {
-            $transactions = TransactionDetail::whereDate('created_at', date('Y-m-d'))->get();
+            $transactions = TransactionDetail::where('created_at', '=', date('Y-m-d'))->get();
             // get total income
             foreach ($transactions as $transaction) {
                 $totalIncome += $transaction->quantity * $transaction->price;
@@ -136,6 +135,7 @@ class DashboardController extends Controller
             foreach ($transactions as $transaction) {
                 $totalIncome += $transaction->quantity * $transaction->price;
             }
+
         } elseif ($request->type == 'month') {
             $transactions = TransactionDetail::whereMonth('created_at', date('m'))->get();
             // get total income
@@ -188,8 +188,7 @@ class DashboardController extends Controller
         ];
     }
 
-    public function totalOrder()
-    {
+    public function totalOrder() {
         $transactions = TransactionDetail::all();
         $totalOrder = 0;
         $totalOrderToday = 0;
@@ -210,20 +209,15 @@ class DashboardController extends Controller
         ];
     }
 
-    public function totalCustomer()
-    {
-        $transactions = Transaction::all();
-        $totalOrder = $transactions->where('customer_name', '!=', null)->count();
-        $totalGuestReservation = $transactions->where('customer_name', null)->sum('total_guest');
-        $totalCustomer = $totalOrder + $totalGuestReservation;
+    public function totalCustomer() {
+        $totalCustomer = Transaction::all()->count();
+        $totalCustomer += Transaction::all()->sum('total_guest');
 
-        // get new customer today by count customer_name in transactions
-        $totalCustomerToday = Transaction::whereDate('created_at', date('Y-m-d'))->where('customer_name', '!=', null)->count();
-        $totalGuestReservationToday = Transaction::whereDate('created_at', date('Y-m-d'))->where('customer_name', null)->sum('total_guest');
-        $totalCustomerToday = $totalCustomerToday + $totalGuestReservationToday;
+        $totalCustomerToday = Transaction::where('created_at', '=', date('Y-m-d'))->count();
+        $totalCustomerToday += Transaction::where('created_at', '=', date('Y-m-d'))->sum('total_guest');
 
         return [
-            'totalCustomer' => $totalCustomer,
+            'totalCustomer'      => $totalCustomer,
             'totalCustomerToday' => $totalCustomerToday
         ];
     }

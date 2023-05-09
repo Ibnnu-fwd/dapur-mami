@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\NewOrderEvent;
 use App\Http\Controllers\Controller;
 use App\Interfaces\DeliveryOrderInterface;
 use App\Models\Setting;
@@ -52,7 +51,6 @@ class DeliveryOrderController extends Controller
 
         try {
             $this->deliveryOrder->store($request->all());
-            event(new NewOrderEvent($request->invoice));
             return response()->json([
                 'status'    => 'success',
                 'message'   => 'Pemesanan berhasil dilakukan!'

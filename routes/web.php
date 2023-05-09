@@ -5,14 +5,12 @@ use App\Http\Controllers\Admin\CashierController;
 use App\Http\Controllers\Admin\CatalogManagementController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DeliveryOrderController;
-use App\Http\Controllers\Admin\DeliveryOrderHistoryController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ReservationConfigController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UserSettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('login', function () {
@@ -27,17 +25,9 @@ Route::get('menu', [HomeController::class, 'menu'])->name('user.menu');
 Route::get('/', [HomeController::class, 'index'])->name('user.home');
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
-
-    // User Setting
-    Route::resource('user-setting', UserSettingController::class, ['as' => 'admin']);
-
     // Dashboard
     Route::get('/total-sales-type-of-menu', [DashboardController::class, 'totalSalesTypeOfMenu'])->name('dashboard.total-sales-type-of-menu');
     Route::get('/', DashboardController::class)->name('admin.dashboard');
-
-    // Delivery Order History
-    Route::post('delivery-order-history/status/change', [DeliveryOrderHistoryController::class, 'changeStatus'])->name('admin.delivery-order-history.status.change');
-    Route::resource('delivery-order-history', DeliveryOrderHistoryController::class, ['as' => 'admin']);
 
     // Delivery Order
     Route::post('delivery-order/cancel-order', [DeliveryOrderController::class, 'cancelOrder'])->name('admin.delivery-order.cancel-order');
@@ -67,9 +57,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('invoice/period', [InvoiceController::class, 'period'])->name('admin.invoice.period');
     Route::resource('invoice', InvoiceController::class, ['as' => 'admin']);
 
-    // Setting'
-    Route::post('setting/configruration-store/update', [SettingController::class, 'configurationStoreUpdate'])->name('admin.configuration-store.update');
-    Route::get('setting/configuration-store', [SettingController::class, 'configurationStore'])->name('admin.configuration-store');
+    // Setting
     Route::post('setting/password/update', [SettingController::class, 'passwordUpdate'])->name('admin.setting.password.update');
     Route::post('setting/password/check', [SettingController::class, 'passwordCheck'])->name('admin.setting.password.check');
     Route::resource('setting', SettingController::class, ['as' => 'admin']);

@@ -29,7 +29,7 @@
                     <div class="absolute inset-0 flex items-center justify-center">
                         <div class="flex flex-col items-center sm:mb-12 mb-14">
                             <span class="text-gray-500">Rupiah</span>
-                            <span class="sm:text-xl text-lg font-semibold" id="totalIncome">-</span>
+                            <span class="sm:text-xl text-lg font-semibold" id="totalIncome">1.000.000</span>
                         </div>
                     </div>
                 </div>
@@ -97,8 +97,8 @@
                 </div>
                 <div class="flex justify-between mt-4">
                     <div class="flex">
-                        <span class="font-medium text-gray-600 mr-2">Nomor</span>
-                        <span class="font-medium text-gray-600">Nama Menu</span>
+                    <span class="font-medium text-gray-600 mr-2">Nomor</span>
+                    <span class="font-medium text-gray-600">Nama Menu</span>
                     </div>
                     <span class="font-medium text-gray-600">Jumlah Pesanan</span>
                 </div>
@@ -141,7 +141,6 @@
                 <table class="w-full" id="recentOrderTable">
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Pelanggan</th>
                             <th>Invoice</th>
                             <th>No. Pesanan</th>
@@ -169,12 +168,6 @@
                     serverSide: true,
                     ajax: "{{ route('admin.dashboard') }}",
                     columns: [{
-                            className: 'dt-control',
-                            orderable: false,
-                            data: null,
-                            defaultContent: ''
-                        },
-                        {
                             data: 'customer',
                             name: 'customer'
                         },
@@ -200,8 +193,7 @@
                         },
                         {
                             data: 'menu',
-                            name: 'menu',
-                            className: 'none'
+                            name: 'menu'
                         },
                     ]
                 });
@@ -221,13 +213,12 @@
                             totalIncomeChart.update();
 
                             let totalIncome = response.totalIncome;
-                            $('#totalIncome').text(formatIncome(totalIncome));
+                            $('#totalIncome').text(formatRupiah(totalIncome, 'Rp. '));
                         }
                     });
                 })
 
             });
-
             let totalSalesHourly = @json($totalSalesHourly);
             let totalSalesTypeOfMenu = @json($totalSalesTypeOfMenu);
             let totalIncome = @json($totalIncome);

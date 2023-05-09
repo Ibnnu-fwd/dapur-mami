@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\NewUserLogin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
@@ -29,8 +28,6 @@ class AuthenticatedSessionController extends Controller
         try {
             $request->authenticate();
             $request->session()->regenerate();
-
-            event(new NewUserLogin(Auth::user()->email));
             if (Auth::user()->role == 3) {
                 return redirect()->intended(RouteServiceProvider::CUSTOMER);
             } else {

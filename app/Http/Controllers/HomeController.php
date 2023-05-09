@@ -37,8 +37,7 @@ class HomeController extends Controller
     {
         $menus = $this->menu->sortByPrice($request->value);
         return view('user.component.list-menu', [
-            'products' => $menus,
-            'setting' => Setting::first(),
+            'products' => $menus
         ])->render();
     }
 
@@ -46,8 +45,7 @@ class HomeController extends Controller
     {
         $menus = $this->menu->sortByCategory($request->value);
         return view('user.component.list-menu', [
-            'products' => $menus,
-            'setting' => Setting::first(),
+            'products' => $menus
         ])->render();
     }
 

@@ -5,7 +5,7 @@
                 {{ \Carbon\Carbon::parse($transaction->created_at)->isoFormat('D MMMM Y') }}
             </span>
             <span
-                class="badge badge-sm badge-{{ $transaction->status == 0 && $transaction->payment_at == null ? 'warning animate-pulse' : ($transaction->status == 0 && $transaction->payment_at != null ? 'info' : ($transaction->status == 1 ? 'primary' : ($transaction->status == 2 ? 'primary' : ($transaction->status == 3 ? 'primary' : 'error')))) }}">
+                class="badge badge-sm badge-{{ $transaction->status == 0 && $transaction->payment_at == null ? 'warning animate-pulse' : ($transaction->status == 0 && $transaction->payment_at != null ? 'info' : ($transaction->status == 1 ? 'success' : ($transaction->status == 2 ? 'primary' : ($transaction->status == 3 ? 'success' : 'error')))) }}">
                 {{ $transaction->status == 0 && $transaction->payment_at == null ? 'Belum dibayar' : ($transaction->status == 0 && $transaction->payment_at != null ? 'Menunggu konfirmasi' : ($transaction->status == 1 ? 'Dikonfirmasi' : ($transaction->status == 2 ? 'Dikirim' : ($transaction->status == 3 ? 'Selesai' : 'Dibatalkan')))) }}
             </span>
             <span class="text-gray-600 text-sm">

@@ -23,20 +23,6 @@
                     {{ $product->sold ?? '0' }} Terjual
                 </p>
             </div>
-            {{-- only show in open at to close at --}}
-            @if (\Carbon\Carbon::now()->between(\Carbon\Carbon::parse($setting->open_at), \Carbon\Carbon::parse($setting->close_at)))
-                <div class="mt-8">
-                    <x-link-button id="addCart-{{ $product->id }}" onclick="addCart('{{ $product->id }}')"
-                        class="bg-primary w-full justify-center" data-drawer-target="drawer-example"
-                        data-drawer-show="drawer-example" aria-controls="drawer-example"
-                        data-drawer-body-scrolling="true">
-                        <span id="cartLabel-{{ $product->id }}">
-                            Tambah ke Pesanan
-                        </span>
-                    </x-link-button>
-                </div>
-            @else
-            @endif
         </div>
     </div>
 @empty

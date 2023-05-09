@@ -7,13 +7,12 @@
             <div class="mr-auto place-self-center lg:col-span-7">
                 <h1
                     class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-700 from-green-500">Sentuhan
-                        Rasa,</span> <br>Kasih Terhidang
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-700 from-green-500">Sentuhan Rasa,</span> <br>Kasih Terhidang
                 </h1>
                 <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
                     Rasakan makanan penuh kasih dan sentuhan rasa memukau di tempat kami. Selamat datang!
                 </p>
-                <a href="{{ route('user.menu') }}"
+                <a href="{{route('user.menu')}}"
                     class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-900">
                     Jelajahi Menu
                     <i class="fas fa-arrow-right ml-2"></i>
@@ -114,6 +113,7 @@
             </div>
         </div>
     </section>
+
     <section class="bg-white dark:bg-gray-900">
         <div class="gap-16 items-center pt-6 pb-6 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-10 lg:px-6">
             <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
@@ -133,25 +133,6 @@
                 <img class="w-full rounded-lg" src="{{ asset('assets/images/gathering1.jpg') }}" alt="office content 1">
                 <img class="mt-4 w-full lg:mt-10 rounded-lg" src="{{ asset('assets/images/gathering2.jpg') }}"
                     alt="office content 2">
-            </div>
-        </div>
-    </section>
-    <section class="bg-white dark:bg-gray-900">
-        <div class="gap-16 items-center pt-6 pb-6 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-10 lg:px-6">
-
-            <div class="grid grid-cols-2 gap-4 mt-8">
-                <img class="w-full rounded-lg" src="{{ asset('assets/images/deliveryorder1.jpg') }}" alt="office content 1">
-                <img class="mt-4 w-full lg:mt-10 rounded-lg" src="{{ asset('assets/images/deliveryorder2.jpg') }}"
-                    alt="office content 2">
-            </div>
-            <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
-                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
-                    Pesan Antar</h2>
-                <p class="mb-4">
-                    Fitur pesan antar memungkinkan pengguna melakukan proses pemesanan makanan dan minuman secara online. Pengguna hanya perlu melakukan proses konfirmasi pembayaran, dan makanan akan diantar ke alamat yang diinginkan.
-                    <br><br>
-                    Pengguna dapat melakukan tracking pada makanan yang diantar
-                </p>
             </div>
         </div>
     </section>
