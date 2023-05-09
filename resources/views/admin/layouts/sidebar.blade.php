@@ -26,6 +26,8 @@
             {{-- Reservasi --}}
             <x-sidebar-menu name="Reservasi" icon="fas fa-book" route="{{ route('admin.booking.index') }}"
                 active="{{ request()->routeIs('admin.booking.*') }}" />
+            {{-- divider --}}
+            <li class="border-t border-gray-200 dark:border-gray-700"></li>
             {{-- pengaturan --}}
             <x-sidebar-menu name="Pengaturan" icon="fas fa-cog" route="{{ route('admin.setting.index') }}"
                 active="{{ request()->routeIs('admin.setting.*') }}" />
@@ -33,6 +35,10 @@
             <x-sidebar-menu name="Konfigurasi Reservasi" icon="fas fa-cog"
                 route="{{ route('admin.reservation-config.index') }}"
                 active="{{ request()->routeIs('admin.reservation-config.*') }}" />
+            {{-- konfigurasi toko --}}
+            <x-sidebar-menu name="Pengaturan Toko" icon="fas fa-cog"
+                route="{{ route('admin.configuration-store') }}"
+                active="{{ request()->routeIs('admin.configuration-store') }}" />
             {{-- divide --}}
             <li class="border-t border-gray-200 dark:border-gray-700"></li>
             @if (auth()->user()->role == 2)
@@ -45,10 +51,14 @@
                 <x-sidebar-menu name="Manajemen Kasir" icon="fas fa-user-tie"
                     route="{{ route('admin.cashier.index') }}" active="{{ request()->routeIs('admin.cashier.*') }}" />
             @endif
-            {{-- Catatan Transaksi --}}
-            <x-sidebar-menu name="Riwayat Transaksi" icon="fas fa-history"
+            {{-- Riwayat Pemesanan --}}
+            <x-sidebar-menu name="Riwayat Pemesanan" icon="fas fa-history"
                 route="{{ route('admin.transaction-history') }}"
                 active="{{ request()->routeIs('admin.transaction-history') }}" />
+            {{-- Riwayat Pengiriman --}}
+            <x-sidebar-menu name="Riwayat Pengiriman" icon="fas fa-history"
+                route="{{ route('admin.delivery-order-history.index') }}"
+                active="{{ request()->routeIs('admin.delivery-order-history.*') }}" />
             {{-- Manajemen Bahan --}}
             <x-sidebar-menu name="Manajemen Bahan" icon="fas fa-book-open" route="{{ route('admin.material.index') }}"
                 active="{{ request()->routeIs('admin.material.*') }}" />
@@ -88,5 +98,5 @@
                     <span>Buka Profil</span>
                 </a>
             </div> --}}
-    {{-- </div> --}}
+        {{-- </div> --}}
 </aside>
