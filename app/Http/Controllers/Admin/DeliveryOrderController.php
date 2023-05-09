@@ -53,7 +53,6 @@ class DeliveryOrderController extends Controller
         try {
             $this->deliveryOrder->store($request->all());
             event(new NewOrderEvent($request->invoice));
-
             return response()->json([
                 'status'    => 'success',
                 'message'   => 'Pemesanan berhasil dilakukan!'

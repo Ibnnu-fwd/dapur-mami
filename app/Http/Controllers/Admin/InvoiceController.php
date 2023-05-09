@@ -160,8 +160,7 @@ class InvoiceController extends Controller
                     ]);
                 })
                 ->addColumn('created_at', function ($data) {
-                    setlocale(LC_TIME, 'id_ID');
-                    return Carbon::parse($data->created_at)->formatLocalized('%d %B %Y');
+                    return Carbon::parse($data->created_at)->isoFormat('D/MM/Y H:mm') . ' WIB';
                 })
                 ->addColumn('user', function ($data) {
                     return $data->user->first_name;

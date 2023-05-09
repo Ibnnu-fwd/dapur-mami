@@ -8,8 +8,10 @@
                 <tr>
                     <th>#</th>
                     <th>Tanggal</th>
+                    <th>Bukti Pembayaran</th>
                     <th>Invoice</th>
                     <th>Pelanggan</th>
+                    <th>No. Telefon</th>
                     <th>Alamat</th>
                     <th>Catatan</th>
                     <th>Produk</th>
@@ -83,12 +85,23 @@
                             name: 'created_at'
                         },
                         {
+                            data: 'payment_proof',
+                            name: 'payment_proof',
+                            orderable: false,
+                            searchable: false,
+                            className: 'text-center',
+                        },
+                        {
                             data: 'invoice',
                             name: 'invoice'
                         },
                         {
                             data: 'customer',
                             name: 'customer'
+                        },
+                        {
+                            data: 'phone',
+                            name: 'phone',
                         },
                         {
                             data: 'address',

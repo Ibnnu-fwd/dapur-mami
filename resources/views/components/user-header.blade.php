@@ -11,7 +11,8 @@
                      class="flex items-center text-md font-medium text-gray-900 rounded-full hover:text-green-600 dark:hover:text-green-500 md:mr-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
                      type="button">
                      <span class="sr-only">Open user menu</span>
-                     <img class="w-12 h-12 mr-2 rounded-full" src="{{ asset('images/profile_picture/default.jpg') }}"
+                     <img class="w-12 h-12 mr-2 rounded-full"
+                         src="{{ auth()->user()->profile_picture ? asset(auth()->user()->profile_picture) : asset('images/profile_picture/default.jpg') }}"
                          alt="user photo">
                      {{ auth()->user()->first_name }}
                      <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -26,19 +27,44 @@
                  <div id="dropdownAvatarName"
                      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                      <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                         <div class="font-medium ">Pelanggan</div>
+                         <div class="font-medium ">
+                             @if (auth()->user()->role == 1)
+                                 Kasir
+                             @elseif (auth()->user()->role == 2)
+                                 Admin
+                             @elseif (auth()->user()->role == 3)
+                                 Pelanggan
+                             @endif
+                         </div>
                          <div class="truncate">
                              {{ auth()->user()->email }}
                          </div>
                      </div>
                      <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                          aria-labelledby="dropdownInformationButton">
-                         <li>
-                             <a href="{{ route('admin.delivery-order.index') }}"
-                                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                 Pesanan
-                             </a>
-                         </li>
+                         @if (auth()->user()->role == 3)
+                             <li>
+                                 <a href="{{ route('admin.delivery-order.index') }}"
+                                     class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                     Pesanan
+                                 </a>
+                             </li>
+                             <li>
+                                 <a href="{{ route('admin.user-setting.index') }}"
+                                     class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                     Pengaturan
+                                 </a>
+                             </li>
+                         @endif
+
+                         @if (auth()->user()->role == 1 || auth()->user()->role == 2)
+                             <li>
+                                 <a href="{{ route('admin.dashboard') }}"
+                                     class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                     Dashboard
+                                 </a>
+                             </li>
+                         @endif
                      </ul>
                      <div class="py-2">
                          <form action="{{ route('logout') }}" method="POST">
@@ -82,13 +108,17 @@
                  </li>
                  <li>
                      <a href="#"
-                         class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Pengumuman</a>
+                         class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                         {{-- soon badge --}}
+                         Pengumuman <span
+                             class="inline-flex items-center justify-center px-2 py-1 ml-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">Soon</span>
+                     </a>
                  </li>
-                 <li>
+                 {{-- <li>
                      <a href="#"
                          class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Kontak
                          Kami</a>
-                 </li>
+                 </li> --}}
              </ul>
          </div>
      </div>

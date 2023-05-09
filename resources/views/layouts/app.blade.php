@@ -40,6 +40,11 @@
         #transactionTable_filter {
             margin-bottom: 10px;
         }
+
+        /* set width of scroll bar */
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
     </style>
 
     <!-- Toastr -->
@@ -108,8 +113,12 @@
 
         var channel = pusher.subscribe('popup-channel');
         channel.bind('new-order', function(data) {
-            // TODO: ganti alert dengan toastr
-            alert(JSON.stringify(data));
+            toastr.success('Pesanan baru', JSON.stringify(data.invoice), {
+                timeOut: 5000,
+                closeButton: true,
+                progressBar: true,
+                positionClass: 'toast-top-right'
+            });
         });
         channel.bind('new-user-login', function(data) {
             toastr.success(JSON.stringify(data.name), 'New User Login', {

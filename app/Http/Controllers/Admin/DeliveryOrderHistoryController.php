@@ -30,11 +30,21 @@ class DeliveryOrderHistoryController extends Controller
                 ->addColumn('created_at', function ($data) {
                     return Carbon::parse($data->created_at)->isoFormat('D MMMM Y HH:mm') . ' WIB';
                 })
+                ->addColumn('payment_proof', function($data) {
+                    return view('admin.delivery-order-history.columns.payment_proof', [
+                        'data' => $data->payment_proof
+                    ]);
+                })
                 ->addColumn('invoice', function ($data) {
                     return $data->invoice;
                 })
                 ->addColumn('customer', function ($data) {
                     return $data->customer_name;
+                })
+                ->addColumn('phone', function ($data) {
+                    $phone = $data->delivery_phone;
+                    $phone = preg_replace('/^0/', '+62', $phone);
+                    return $phone;
                 })
                 ->addColumn('address', function ($data) {
                     return $data->delivery_address;
@@ -48,7 +58,7 @@ class DeliveryOrderHistoryController extends Controller
                     ]);
                 })
                 ->addColumn('total', function ($data) {
-                    return 'Rp.' . number_format($data->total_payment, 0, ',', '.');
+                    return 'Rp. ' . number_format($data->total_payment, 0, ',', '.');
                 })
                 ->addColumn('status', function ($data) {
                     return view('admin.delivery-order-history.columns.status', [
