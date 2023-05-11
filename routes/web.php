@@ -32,6 +32,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('user-setting', UserSettingController::class, ['as' => 'admin']);
 
     // Dashboard
+    Route::get('/total-sales-hourly', [DashboardController::class, 'totalSalesHourly'])->name('dashboard.total-sales-hourly');
     Route::get('/total-sales-type-of-menu', [DashboardController::class, 'totalSalesTypeOfMenu'])->name('dashboard.total-sales-type-of-menu');
     Route::get('/', DashboardController::class)->name('admin.dashboard');
 

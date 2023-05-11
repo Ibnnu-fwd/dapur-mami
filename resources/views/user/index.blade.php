@@ -176,6 +176,7 @@
             </div>
         </div>
     </section>
+    <div class="my-24"></div>
     <section class="bg-white dark:bg-gray-900">
         <div
             class="gap-16 items-center pt-6 pb-6 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-10 lg:px-6">

@@ -1,4 +1,4 @@
-<footer class="p-4 bg-white md:p-8 lg:p-10 mt-12 dark:bg-gray-800">
+<footer class="p-4 bg-white md:p-8 lg:p-10 mt-64 dark:bg-gray-800">
     <div class="mx-auto max-w-screen-xl text-center">
         <a href="#" class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white">
             <img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="w-10 h-10 mr-2">

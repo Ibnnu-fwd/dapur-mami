@@ -13,7 +13,7 @@
                 {{ $invoice->getStatus() }}
             </span>
         </div>
-        @if ($invoice->status == 0)
+        @if ($invoice->status == 1)
             <label for="editStatusModal" onclick="editStatus({{ $invoice->id }})"
                 class="cursor-pointer bg-gray-600 text-white px-3 py-2 text-center rounded-lg text-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray">
                 <i class="fas fa-edit mr-2"></i>

@@ -42,8 +42,10 @@ class DashboardController extends Controller
                 ->make(true);
         }
 
+        $date = Carbon::now()->isoFormat('dddd, D MMMM Y HH:mm') . ' WIB';
+
         return view('admin.dashboard.index', [
-            'totalSalesHourly'     => $this->totalSalesHourly(),
+            'totalSalesHourly'     => $this->totalSalesHourly(app(Request::class)),
             'totalSalesTypeOfMenu' => $this->totalSalesTypeOfMenu(app(Request::class))['totalSalesTypeOfMenu'],
             'totalIncome'          => $this->totalSalesTypeOfMenu(app(Request::class))['totalIncome'],
             'totalOrder'           => $this->totalOrder()['totalOrder'],
@@ -51,11 +53,12 @@ class DashboardController extends Controller
             'totalCustomer'        => $this->totalCustomer()['totalCustomer'],
             'totalCustomerToday'   => $this->totalCustomer()['totalCustomerToday'],
             'favoriteMenu'         => $this->favoriteMenu(),
+            'date'                 => $date
         ]);
     }
 
     // custom function
-    public function totalSalesHourly()
+    public function totalSalesHourly(Request $request)
     {
 
         $sales1 = [];
@@ -65,6 +68,22 @@ class DashboardController extends Controller
         $sales5 = [];
 
         $transactions = TransactionDetail::all();
+
+        if($request->type == 'day') {
+            $transactions = TransactionDetail::whereDate('created_at', date('Y-m-d'))->get();
+        }
+
+        if($request->type == 'week') {
+            $transactions = TransactionDetail::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+        }
+
+        if($request->type == 'month') {
+            $transactions = TransactionDetail::whereMonth('created_at', date('m'))->get();
+        }
+
+        if($request->type == 'year') {
+            $transactions = TransactionDetail::whereYear('created_at', date('Y'))->get();
+        }
 
         foreach ($transactions as $transaction) {
             $time = $transaction->created_at->format('H:i');

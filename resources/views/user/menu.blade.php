@@ -173,6 +173,34 @@
                             :value="$customer->fullname" type="text" required />
                         <x-input readonly id="delivery_phone" label="Nomor Telepon" name="delivery_phone"
                             :value="$customer->phone" type="text" required />
+                            <div class="flex justify-between items-end gap-x-3">
+                                <x-select id="regency" name="regency" label="Kabupaten" required>
+                                    <option value="Situbondo" selected>Situbondo</option>
+                                </x-select>
+                            <x-select id="district" name="district" label="Kecamatan" required>
+                                <option value="Arjasa" selected>Arjasa</option>
+                                <option value="Asembagus">Asembagus</option>
+                                <option value="Banyuglugur">Banyuglugur</option>
+                                <option value="Banyuputih">Banyuputih</option>
+                                <option value="Besuki">Besuki</option>
+                                <option value="Bungatan">Bungatan</option>
+                                <option value="Jangkar">Jangkar</option>
+                                <option value="Jatibanteng">Jatibanteng</option>
+                                <option value="Kapongan">Kapongan</option>
+                                <option value="Kendit">Kendit</option>
+                                <option value="Mangaran">Mangaran</option>
+                                <option value="Mlandingan">Mlandingan</option>
+                                <option value="Panarukan">Panarukan</option>
+                                <option value="Panji">Panji</option>
+                                <option value="Ardirejo">Ardirejo</option>
+                                <option value="Mimbaan">Mimbaan</option>
+                                <option value="Situbondo">Situbondo</option>
+                                <option value="Dawuhan">Dawuhan</option>
+                                <option value="Patokan">Patokan</option>
+                                <option value="Suboh">Suboh</option>
+                                <option value="Sumber Malang">Sumber Malang</option>
+                            </x-select>
+                            </div>
                         <x-textarea id="alamat" label="Alamat" name="delivery_address" type="text"
                             placeholder="[Nama Jalan, RT/RW, Kelurahan, Kecamatan, No. Rumah]" required></x-textarea>
                         <x-textarea id="note" label="Catatan" name="delivery_note" type="text" required>
@@ -420,6 +448,11 @@
                         let delivery_phone = $('#detailDeliveryOrder input[name="delivery_phone"]').val();
                         let delivery_address = $('#detailDeliveryOrder textarea[name="delivery_address"]').val();
                         let delivery_note = $('#detailDeliveryOrder textarea[name="delivery_note"]').val();
+                        let district = $('#detailDeliveryOrder select[name="district"]').val();
+                        let regency = $('#detailDeliveryOrder select[name="regency"]').val();
+
+                        // append district and regency to delivery_address
+                        delivery_address += ', ' + district + ', ' + regency;
 
                         if (invoice != '' && customer_name != '' && delivery_phone != '' && delivery_address !=
                             '' && delivery_note != '') {
