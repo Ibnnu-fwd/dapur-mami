@@ -96,7 +96,7 @@
         {{-- Modal Detail Transaction --}}
         <input type="checkbox" id="detailTransactionModal" class="modal-toggle" />
         <label for="detailTransactionModal" class="modal cursor-pointer">
-            <label class="modal-box relative w-6/12 max-w-5xl" for="">
+            <label class="modal-box relative lg:w-6/12 max-w-5xl" for="">
                 <h3 class="text-lg font-bold">
                     Detail Transaksi
                 </h3>
@@ -127,35 +127,35 @@
                         <div class="xl:grid grid-cols-3 text-sm mb-3">
                             <span class="text-gray-500">Kurir</span>
                             <div class="text-gray-10 col-span-2 flex">
-                                <span class="mr-2">:</span>
+                                <span class="mr-2 hidden xl:block">:</span>
                                 <p id="labelCourier">Dapur Mami</p>
                             </div>
                         </div>
                         <div class="xl:grid grid-cols-3 text-sm mb-3">
                             <span class="text-gray-500">Nama Penerima</span>
                             <div class="text-gray-10 col-span-2 flex">
-                                <span class="mr-2">:</span>
+                                <span class="mr-2 hidden xl:block">:</span>
                                 <p id="labelReceiver" class="capitalize">-</p>
                             </div>
                         </div>
                         <div class="xl:grid grid-cols-3 text-sm mb-3">
                             <span class="text-gray-500">No. Telepon</span>
                             <div class="text-gray-10 col-span-2 flex">
-                                <span class="mr-2">:</span>
+                                <span class="mr-2 hidden xl:block">:</span>
                                 <p id="labelPhone">-</p>
                             </div>
                         </div>
                         <div class="xl:grid grid-cols-3 text-sm mb-3">
                             <span class="text-gray-500">Alamat</span>
                             <div class="text-gray-10 col-span-2 flex">
-                                <span class="mr-2">:</span>
+                                <span class="mr-2 hidden xl:block">:</span>
                                 <p id="labelAddress">-</p>
                             </div>
                         </div>
                         <div class="xl:grid grid-cols-3 text-sm mb-3">
                             <span class="text-gray-500">Catatan</span>
                             <div class="text-gray-10 col-span-2 flex">
-                                <span class="mr-2">:</span>
+                                <span class="mr-2 hidden xl:block">:</span>
                                 <p id="labelNote">-</p>
                             </div>
                         </div>
@@ -168,21 +168,21 @@
                         <div class="xl:grid grid-cols-3 text-sm mb-3">
                             <span class="text-gray-500">Bank</span>
                             <div class="text-gray-10 col-span-2 flex">
-                                <span class="mr-2">:</span>
+                                <span class="mr-2 hidden xl:block">:</span>
                                 <p>{{ $setting->bank_name }}</p>
                             </div>
                         </div>
                         <div class="xl:grid grid-cols-3 text-sm mb-3">
                             <span class="text-gray-500">No. Rekening</span>
                             <div class="text-gray-10 col-span-2 flex">
-                                <span class="mr-2">:</span>
+                                <span class="mr-2 hidden xl:block">:</span>
                                 <p>{{ $setting->bank_account }}</p>
                             </div>
                         </div>
                         <div class="xl:grid grid-cols-3 text-sm mb-3">
                             <span class="text-gray-500">Atas Nama</span>
                             <div class="text-gray-10 col-span-2 flex">
-                                <span class="mr-2">:</span>
+                                <span class="mr-2 hidden xl:block">:</span>
                                 <p>{{ $setting->bank_account_name }}</p>
                             </div>
                         </div>
@@ -196,11 +196,11 @@
                         <span class="text-gray-500 capitalize" id="labelPaymentMethod">-</span>
                     </div>
                     <div class="border-t border-gray-100 mb-4"></div>
-                    <div class="xl:flex justify-between text-sm">
+                    <div class="xl:flex justify-between block text-sm">
                         <span class="text-gray-500">Total Harga</span>
                         <span class="text-gray-500" id="labelSubTotal">-</span>
                     </div>
-                    <div class="xl:flex justify-between text-sm">
+                    <div class="xl:flex justify-between block text-sm">
                         <span class="text-gray-500">Total Ongkos Kirim</span>
                         <span class="text-gray-500" id="labelDeliveryPrice">-</span>
                     </div>
