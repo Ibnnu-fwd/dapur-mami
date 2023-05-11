@@ -462,13 +462,13 @@
                                 total_guest: reservationGuest
                             },
                             success: function(response) {
-                                if (response.data.isFull == true || response.data.isMaxBooking == true && response.data.isAvailable == false) {
+                                if (response.data.isFull == true || response.data.isMaxBooking == true && response.data.isAvailable == false || response.data.isBetween == false) {
                                     Swal.fire({
                                         icon: 'error',
                                         title: 'Oops...',
                                         text: 'Kuota reservasi sudah penuh! Sisa kuota pada tanggal ' +
                                             reservationDate + ' : ' + response.data
-                                            .remainingCapacity + ' orang!',
+                                            .remainingCapacity + ' orang!' + ' Periksa waktu reservasi!',
                                     });
                                     $('#detailOrderForm').addClass('hidden');
                                 } else {

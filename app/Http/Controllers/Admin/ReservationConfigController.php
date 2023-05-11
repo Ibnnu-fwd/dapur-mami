@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ReservationConfig;
+use App\Models\Setting;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -79,6 +80,16 @@ class ReservationConfigController extends Controller
         $maxBooking = $reservationConfig->max_booking;
         $totalBooking = count($reservation);
 
+        // check if booking time is between open_at and close_at
+        $setting = Setting::first();
+        $open_at = date('H:i', strtotime($setting->open_at));
+        $close_at = date('H:i', strtotime($setting->close_at));
+
+        $isBetween = false;
+        if (date('H:i', strtotime($request->booking_time)) >= $open_at && date('H:i', strtotime($request->booking_time)) <= $close_at) {
+            $isBetween = true;
+        }
+
         // check max booking
         $isMaxBooking = false;
         if ($totalBooking >= $maxBooking) {
@@ -101,13 +112,14 @@ class ReservationConfigController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => [
-                'isAvailable' => $reservation->isEmpty() ? true : false,
+                'isAvailable' => $reservation->isEmpty() && date('Y-m-d', strtotime($request->booking_date)) != date('Y-m-d') ? true : false,
                 'reservationConfig' => $reservationConfig,
                 'reservation' => $reservation,
                 'totalGuest' => $totalGuest,
                 'isFull' => $isFull,
                 'isMaxBooking' => $isMaxBooking,
                 'remainingCapacity' => $remainingCapacity,
+                'isBetween' => $isBetween,
             ],
         ]);
     }
