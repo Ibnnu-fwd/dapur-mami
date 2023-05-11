@@ -1,11 +1,25 @@
 <x-app-layout>
     <x-breadcrumbs name="dashboard" />
-    <h1 class="font-semibold text-2xl my-8">Halaman Utama</h1>
+    <div class="lg:flex justify-between items-center">
+        <h1 class="font-semibold text-2xl my-8">Halaman Utama</h1>
+        <h2 class="text-lg" id="currentDate"></h2>
+    </div>
 
     <div class="lg:flex gap-x-3">
         <div class="lg:w-2/5">
             <x-card-container>
-                <h3 class="font-semibold">Penjualan Harian</h3>
+                <div class="flex justify-between items-center">
+                    <h3 class="font-semibold">Penjualan Harian</h3>
+                    <span class="dateLabel"></span>
+                    <select id="totalSalesHourlySelect"
+                        class="block max-w-auto p-2 text-sm text-gray-900 border border-gray-300 rounded-lg  focus:ring-primary focus:border-primary">
+                        <option value="day">Hari Ini</option>
+                        <option value="week">Mingguan</option>
+                        <option value="month">Bulanan</option>
+                        <option value="year">Tahunan</option>
+                        <option value="all" selected>Semua</option>
+                    </select>
+                </div>
                 <div style="height: 317px">
                     <canvas id="dailySalesChart"></canvas>
                 </div>
@@ -159,6 +173,19 @@
     @push('js-internal')
         <script>
             $(function() {
+                setInterval(() => {
+                    // dont use moment.js
+                    $('#currentDate').html(new Date().toLocaleDateString('id-ID', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        second: 'numeric'
+                    }) + ' WIB');
+                }, 1000);
+
                 $('#favoriteMenuSelect').select2({
                     width: 'resolve'
                 });
@@ -206,6 +233,62 @@
                     ]
                 });
 
+                $('#totalSalesHourlySelect').on('change', function() {
+                    let value = $(this).val();
+                    if (value == 'day') {
+                        // set current date dont using moment
+                        $('.dateLabel').text(new Date().toLocaleDateString('id-ID', {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        }));
+                    } else if (value == 'week') {
+                        // show this week dont using moment
+                        // start date of this week (sunday), end date of this week (saturday)
+                        let startOfWeek = new Date();
+                        startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+                        let endOfWeek = new Date();
+                        endOfWeek.setDate(endOfWeek.getDate() + (6 - endOfWeek.getDay()));
+                        $('.dateLabel').text(`${startOfWeek.toLocaleDateString('id-ID', {
+                            day: 'numeric'
+                        })} - ${endOfWeek.toLocaleDateString('id-ID', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
+                        })}`);
+                    }
+
+                    if (value == 'month') {
+                        // show this month
+                        $('.dateLabel').text(new Date().toLocaleDateString('id-ID', {
+                            month: 'long',
+                            year: 'numeric'
+                        }));
+                    }
+
+                    if (value == 'year') {
+                        // show this year
+                        $('.dateLabel').text(new Date().toLocaleDateString('id-ID', {
+                            year: 'numeric'
+                        }));
+                    }
+
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('dashboard.total-sales-hourly') }}",
+                        data: {
+                            type: value
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            let totalSalesHourly = response;
+                            dailySalesChart.data.datasets[0].data = totalSalesHourly;
+                            dailySalesChart.update();
+                        }
+                    });
+                });
+
                 $('#totalSalesTypeOfMenuSelect').on('change', function() {
                     let value = $(this).val();
                     $.ajax({
@@ -224,8 +307,7 @@
                             $('#totalIncome').text(formatIncome(totalIncome));
                         }
                     });
-                })
-
+                });
             });
 
             let totalSalesHourly = @json($totalSalesHourly);
