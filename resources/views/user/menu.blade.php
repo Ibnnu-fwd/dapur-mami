@@ -366,11 +366,20 @@
                 }
 
                 $(function() {
-                    $('input[name="search"]').on('keyup', function() {
+                    $('input[name="search"]').on('keydown', function() {
                         let value = $(this).val();
-                        $('#listMenu div').filter(function() {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                        });
+                        if (event.keyCode == 13) {
+                            $.ajax({
+                                url: '{{ route('user.menu.search') }}',
+                                type: 'GET',
+                                data: {
+                                    value: value
+                                },
+                                success: function(data) {
+                                    $('#listMenu').html(data);
+                                }
+                            })
+                        }
                     });
 
                     $('select#price').on('change', function() {

@@ -133,8 +133,11 @@ class DeliveryOrderRepository implements DeliveryOrderInterface
             ->when($period == 'yesterday', function ($query) {
                 return $query->whereDate('delivery_date', Carbon::yesterday());
             })
-            ->when($period == 'this_week', function ($query) {
-                return $query->whereBetween('delivery_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+            ->when($period == 'last_week', function ($query) {
+                return $query->whereBetween('delivery_date', [Carbon::now()->subDays(7), Carbon::now()]);
+            })
+            ->when($period == 'last_thirty_days', function ($query) {
+                return $query->whereBetween('delivery_date', [Carbon::now()->subDays(30), Carbon::now()]);
             })
             ->when($period == 'this_month', function ($query) {
                 return $query->whereMonth('delivery_date', Carbon::now()->month);

@@ -21,12 +21,13 @@
                 <!-- Password -->
                 <x-input id="password" label="Password" name="password" type="password" required />
 
-                <div class="flex items-center justify-end mt-4">
-                    {{-- @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600" href="{{ route('register') }}">
-                    {{ __('Tidak punya akun?') }}
-                </a>
-            @endif --}}
+                <div class="flex items-center justify-between mt-4">
+                    {{-- forgot password --}}
+                    <div class="text-sm">
+                        <a href="{{ route('password.request') }}" class="underline text-sm text-gray-600 hover:text-gray-900">
+                            {{ __('Lupa password?') }}
+                        </a>
+                    </div>
 
                     <x-button class="ml-3">Masuk</x-button>
                 </div>

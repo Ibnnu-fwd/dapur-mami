@@ -11,18 +11,29 @@ use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ReservationConfigController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserSettingController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('login', function () {
     return view('auth.login');
 })->name('login');
 
+// Forgot Password
+Route::group(['prefix' => 'forgot-password'], function () {
+    Route::get('/', [ForgetPasswordController::class, 'index'])->name('forgot-password');
+    Route::post('/', [ForgetPasswordController::class, 'sendResetLinkEmail'])->name('forgot-password');
+    Route::get('/reset/{token}', [ForgetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset', [ForgetPasswordController::class, 'reset'])->name('password.update');
+});
+
 // Menu
 Route::get('menu/add-cart/{id}', [HomeController::class, 'addCart'])->name('user.menu.add-cart');
 Route::get('menu/sort-by-category', [HomeController::class, 'sortByCategory'])->name('user.menu.sort-by-category');
 Route::get('menu/sort-by-price', [HomeController::class, 'sortByPrice'])->name('user.menu.sort-by-price');
+Route::get('menu/search', [HomeController::class, 'search'])->name('user.menu.search');
 Route::get('menu', [HomeController::class, 'menu'])->name('user.menu');
 Route::get('/', [HomeController::class, 'index'])->name('user.home');
 

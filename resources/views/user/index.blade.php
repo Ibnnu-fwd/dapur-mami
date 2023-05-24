@@ -18,7 +18,7 @@
                     Jelajahi Menu
                     <i class="fas fa-arrow-right ml-2"></i>
                 </a>
-                <a href="#"
+                <a href="{{ 'https://api.whatsapp.com/send?phone=' . $whatsapp }}" target="_blank"
                     class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                     Hubungi Kami
                 </a>
@@ -167,6 +167,11 @@
                     Pengguna dapat menjamin tempat mereka dan menikmati makanan yang lezat tanpa khawatir tidak
                     mendapatkan tempat.
                 </p>
+                <a href="{{ 'https://api.whatsapp.com/send?phone=' . $whatsapp }}" target="_blank"
+                    class="inline-flex items-center justify-center mt-5 px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                    <i class="fab fa-whatsapp mr-2"></i>
+                    Pesan Sekarang
+                </a>
             </div>
             <div class="grid grid-cols-2 gap-4 mt-8">
                 <img class="w-full rounded-lg" src="{{ asset('assets/images/gathering1.jpg') }}"
@@ -204,7 +209,6 @@
     <x-user-footer />
 
     @push('js-internet')
-        <script>
-        </script>
+        <script></script>
     @endpush
 </x-guest-layout>

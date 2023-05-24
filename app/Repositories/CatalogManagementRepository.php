@@ -99,7 +99,14 @@ class CatalogManagementRepository implements CatalogManagementInterface
 
     public function search($data)
     {
-        return $this->menu->where('name', 'like', '%' . $data . '%')->get();
+        // get quantity of menu in transaction detail
+        $menu = $this->menu->withCount([
+            'transactionDetails as sold' => function ($query) {
+                $query->select(DB::raw('sum(quantity)'));
+            }
+        ])->where('name', 'like', '%' . $data . '%')->get();
+
+        return $menu;
     }
 
     public function getWithTotalSales()
@@ -116,7 +123,13 @@ class CatalogManagementRepository implements CatalogManagementInterface
 
     public function sortByPrice($value)
     {
-        $menus = $this->get();
+        // get quantity of menu in transaction detail
+        $menus = $this->menu->withCount([
+            'transactionDetails as sold' => function ($query) {
+                $query->select(DB::raw('sum(quantity)'));
+            }
+        ])->get();
+
         if($value == 'minmax') {
             $menus = $menus->sortBy('price');
         } elseif($value == 'maxmin') {
@@ -130,7 +143,11 @@ class CatalogManagementRepository implements CatalogManagementInterface
 
     public function sortByCategory($value)
     {
-        $menus = $this->get();
+        $menus = $this->menu->withCount([
+            'transactionDetails as sold' => function ($query) {
+                $query->select(DB::raw('sum(quantity)'));
+            }
+        ])->get();
         return $value == 'all' ? $menus : $menus->where('category', $value);
     }
 }
