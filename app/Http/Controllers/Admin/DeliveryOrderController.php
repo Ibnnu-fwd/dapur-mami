@@ -139,11 +139,7 @@ class DeliveryOrderController extends Controller
                 'message'   => 'Konfirmasi pembayaran berhasil dilakukan!'
             ]);
         } catch (\Throwable $th) {
-            dd($th);
-            return response()->json([
-                'status'    => 'error',
-                'message'   => $th->getMessage()
-            ]);
+            dd($th->getMessage());
         }
     }
 
