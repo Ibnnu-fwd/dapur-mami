@@ -15,6 +15,7 @@ class HomeController extends Controller
 {
     private $menu;
     private $catalogMenu;
+
     public function __construct(CatalogManagementInterface $menu, CatalogManagementInterface $catalogMenu)
     {
         $this->menu = $menu;
@@ -23,9 +24,9 @@ class HomeController extends Controller
 
     public function index()
     {
-        // dd($this->favoriteMenu());
         return view('user.index', [
             'favoriteMenu'         => $this->favoriteMenu(),
+            'whatsapp' => Setting::first()->phone,
         ]);
     }
 
@@ -78,6 +79,15 @@ class HomeController extends Controller
         $menu = $this->catalogMenu->find($id);
         return view('user.component.menu-item', [
             'menu' => $menu
+        ])->render();
+    }
+
+    public function search(Request $request)
+    {
+        $menus = $this->menu->search($request->value);
+        return view('user.component.list-menu', [
+            'products' => $menus,
+            'setting' => Setting::first(),
         ])->render();
     }
 }

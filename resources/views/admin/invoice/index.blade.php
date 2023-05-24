@@ -227,6 +227,8 @@
             }
 
             function detailInvoice(id) {
+                // unbind event
+                $(this).unbind('click');
                 event.preventDefault();
                 $('#invoiceContainer').removeClass('lg:w-full').addClass('lg:w-3/5');
                 $('#invoiceList').removeClass('xl:grid-cols-4').addClass('xl:grid-cols-3');

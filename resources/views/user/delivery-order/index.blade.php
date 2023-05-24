@@ -12,7 +12,7 @@
                         <x-input id="search" name="search" placeholder="Cari invoice" type="text"
                             class="py-3 mb-1.4" />
                         <x-select id="period">
-                            <option value="" selected>Periode</option>
+                            <option value="" selected disabled>Periode</option>
                             <option value="today">Hari ini</option>
                             <option value="yesterday">Kemarin</option>
                             <option value="last_week">7 hari terakhir</option>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="xl:grid grid-cols-2 gap-x-3">
                         <x-select id="status">
-                            <option value="" selected>Semua</option>
+                            <option value="all" selected>Semua</option>
                             <option value="0">Menunggu pembayaran</option>
                             <option value="0t">Menunggu konfirmasi</option>
                             <option value="1">Sudah dibayar</option>

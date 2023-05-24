@@ -74,6 +74,17 @@
                     autoWidth: false,
                     responsive: true,
                     ajax: "{{ route('admin.delivery-order-history.index') }}",
+                    dom: 'Bfrtip',
+                    buttons: [{
+                        extend: 'pdfHtml5',
+                        className: 'bg-red-500 text-white hover:bg-red-600',
+                        text: 'Export PDF',
+                        // filename
+                        title: 'Riwayat Pengiriman',
+                        exportOptions: {
+                            columns: [1, 3, 4, 5, 6, 7, 8, 9, 10]
+                        }
+                    }, ],
                     columns: [{
                             className: 'dt-control',
                             orderable: false,
@@ -82,7 +93,7 @@
                         },
                         {
                             data: 'created_at',
-                            name: 'created_at'
+                            name: 'created_at',
                         },
                         {
                             data: 'payment_proof',
